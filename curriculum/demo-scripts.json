@@ -1,0 +1,637 @@
+[
+  {
+    "lessonId": "b01",
+    "steps": [
+      {
+        "kind": "terminal",
+        "value": "git init",
+        "narration": {
+          "en": "This creates the repository metadata. No commit exists yet.",
+          "de": "Damit entsteht die Repository-Struktur. Einen Commit gibt es noch nicht."
+        },
+        "focus": "repository"
+      },
+      {
+        "kind": "terminal",
+        "value": "git status",
+        "narration": {
+          "en": "Git is ready, but there is no history yet.",
+          "de": "Git ist bereit, aber es gibt noch keinen Verlauf."
+        },
+        "focus": "terminal"
+      }
+    ]
+  },
+  {
+    "lessonId": "b02",
+    "steps": [
+      {
+        "kind": "fileEdit",
+        "value": {
+          "path": "app.ts",
+          "content": "console.log(\"hello\");\n"
+        },
+        "narration": {
+          "en": "We change a file. The change exists only in the Working Tree.",
+          "de": "Wir ändern eine Datei. Die Änderung existiert zunächst nur im Working Tree."
+        },
+        "focus": "workingTree"
+      },
+      {
+        "kind": "terminal",
+        "value": "git status",
+        "narration": {
+          "en": "Git can see the change, but it is not selected for a commit.",
+          "de": "Git sieht die Änderung, aber sie ist noch nicht für einen Commit vorgemerkt."
+        },
+        "focus": "workingTree"
+      },
+      {
+        "kind": "terminal",
+        "value": "git add app.ts",
+        "narration": {
+          "en": "The current file version is copied into the Staging Area.",
+          "de": "Die aktuelle Dateiversion wird in die Staging Area übernommen."
+        },
+        "focus": "staging"
+      },
+      {
+        "kind": "terminal",
+        "value": "git commit -m \"First snapshot\"",
+        "narration": {
+          "en": "The staged snapshot becomes a commit. main and HEAD move to it.",
+          "de": "Der vorgemerkte Snapshot wird zum Commit. main und HEAD bewegen sich dorthin."
+        },
+        "focus": "repository"
+      }
+    ]
+  },
+  {
+    "lessonId": "b03",
+    "steps": [
+      {
+        "kind": "terminal",
+        "value": "git log --oneline",
+        "narration": {
+          "en": "The newest commit is shown first. Each short hash identifies a commit.",
+          "de": "Der neueste Commit steht oben. Jeder kurze Hash identifiziert einen Commit."
+        },
+        "focus": "graph"
+      },
+      {
+        "kind": "selectCommit",
+        "value": "HEAD",
+        "narration": {
+          "en": "A commit points to its parent, forming history.",
+          "de": "Ein Commit zeigt auf seinen Parent. Dadurch entsteht Verlauf."
+        },
+        "focus": "graph"
+      }
+    ]
+  },
+  {
+    "lessonId": "b04",
+    "steps": [
+      {
+        "kind": "terminal",
+        "value": "git branch feature",
+        "narration": {
+          "en": "Creating a branch adds a new movable label at the current commit. It does not copy history.",
+          "de": "Ein Branch erzeugt einen neuen beweglichen Zeiger am aktuellen Commit. Der Verlauf wird nicht kopiert."
+        },
+        "focus": "graph"
+      },
+      {
+        "kind": "terminal",
+        "value": "git switch feature",
+        "narration": {
+          "en": "HEAD now follows feature. No commit was created by switching.",
+          "de": "HEAD folgt jetzt feature. Durch den Wechsel entsteht kein neuer Commit."
+        },
+        "focus": "graph"
+      }
+    ]
+  },
+  {
+    "lessonId": "b05",
+    "steps": [
+      {
+        "kind": "fileEdit",
+        "value": {
+          "path": "feature.ts",
+          "content": "export const feature = 1;\n"
+        },
+        "narration": {
+          "en": "This change happens while HEAD is on feature.",
+          "de": "Diese Änderung entsteht, während HEAD auf feature liegt."
+        },
+        "focus": "workingTree"
+      },
+      {
+        "kind": "terminal",
+        "value": "git add feature.ts",
+        "narration": {
+          "en": "Stage the first feature change.",
+          "de": "Stage die erste Feature-Änderung."
+        },
+        "focus": "staging"
+      },
+      {
+        "kind": "terminal",
+        "value": "git commit -m \"Feature step 1\"",
+        "narration": {
+          "en": "Only feature advances. main stays where it was.",
+          "de": "Nur feature bewegt sich weiter. main bleibt stehen."
+        },
+        "focus": "graph"
+      },
+      {
+        "kind": "fileEdit",
+        "value": {
+          "path": "feature.ts",
+          "content": "export const feature = 2;\n"
+        },
+        "narration": {
+          "en": "A second change creates another step in feature history.",
+          "de": "Eine zweite Änderung erzeugt einen weiteren Schritt im Feature-Verlauf."
+        },
+        "focus": "workingTree"
+      },
+      {
+        "kind": "terminal",
+        "value": "git add feature.ts",
+        "narration": {
+          "en": "Stage the second version.",
+          "de": "Stage die zweite Version."
+        },
+        "focus": "staging"
+      },
+      {
+        "kind": "terminal",
+        "value": "git commit -m \"Feature step 2\"",
+        "narration": {
+          "en": "feature advances again.",
+          "de": "feature bewegt sich erneut weiter."
+        },
+        "focus": "graph"
+      }
+    ]
+  },
+  {
+    "lessonId": "b06",
+    "steps": [
+      {
+        "kind": "terminal",
+        "value": "git switch main",
+        "narration": {
+          "en": "Move HEAD back to the branch that should receive the work.",
+          "de": "HEAD wechselt zurück auf den Branch, der die Arbeit erhalten soll."
+        },
+        "focus": "graph"
+      },
+      {
+        "kind": "terminal",
+        "value": "git merge feature",
+        "narration": {
+          "en": "Because main did not diverge, Git can fast-forward: only the main pointer moves.",
+          "de": "Weil main nicht abgezweigt ist, reicht Fast-Forward: Nur der main-Zeiger bewegt sich."
+        },
+        "focus": "graph"
+      }
+    ]
+  },
+  {
+    "lessonId": "b07",
+    "steps": [
+      {
+        "kind": "terminal",
+        "value": "git merge feature",
+        "narration": {
+          "en": "Both branches changed the same region differently. Git stops instead of guessing.",
+          "de": "Beide Branches haben dieselbe Stelle unterschiedlich geändert. Git stoppt, statt zu raten."
+        },
+        "focus": "conflict"
+      },
+      {
+        "kind": "terminal",
+        "value": "git status",
+        "narration": {
+          "en": "Git tells us which file is conflicted.",
+          "de": "Git zeigt, welche Datei im Konflikt ist."
+        },
+        "focus": "conflict"
+      },
+      {
+        "kind": "openConflict",
+        "value": "app.ts",
+        "narration": {
+          "en": "Compare base, ours and theirs and choose the final content.",
+          "de": "Vergleiche Base, Ours und Theirs und lege den finalen Inhalt fest."
+        },
+        "focus": "conflict"
+      },
+      {
+        "kind": "resolveConflict",
+        "value": {
+          "path": "app.ts",
+          "strategy": "manual"
+        },
+        "narration": {
+          "en": "The file content is resolved, but Git still needs it staged.",
+          "de": "Der Dateiinhalt ist gelöst, aber Git braucht die Lösung noch in der Staging Area."
+        },
+        "focus": "staging"
+      },
+      {
+        "kind": "terminal",
+        "value": "git add app.ts",
+        "narration": {
+          "en": "Staging marks this path as resolved for the merge.",
+          "de": "Durch das Staging gilt dieser Pfad für den Merge als gelöst."
+        },
+        "focus": "staging"
+      },
+      {
+        "kind": "terminal",
+        "value": "git commit -m \"Resolve conflict\"",
+        "narration": {
+          "en": "The merge commit now records both parents.",
+          "de": "Der Merge-Commit hält jetzt beide Parent-Verläufe fest."
+        },
+        "focus": "graph"
+      }
+    ]
+  },
+  {
+    "lessonId": "b08",
+    "steps": [
+      {
+        "kind": "terminal",
+        "value": "git reset --soft HEAD~1",
+        "narration": {
+          "en": "Only the branch pointer moves back; staged state remains.",
+          "de": "Nur der Branch-Zeiger geht zurück; die Staging Area bleibt erhalten."
+        },
+        "focus": "commandLens"
+      },
+      {
+        "kind": "resetScenario",
+        "value": "scenario-undo-lab",
+        "narration": {
+          "en": "Reset the teaching scenario so we can compare another undo method fairly.",
+          "de": "Das Lernszenario wird zurückgesetzt, damit wir fair vergleichen können."
+        },
+        "focus": "workspace"
+      },
+      {
+        "kind": "terminal",
+        "value": "git revert HEAD",
+        "narration": {
+          "en": "Revert keeps history and adds a new correcting commit.",
+          "de": "Revert behält den Verlauf und fügt einen neuen Korrektur-Commit hinzu."
+        },
+        "focus": "graph"
+      }
+    ]
+  },
+  {
+    "lessonId": "b09",
+    "steps": [
+      {
+        "kind": "terminal",
+        "value": "git status",
+        "narration": {
+          "en": "There is unfinished local work.",
+          "de": "Es gibt unfertige lokale Arbeit."
+        },
+        "focus": "workingTree"
+      },
+      {
+        "kind": "terminal",
+        "value": "git stash -m \"WIP\"",
+        "narration": {
+          "en": "The local changes collapse into a temporary stash entry.",
+          "de": "Die lokalen Änderungen wandern in einen temporären Stash-Eintrag."
+        },
+        "focus": "stash"
+      },
+      {
+        "kind": "terminal",
+        "value": "git stash list",
+        "narration": {
+          "en": "The stash stack keeps the temporary state visible.",
+          "de": "Der Stash-Stack macht den temporären Zustand sichtbar."
+        },
+        "focus": "stash"
+      },
+      {
+        "kind": "terminal",
+        "value": "git stash pop",
+        "narration": {
+          "en": "The latest stash expands back into the working state.",
+          "de": "Der neueste Stash wird zurück in den Arbeitszustand geholt."
+        },
+        "focus": "workingTree"
+      }
+    ]
+  },
+  {
+    "lessonId": "b10",
+    "steps": [
+      {
+        "kind": "terminal",
+        "value": "git fetch origin",
+        "narration": {
+          "en": "Fetch updates our remote-tracking knowledge without moving local main.",
+          "de": "Fetch aktualisiert unser Wissen über den Remote, ohne den lokalen main zu verschieben."
+        },
+        "focus": "remote"
+      },
+      {
+        "kind": "inspectRefs",
+        "value": [
+          "main",
+          "origin/main"
+        ],
+        "narration": {
+          "en": "These are separate pointers. Their distance explains ahead/behind state.",
+          "de": "Das sind getrennte Zeiger. Ihr Abstand erklärt Ahead/Behind."
+        },
+        "focus": "graph"
+      },
+      {
+        "kind": "terminal",
+        "value": "git pull",
+        "narration": {
+          "en": "Pull integrates fetched remote work into the current local branch.",
+          "de": "Pull integriert gefetchte Remote-Arbeit in den aktuellen lokalen Branch."
+        },
+        "focus": "graph"
+      },
+      {
+        "kind": "terminal",
+        "value": "git push",
+        "narration": {
+          "en": "Push updates the remote when the remote can advance safely.",
+          "de": "Push aktualisiert den Remote, wenn er sicher vorwärtsbewegt werden kann."
+        },
+        "focus": "remote"
+      }
+    ]
+  },
+  {
+    "lessonId": "a01",
+    "steps": [
+      {
+        "kind": "terminal",
+        "value": "git rebase -i HEAD~3",
+        "narration": {
+          "en": "Select how the last three local commits should be replayed.",
+          "de": "Lege fest, wie die letzten drei lokalen Commits neu abgespielt werden."
+        },
+        "focus": "graph"
+      },
+      {
+        "kind": "interactiveRebase",
+        "value": [
+          "pick",
+          "squash",
+          "reword"
+        ],
+        "narration": {
+          "en": "The old commits are replaced by newly replayed commits with new identities.",
+          "de": "Die alten Commits werden durch neu abgespielte Commits mit neuen Identitäten ersetzt."
+        },
+        "focus": "graph"
+      }
+    ]
+  },
+  {
+    "lessonId": "a02",
+    "steps": [
+      {
+        "kind": "selectCommit",
+        "value": "source-hotfix",
+        "narration": {
+          "en": "Select one change from another branch.",
+          "de": "Wähle eine einzelne Änderung von einem anderen Branch."
+        },
+        "focus": "graph"
+      },
+      {
+        "kind": "terminal",
+        "value": "git cherry-pick <selected-hash>",
+        "narration": {
+          "en": "Git replays that change on the current branch as a new commit.",
+          "de": "Git spielt diese Änderung auf dem aktuellen Branch als neuen Commit ab."
+        },
+        "focus": "graph"
+      }
+    ]
+  },
+  {
+    "lessonId": "a03",
+    "steps": [
+      {
+        "kind": "terminal",
+        "value": "git stash -m \"WIP login\"",
+        "narration": {
+          "en": "Name temporary work so the stack remains understandable.",
+          "de": "Benenne temporäre Arbeit, damit der Stack verständlich bleibt."
+        },
+        "focus": "stash"
+      },
+      {
+        "kind": "terminal",
+        "value": "git stash list",
+        "narration": {
+          "en": "Inspect before restoring.",
+          "de": "Prüfe den Stack vor dem Wiederherstellen."
+        },
+        "focus": "stash"
+      }
+    ]
+  },
+  {
+    "lessonId": "a04",
+    "steps": [
+      {
+        "kind": "terminal",
+        "value": "git reflog",
+        "narration": {
+          "en": "Reflog reveals where HEAD pointed before the destructive reset.",
+          "de": "Der Reflog zeigt, wo HEAD vor dem destruktiven Reset lag."
+        },
+        "focus": "timeMachine"
+      },
+      {
+        "kind": "selectReflog",
+        "value": "lost-tip",
+        "narration": {
+          "en": "Preview the old state before recovering it.",
+          "de": "Zeige den alten Zustand in der Vorschau, bevor du ihn wiederherstellst."
+        },
+        "focus": "timeMachine"
+      }
+    ]
+  },
+  {
+    "lessonId": "a05",
+    "steps": [
+      {
+        "kind": "terminal",
+        "value": "git checkout HEAD~1",
+        "narration": {
+          "en": "HEAD now points directly at a commit instead of following a branch.",
+          "de": "HEAD zeigt jetzt direkt auf einen Commit statt einem Branch zu folgen."
+        },
+        "focus": "graph"
+      },
+      {
+        "kind": "terminal",
+        "value": "git switch -c rescue",
+        "narration": {
+          "en": "A new branch gives the detached work a durable reference.",
+          "de": "Ein neuer Branch gibt der detached Arbeit eine dauerhafte Referenz."
+        },
+        "focus": "graph"
+      }
+    ]
+  },
+  {
+    "lessonId": "a06",
+    "steps": [
+      {
+        "kind": "inspectMergeBase",
+        "value": "auto",
+        "narration": {
+          "en": "Compare both sides against their shared base.",
+          "de": "Vergleiche beide Seiten mit ihrer gemeinsamen Base."
+        },
+        "focus": "conflict"
+      },
+      {
+        "kind": "terminal",
+        "value": "git merge feature",
+        "narration": {
+          "en": "Compatible changes combine; incompatible regions require resolution.",
+          "de": "Kompatible Änderungen werden kombiniert; unvereinbare Bereiche müssen gelöst werden."
+        },
+        "focus": "conflict"
+      }
+    ]
+  },
+  {
+    "lessonId": "a07",
+    "steps": [
+      {
+        "kind": "terminal",
+        "value": "git fetch origin",
+        "narration": {
+          "en": "Refresh remote-tracking refs first.",
+          "de": "Aktualisiere zuerst die Remote-Tracking-Refs."
+        },
+        "focus": "remote"
+      },
+      {
+        "kind": "inspectRefs",
+        "value": [
+          "main",
+          "origin/main"
+        ],
+        "narration": {
+          "en": "Both refs own commits the other does not have.",
+          "de": "Beide Refs besitzen Commits, die der jeweils anderen fehlen."
+        },
+        "focus": "graph"
+      }
+    ]
+  },
+  {
+    "lessonId": "a08",
+    "steps": [
+      {
+        "kind": "concept",
+        "value": "known-good-bad",
+        "narration": {
+          "en": "Mark one known-good and one known-bad commit.",
+          "de": "Markiere einen sicher guten und einen sicher schlechten Commit."
+        },
+        "focus": "graph"
+      },
+      {
+        "kind": "concept",
+        "value": "bisect-midpoint",
+        "narration": {
+          "en": "Test the midpoint and halve the remaining suspect range.",
+          "de": "Teste den Mittelpunkt und halbiere den verbleibenden verdächtigen Bereich."
+        },
+        "focus": "graph"
+      }
+    ]
+  },
+  {
+    "lessonId": "a09",
+    "steps": [
+      {
+        "kind": "concept",
+        "value": "submodule",
+        "narration": {
+          "en": "A submodule stores a pointer to another repository state.",
+          "de": "Ein Submodule speichert einen Zeiger auf einen Zustand eines anderen Repositories."
+        },
+        "focus": "concept"
+      },
+      {
+        "kind": "concept",
+        "value": "subtree",
+        "narration": {
+          "en": "A subtree integrates another project content into this repository history.",
+          "de": "Ein Subtree integriert den Inhalt eines anderen Projekts in diesen Repository-Verlauf."
+        },
+        "focus": "concept"
+      }
+    ]
+  },
+  {
+    "lessonId": "a10",
+    "steps": [
+      {
+        "kind": "concept",
+        "value": "blob",
+        "narration": {
+          "en": "File content becomes a blob object.",
+          "de": "Dateiinhalt wird als Blob-Objekt repräsentiert."
+        },
+        "focus": "internals"
+      },
+      {
+        "kind": "concept",
+        "value": "tree",
+        "narration": {
+          "en": "A tree maps names to blobs/trees.",
+          "de": "Ein Tree ordnet Namen Blobs bzw. weiteren Trees zu."
+        },
+        "focus": "internals"
+      },
+      {
+        "kind": "concept",
+        "value": "commit",
+        "narration": {
+          "en": "A commit points to a tree and parent commit(s).",
+          "de": "Ein Commit zeigt auf einen Tree und Parent-Commit(s)."
+        },
+        "focus": "internals"
+      },
+      {
+        "kind": "concept",
+        "value": "ref",
+        "narration": {
+          "en": "A branch ref gives a movable human-friendly name to a commit.",
+          "de": "Eine Branch-Ref gibt einem Commit einen beweglichen, lesbaren Namen."
+        },
+        "focus": "internals"
+      }
+    ]
+  }
+]

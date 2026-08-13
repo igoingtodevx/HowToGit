@@ -1,0 +1,221 @@
+[
+  {
+    "lessonId": "b01",
+    "goal": {
+      "en": "Initialize this folder as a Git repository.",
+      "de": "Initialisiere diesen Ordner als Git-Repository."
+    },
+    "oraclePredicates": [
+      "repo.initialized == true"
+    ]
+  },
+  {
+    "lessonId": "b02",
+    "goal": {
+      "en": "Stage `app.ts` and save it in your first commit.",
+      "de": "Stage `app.ts` und speichere die Datei in deinem ersten Commit."
+    },
+    "oraclePredicates": [
+      "reachableCommitCount(main) >= 1",
+      "HEAD.tree[app.ts] exists",
+      "operation == null"
+    ]
+  },
+  {
+    "lessonId": "b03",
+    "goal": {
+      "en": "Inspect the history and identify the newest commit.",
+      "de": "Untersuche den Verlauf und identifiziere den neuesten Commit."
+    },
+    "oraclePredicates": [
+      "interaction.logExecuted == true"
+    ]
+  },
+  {
+    "lessonId": "b04",
+    "goal": {
+      "en": "Create `feature` and switch to it.",
+      "de": "Erstelle `feature` und wechsle dorthin."
+    },
+    "oraclePredicates": [
+      "branch(feature) exists",
+      "HEAD.symbolicBranch == feature"
+    ]
+  },
+  {
+    "lessonId": "b05",
+    "goal": {
+      "en": "Create two commits on `feature` without moving `main`.",
+      "de": "Erstelle zwei Commits auf `feature`, ohne `main` zu verschieben."
+    },
+    "oraclePredicates": [
+      "uniqueCommits(feature,scenarioBase) >= 2",
+      "main.tip == scenarioBase"
+    ]
+  },
+  {
+    "lessonId": "b06",
+    "goal": {
+      "en": "Merge `feature` into `main`.",
+      "de": "Merge `feature` in `main`."
+    },
+    "oraclePredicates": [
+      "HEAD.symbolicBranch == main",
+      "main contains feature tip changes",
+      "operation == null"
+    ]
+  },
+  {
+    "lessonId": "b07",
+    "goal": {
+      "en": "Resolve the `app.ts` conflict and complete the merge.",
+      "de": "Löse den Konflikt in `app.ts` und schließe den Merge ab."
+    },
+    "oraclePredicates": [
+      "operation == null",
+      "HEAD commit has two parents",
+      "app.ts conflict resolved and committed"
+    ]
+  },
+  {
+    "lessonId": "b08",
+    "goal": {
+      "en": "Complete the undo comparison and leave the repository in the requested safe state.",
+      "de": "Schließe den Undo-Vergleich ab und hinterlasse das Repository im geforderten sicheren Zustand."
+    },
+    "oraclePredicates": [
+      "lesson.undoStepsCompleted == true",
+      "no unresolved operation"
+    ]
+  },
+  {
+    "lessonId": "b09",
+    "goal": {
+      "en": "Temporarily stash the local work, inspect it, then restore it.",
+      "de": "Stashe die lokale Arbeit vorübergehend, prüfe sie und stelle sie wieder her."
+    },
+    "oraclePredicates": [
+      "lesson.stashCreated == true",
+      "target working changes restored"
+    ]
+  },
+  {
+    "lessonId": "b10",
+    "goal": {
+      "en": "Synchronize the simulated local branch with `origin` as the scenario requires.",
+      "de": "Synchronisiere den simulierten lokalen Branch wie im Szenario gefordert mit `origin`."
+    },
+    "oraclePredicates": [
+      "local/remote relation == target relation"
+    ]
+  },
+  {
+    "lessonId": "a01",
+    "goal": {
+      "en": "Rewrite the feature history into the requested clean form.",
+      "de": "Schreibe den Feature-Verlauf in die geforderte saubere Form um."
+    },
+    "oraclePredicates": [
+      "feature descends from target base",
+      "semantic changes preserved",
+      "replayed ids differ",
+      "requested squash/drop/reword satisfied"
+    ]
+  },
+  {
+    "lessonId": "a02",
+    "goal": {
+      "en": "Bring only the hotfix commit onto the current branch.",
+      "de": "Übernimm nur den Hotfix-Commit auf den aktuellen Branch."
+    },
+    "oraclePredicates": [
+      "equivalent source patch reachable from HEAD",
+      "new commit id != source id"
+    ]
+  },
+  {
+    "lessonId": "a03",
+    "goal": {
+      "en": "Create, inspect and restore the requested named stash entry.",
+      "de": "Erstelle, prüfe und stelle den geforderten benannten Stash-Eintrag wieder her."
+    },
+    "oraclePredicates": [
+      "stash ordering/action target satisfied"
+    ]
+  },
+  {
+    "lessonId": "a04",
+    "goal": {
+      "en": "Recover the commits lost by the earlier hard reset.",
+      "de": "Hole die durch den vorherigen Hard Reset verlorenen Commits zurück."
+    },
+    "oraclePredicates": [
+      "lost commits reachable again",
+      "HEAD/ref points to recovered history"
+    ]
+  },
+  {
+    "lessonId": "a05",
+    "goal": {
+      "en": "Save detached work on a named branch.",
+      "de": "Sichere detached Arbeit auf einem benannten Branch."
+    },
+    "oraclePredicates": [
+      "HEAD is symbolic",
+      "detached-created work reachable from current branch"
+    ]
+  },
+  {
+    "lessonId": "a06",
+    "goal": {
+      "en": "Resolve the complex merge while preserving both compatible changes.",
+      "de": "Löse den komplexen Merge und erhalte beide kompatiblen Änderungen."
+    },
+    "oraclePredicates": [
+      "operation == null",
+      "correct merge ancestry",
+      "all intended tree changes present"
+    ]
+  },
+  {
+    "lessonId": "a07",
+    "goal": {
+      "en": "Resolve local/remote divergence without pretending fetch changed local history.",
+      "de": "Löse lokale/Remote-Divergenz, ohne so zu tun, als hätte fetch den lokalen Verlauf verändert."
+    },
+    "oraclePredicates": [
+      "local/remote target relation satisfied",
+      "fetch semantics respected"
+    ]
+  },
+  {
+    "lessonId": "a08",
+    "goal": {
+      "en": "Identify the first bad commit using the conceptual bisect simulation.",
+      "de": "Identifiziere den ersten schlechten Commit mit der konzeptionellen Bisect-Simulation."
+    },
+    "oraclePredicates": [
+      "concept.bisect.firstBadCorrect == true"
+    ]
+  },
+  {
+    "lessonId": "a09",
+    "goal": {
+      "en": "Correctly classify repository-composition scenarios as submodule or subtree.",
+      "de": "Ordne Repository-Kompositionsszenarien korrekt Submodule oder Subtree zu."
+    },
+    "oraclePredicates": [
+      "concept.submoduleSubtree.score == full"
+    ]
+  },
+  {
+    "lessonId": "a10",
+    "goal": {
+      "en": "Build the correct object chain from file content to branch ref.",
+      "de": "Baue die korrekte Objektkette vom Dateiinhalt bis zur Branch-Ref."
+    },
+    "oraclePredicates": [
+      "concept.internals.order == blob>tree>commit>ref"
+    ]
+  }
+]

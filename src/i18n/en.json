@@ -1,0 +1,432 @@
+{
+  "app": {
+    "name": "GitFlow Academy",
+    "tagline": "Master Git by seeing what it actually does."
+  },
+  "shell": {
+    "skipToContent": "Skip to content",
+    "primaryNavigation": "Primary navigation",
+    "learningMode": "Learning mode",
+    "workspaceReady": "Your visual workspace is ready",
+    "workspaceDescription": "The simulator, lessons, and tutor will share one repository state here. Changing language or learning mode will not reset your work.",
+    "gitZones": "The three Git zones"
+  },
+  "ui": {
+    "brandSubtitle": "Visual Git laboratory",
+    "courseLessons": "Course lessons",
+    "closeNavigation": "Close navigation",
+    "openLessons": "Open lessons",
+    "engineReady": "deterministic engine",
+    "notInitialized": "folder · not initialized",
+    "resetLab": "Reset Lab",
+    "footerTruth": "One deterministic state. Every visual tells the same truth.",
+    "conceptualLabel": "Conceptual · no fake command simulation",
+    "startHere": "Start here",
+    "interactive": "Interactive",
+    "simulatorLesson": "Simulator lesson",
+    "conceptualModule": "Conceptual module",
+    "challengeCriteria": "challenge criteria",
+    "xraySignature": "one state · three views",
+    "nothingHere": "Nothing here yet",
+    "virtualFile": "VIRTUAL FILE",
+    "fileEditor": "File editor",
+    "editable": "editable",
+    "filename": "Filename",
+    "content": "Content",
+    "saveChange": "Save change",
+    "deleteFile": "Delete file",
+    "mergePaused": "MERGE PAUSED",
+    "resolve": "Resolve",
+    "needsDecision": "needs your decision",
+    "conflictIntro": "Git found two valid edits to the same content. Compare the shared base with both sides—then choose the final file.",
+    "base": "Base · shared past",
+    "ours": "Ours · current branch",
+    "theirs": "Theirs · incoming branch",
+    "finalContent": "Final content",
+    "useResolution": "Use this resolution",
+    "nextStage": "Next: stage the file, then commit the merge.",
+    "terminalWelcome": "GitFlow simulator · deterministic shell",
+    "terminalLocal": "Commands run locally against the visual repository.",
+    "run": "Run",
+    "quickCommands": "Quick commands",
+    "commitDag": "COMMIT DAG",
+    "gitGraph": "Git Graph",
+    "commit": "commit",
+    "commits": "commits",
+    "commitGraph": "Commit graph",
+    "firstCommit": "Your first commit will appear here.",
+    "reflogSafety": "REFLOG SAFETY NET",
+    "movements": "movements",
+    "timeEmpty": "Ref and HEAD movements will appear here. Commits can remain recoverable even after a reset.",
+    "previewRecovery": "Preview recovery",
+    "unborn": "unborn",
+    "tutorBoundary": "BOUNDED · STATE-AWARE · VALIDATED",
+    "liveProvider": "live provider",
+    "offlineGuide": "offline guide",
+    "trustBoundary": "trust boundary active",
+    "tutorContext": "The tutor can see branch tips, staged/working changes, conflicts and recent commands—never mutable state or file contents.",
+    "noConflicts": "no conflicts",
+    "thinking": "Thinking from current state…",
+    "grounded": "Grounded in the current simulator snapshot",
+    "preview": "Preview",
+    "rebaseEditor": "Interactive rebase editor",
+    "rebaseIntro": "Reword changes a message, squash combines a change with the previous commit, and drop removes it from replay. The engine applies every choice deterministically.",
+    "rewordedMessage": "Reworded message",
+    "applyReplay": "Apply replay plan",
+    "complete": "Complete",
+    "hintIntro": "Try the challenge first. Hints get progressively more specific.",
+    "zoomOut": "Zoom out",
+    "zoomIn": "Zoom in",
+    "resetView": "Reset view",
+    "commitDetails": "Commit details",
+    "parents": "Parents",
+    "branches": "References",
+    "nextDemoStep": "Next demo step",
+    "restartDemo": "Restart demo",
+    "demoComplete": "Demo complete",
+    "conceptQuestionA08": "Which commit is the first bad commit in a bisect?",
+    "conceptAnswerA08": "The first commit whose test fails",
+    "conceptDistractorA08": "The newest commit on the branch",
+    "conceptQuestionA09": "What does a Git submodule store in its parent repository?",
+    "conceptAnswerA09": "A commit pointer to another repository",
+    "conceptDistractorA09": "A full copied repository history",
+    "conceptQuestionA10": "Choose the correct Git object chain.",
+    "conceptAnswerA10": "blob → tree → commit → ref",
+    "conceptDistractorA10": "ref → blob → commit → tree",
+    "indexImpact": "staged paths",
+    "worktreeImpact": "working paths",
+    "semanticEffects": "semantic effects",
+    "landingBrand": "deterministic visual Git",
+    "demoRunning": "Running real commands…",
+    "noAccount": "No account. No backend. The learning engine works without AI.",
+    "liveSimulator": "Live deterministic simulator",
+    "liveEngine": "LIVE ENGINE",
+    "proofCaption": "This is not a video. Replay uses the same command engine as the lab.",
+    "seeCausality": "See causality",
+    "seeCausalityBody": "Working Tree, Staging Area and Repository make every command visible.",
+    "trustSimulator": "Trust the simulator",
+    "trustSimulatorBody": "Commits, branches, conflicts, resets and recovery follow a deterministic DAG.",
+    "useAiSafely": "Use AI safely",
+    "useAiSafelyBody": "The tutor receives bounded state and can only suggest commands through validation."
+  },
+  "nav": {
+    "learn": "Learn",
+    "lab": "Lab",
+    "timeMachine": "Time Machine",
+    "settings": "Settings",
+    "beginner": "Beginner",
+    "advanced": "Advanced"
+  },
+  "mode": {
+    "noob": "Noob Mode",
+    "pro": "Pro Mode",
+    "noobDescription": "Visual explanations and guided feedback.",
+    "proDescription": "Less guidance, more Git."
+  },
+  "language": {
+    "label": "Language",
+    "english": "English",
+    "german": "Deutsch"
+  },
+  "gitZones": {
+    "workingTree": {
+      "title": "Working Tree",
+      "subtitle": "What is in your files right now"
+    },
+    "staging": {
+      "title": "Staging Area",
+      "subtitle": "What you selected for the next commit"
+    },
+    "repository": {
+      "title": "Repository",
+      "subtitle": "Saved snapshots and history"
+    }
+  },
+  "terminal": {
+    "title": "Terminal",
+    "placeholder": "Type a Git command…",
+    "unsupported": "This simulator does not support that Git syntax yet."
+  },
+  "commandLens": {
+    "title": "Command Lens",
+    "before": "Before",
+    "after": "After",
+    "preview": "Preview",
+    "run": "Run",
+    "putInTerminal": "Put in terminal",
+    "risk": {
+      "safe": "Safe",
+      "caution": "Caution",
+      "destructive": "Destructive"
+    }
+  },
+  "tutor": {
+    "title": "Git Tutor",
+    "askPlaceholder": "Ask about Git or your current repo…",
+    "askGit": "Ask Git",
+    "explainThis": "Explain this",
+    "diagnose": "Why is my repo like this?",
+    "fix": "Fix my repo",
+    "mistake": "Explain my mistake",
+    "preview": "What will this do?",
+    "retry": "Retry",
+    "offlineTitle": "Tutor unavailable",
+    "offlineBody": "The Git lab and lessons still work without AI."
+  },
+  "lesson": {
+    "goal": "Goal",
+    "why": "Why this matters",
+    "mentalModel": "Mental model",
+    "tryIt": "Try it",
+    "challenge": "Challenge",
+    "hint": "Hint",
+    "showMe": "Show me",
+    "restart": "Restart lesson",
+    "complete": "Lesson complete",
+    "progress": "Progress"
+  },
+  "statusHelp": {
+    "nothingToCommit": "Nothing was committed. Git only commits what is currently in the Staging Area.",
+    "workingButNotStaged": "Your file changed in the Working Tree, but that version is not staged yet.",
+    "conflict": "Git found two incompatible versions. Choose the final content, stage it, then complete the merge."
+  },
+  "fileState": {
+    "unchanged": "unchanged",
+    "modified": "modified",
+    "untracked": "untracked",
+    "added": "added",
+    "deleted": "deleted",
+    "staged": "staged",
+    "conflicted": "conflicted"
+  },
+  "hero": {
+    "eyebrow": "Interactive Git laboratory",
+    "title": "Master Git by seeing what it actually does.",
+    "subtitle": "Learn branches, commits, merges and recovery through a real visual state machine — with an AI tutor that understands your current repo.",
+    "startZero": "Start from zero",
+    "startAdvanced": "I know the basics",
+    "replay": "Replay demo"
+  },
+  "lessons": {
+    "b01": {
+      "title": "Meet Git",
+      "objective": "Turn a normal folder into a Git repository.",
+      "why": "Git needs a repository before it can track history.",
+      "mentalModel": "A repository is the history system attached to your project folder.",
+      "hints": [
+        "You need to initialize the folder.",
+        "Which command creates a Git repository?",
+        "Run `git init`."
+      ]
+    },
+    "b02": {
+      "title": "Your Three Git Zones",
+      "objective": "Stage `app.ts` and create your first commit.",
+      "why": "Most Git confusion disappears once these three zones are clear.",
+      "mentalModel": "You edit in the Working Tree, select versions in the Staging Area, and save those snapshots as commits.",
+      "hints": [
+        "Your changed file is still only in the Working Tree.",
+        "Move the desired version into the Staging Area before committing.",
+        "Run `git add app.ts`, then `git commit -m \"First snapshot\"`."
+      ]
+    },
+    "b03": {
+      "title": "See Your History",
+      "objective": "Inspect history and identify the newest commit.",
+      "why": "Commits form a chain of saved project states.",
+      "mentalModel": "Each commit has an identity and parent relation, creating history.",
+      "hints": [
+        "Use a command that shows commit history.",
+        "Try the compact one-line history.",
+        "Run `git log --oneline`."
+      ]
+    },
+    "b04": {
+      "title": "Branches Without Fear",
+      "objective": "Create `feature` and switch to it.",
+      "why": "Branches let one line of work move without moving another.",
+      "mentalModel": "A branch is mainly a movable label pointing at a commit. HEAD says which branch you are working on.",
+      "hints": [
+        "Create the branch label first.",
+        "Then move HEAD to that branch.",
+        "Run `git branch feature`, then `git switch feature`."
+      ]
+    },
+    "b05": {
+      "title": "Build on a Branch",
+      "objective": "Make two commits on `feature` while leaving `main` in place.",
+      "why": "This is the everyday reason branches exist.",
+      "mentalModel": "New commits move only the currently checked-out branch pointer.",
+      "hints": [
+        "Check which branch HEAD is attached to.",
+        "Create and stage two separate changes.",
+        "Commit two separate changes while on `feature`."
+      ]
+    },
+    "b06": {
+      "title": "Bring Work Together",
+      "objective": "Merge `feature` into `main`.",
+      "why": "A merge combines development lines. Sometimes Git only moves a pointer.",
+      "mentalModel": "If `main` has not diverged, a fast-forward simply moves `main` along existing commits.",
+      "hints": [
+        "Switch to the branch that should receive the work.",
+        "Merge the source branch into the current branch.",
+        "Run `git switch main`, then `git merge feature`."
+      ]
+    },
+    "b07": {
+      "title": "Handle a Merge Conflict",
+      "objective": "Resolve the conflict in `app.ts` and finish the merge.",
+      "why": "Git asks for help only when it cannot safely choose the final content.",
+      "mentalModel": "Base is the shared past; ours and theirs changed the same place differently, so you choose the result.",
+      "hints": [
+        "Inspect `git status` and the highlighted conflict file.",
+        "Choose final content, then stage the resolved file.",
+        "Resolve `app.ts`, run `git add app.ts`, then commit the merge."
+      ]
+    },
+    "b08": {
+      "title": "Undo Without Guessing",
+      "objective": "Use the appropriate undo strategy and see the difference.",
+      "why": "`reset` moves history refs; `revert` adds new correcting history.",
+      "mentalModel": "Ask whether history should move or whether a correcting commit should be added.",
+      "hints": [
+        "Decide whether history may be rewritten.",
+        "Shared history is usually safer to correct with a new commit.",
+        "Use the requested reset mode or `git revert` and compare X-Ray before/after."
+      ]
+    },
+    "b09": {
+      "title": "Put Work Aside",
+      "objective": "Stash unfinished work, inspect it, then restore it.",
+      "why": "Stash gives you a clean worktree without committing unfinished work.",
+      "mentalModel": "Think of stash as a temporary shelf for local changes.",
+      "hints": [
+        "Aim for a clean worktree without a new commit.",
+        "Put local changes on the stash stack.",
+        "Run `git stash`, inspect `git stash list`, then `git stash pop`."
+      ]
+    },
+    "b10": {
+      "title": "Understand Remotes",
+      "objective": "Synchronize the simulated local repository with `origin`.",
+      "why": "Local branches and remote-tracking branches are separate pointers.",
+      "mentalModel": "`fetch` updates your knowledge of the remote; `pull` integrates; `push` moves remote refs using local history.",
+      "hints": [
+        "Fetch before deciding what the remote contains.",
+        "Watch `main` and `origin/main` as separate labels.",
+        "Run `git fetch origin`, then choose pull/push from ahead-behind state."
+      ]
+    },
+    "a01": {
+      "title": "Interactive Rebase",
+      "objective": "Turn noisy feature history into deliberate history.",
+      "why": "Interactive rebase lets you edit how local commits are replayed.",
+      "mentalModel": "Replaying changes creates new commit identities.",
+      "hints": [
+        "Identify the local commits to rewrite.",
+        "Choose the correct rebase base.",
+        "Use pick/reword/squash/drop as the lesson requests."
+      ]
+    },
+    "a02": {
+      "title": "Cherry-Pick Surgery",
+      "objective": "Copy one specific change onto your current branch.",
+      "why": "Cherry-pick is useful when you want one change, not the whole source branch.",
+      "mentalModel": "Git replays the selected commit change on a new parent, creating a new identity.",
+      "hints": [
+        "Find the source commit.",
+        "Replay that commit on the current branch.",
+        "Run `git cherry-pick <hash>`."
+      ]
+    },
+    "a03": {
+      "title": "Stash Like a Pro",
+      "objective": "Manage temporary work deliberately.",
+      "why": "A stash stack is useful only when you know what each entry represents.",
+      "mentalModel": "Each stash is temporary local state associated with a base and stack order.",
+      "hints": [
+        "Name the stash clearly.",
+        "Inspect the stack before applying.",
+        "Use `git stash -m \"...\"`, `git stash list`, then restore the intended entry."
+      ]
+    },
+    "a04": {
+      "title": "Reflog: Your Safety Net",
+      "objective": "Recover commits that vanished from normal branch history.",
+      "why": "Many scary Git mistakes only move references. Reflog remembers previous HEAD positions.",
+      "mentalModel": "A commit can be unreachable from a branch without immediately ceasing to exist.",
+      "hints": [
+        "Inspect previous HEAD positions.",
+        "Find the lost tip in reflog.",
+        "Use `git reflog`, identify the old tip, then restore a branch/reference to it."
+      ]
+    },
+    "a05": {
+      "title": "Detached HEAD",
+      "objective": "Experiment from an old commit and save the work safely.",
+      "why": "Detached HEAD means HEAD points directly to a commit instead of a branch.",
+      "mentalModel": "Detached commits need a branch if you want an easy durable reference.",
+      "hints": [
+        "Notice whether HEAD is attached to a branch.",
+        "Create a branch pointing at the experimental work.",
+        "Use `git switch -c rescue` before leaving the detached work."
+      ]
+    },
+    "a06": {
+      "title": "Advanced Merge Reasoning",
+      "objective": "Resolve a non-trivial merge using base, ours and theirs.",
+      "why": "Three-way merge becomes predictable when you inspect the shared base.",
+      "mentalModel": "Git compares both sides against the merge base and combines compatible changes.",
+      "hints": [
+        "Identify the base and competing edits.",
+        "Resolve only the genuinely incompatible region.",
+        "Stage resolved files and complete the merge commit."
+      ]
+    },
+    "a07": {
+      "title": "Remote Divergence",
+      "objective": "Resolve a branch that is both ahead of and behind its remote.",
+      "why": "Fetch, pull and push make sense once local and remote-tracking refs are separate state.",
+      "mentalModel": "Divergence means each side has commits the other side lacks.",
+      "hints": [
+        "Fetch before deciding remote state.",
+        "Inspect ahead/behind.",
+        "Integrate remote work before pushing when the remote cannot fast-forward."
+      ]
+    },
+    "a08": {
+      "title": "Git Bisect",
+      "objective": "Find a regression by repeatedly halving the suspect history.",
+      "why": "Binary search can dramatically reduce the number of commits you must test.",
+      "mentalModel": "Mark known-good and known-bad points, then test useful midpoints.",
+      "hints": [
+        "Start with good/bad boundaries.",
+        "Classify the midpoint.",
+        "Repeat until the first bad commit remains."
+      ]
+    },
+    "a09": {
+      "title": "Submodules vs Subtrees",
+      "objective": "Understand two repository-composition approaches without pretending they are the same.",
+      "why": "Both connect projects, but ownership/update mechanics differ.",
+      "mentalModel": "A submodule records a pointer to another repo state; a subtree brings another project content into your history.",
+      "hints": [
+        "Focus on where nested history lives.",
+        "Compare pointer-based composition with integrated content.",
+        "Classify each visual scenario as submodule or subtree."
+      ]
+    },
+    "a10": {
+      "title": "Git Internals",
+      "objective": "Trace a file from blob to tree to commit to branch ref.",
+      "why": "Git becomes less magical once you see that commits point to trees and refs point to commits.",
+      "mentalModel": "Content objects are immutable; movable refs name points in that object graph.",
+      "hints": [
+        "Start from file content.",
+        "Follow blob → tree → commit.",
+        "Then identify the ref that gives the commit a human-friendly name."
+      ]
+    }
+  }
+}

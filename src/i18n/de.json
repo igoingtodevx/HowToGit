@@ -1,0 +1,432 @@
+{
+  "app": {
+    "name": "GitFlow Academy",
+    "tagline": "Verstehe Git, indem du siehst, was wirklich passiert."
+  },
+  "shell": {
+    "skipToContent": "Zum Inhalt springen",
+    "primaryNavigation": "Hauptnavigation",
+    "learningMode": "Lernmodus",
+    "workspaceReady": "Dein visueller Arbeitsbereich ist bereit",
+    "workspaceDescription": "Simulator, Lektionen und Tutor teilen hier denselben Repository-Zustand. Ein Wechsel von Sprache oder Lernmodus setzt deine Arbeit nicht zurück.",
+    "gitZones": "Die drei Git-Zonen"
+  },
+  "ui": {
+    "brandSubtitle": "Visuelles Git-Labor",
+    "courseLessons": "Kurslektionen",
+    "closeNavigation": "Navigation schließen",
+    "openLessons": "Lektionen öffnen",
+    "engineReady": "deterministische Engine",
+    "notInitialized": "Ordner · nicht initialisiert",
+    "resetLab": "Lab zurücksetzen",
+    "footerTruth": "Ein deterministischer Zustand. Jede Ansicht zeigt dieselbe Wahrheit.",
+    "conceptualLabel": "Konzeptionell · keine vorgetäuschte Befehlsausführung",
+    "startHere": "Hier starten",
+    "interactive": "Interaktiv",
+    "simulatorLesson": "Simulator-Lektion",
+    "conceptualModule": "Konzeptmodul",
+    "challengeCriteria": "Challenge-Kriterien",
+    "xraySignature": "ein Zustand · drei Ansichten",
+    "nothingHere": "Hier ist noch nichts",
+    "virtualFile": "VIRTUELLE DATEI",
+    "fileEditor": "Datei-Editor",
+    "editable": "bearbeitbar",
+    "filename": "Dateiname",
+    "content": "Inhalt",
+    "saveChange": "Änderung speichern",
+    "deleteFile": "Datei löschen",
+    "mergePaused": "MERGE PAUSIERT",
+    "resolve": "Löse",
+    "needsDecision": "deine Entscheidung ist nötig",
+    "conflictIntro": "Git hat zwei gültige Änderungen am selben Inhalt gefunden. Vergleiche die gemeinsame Base mit beiden Seiten und lege dann die finale Datei fest.",
+    "base": "Base · gemeinsame Vergangenheit",
+    "ours": "Ours · aktueller Branch",
+    "theirs": "Theirs · eingehender Branch",
+    "finalContent": "Finaler Inhalt",
+    "useResolution": "Diese Lösung verwenden",
+    "nextStage": "Als Nächstes: Stage die Datei und committe danach den Merge.",
+    "terminalWelcome": "GitFlow-Simulator · deterministische Shell",
+    "terminalLocal": "Befehle laufen lokal gegen das visuelle Repository.",
+    "run": "Ausführen",
+    "quickCommands": "Schnellbefehle",
+    "commitDag": "COMMIT-DAG",
+    "gitGraph": "Git-Graph",
+    "commit": "Commit",
+    "commits": "Commits",
+    "commitGraph": "Commit-Graph",
+    "firstCommit": "Dein erster Commit erscheint hier.",
+    "reflogSafety": "REFLOG-SICHERHEITSNETZ",
+    "movements": "Bewegungen",
+    "timeEmpty": "Ref- und HEAD-Bewegungen erscheinen hier. Commits können auch nach einem Reset wiederherstellbar bleiben.",
+    "previewRecovery": "Recovery-Vorschau",
+    "unborn": "unborn",
+    "tutorBoundary": "BEGRENZT · ZUSTANDSBEWUSST · VALIDIERT",
+    "liveProvider": "Live-Provider",
+    "offlineGuide": "Offline-Hilfe",
+    "trustBoundary": "Trust Boundary aktiv",
+    "tutorContext": "Der Tutor sieht Branch-Tips, gestagte und lokale Änderungen, Konflikte und letzte Befehle – aber nie veränderbaren Zustand oder Dateiinhalte.",
+    "noConflicts": "keine Konflikte",
+    "thinking": "Denke anhand des aktuellen Zustands…",
+    "grounded": "Im aktuellen Simulator-Zustand verankert",
+    "preview": "Vorschau",
+    "rebaseEditor": "Interactive-Rebase-Editor",
+    "rebaseIntro": "Reword ändert eine Nachricht, squash verbindet eine Änderung mit dem vorherigen Commit und drop entfernt sie aus dem Replay. Die Engine wendet jede Wahl deterministisch an.",
+    "rewordedMessage": "Neue Commit-Nachricht",
+    "applyReplay": "Replay-Plan anwenden",
+    "complete": "Abgeschlossen",
+    "hintIntro": "Versuche zuerst die Aufgabe. Die Hinweise werden schrittweise genauer.",
+    "zoomOut": "Verkleinern",
+    "zoomIn": "Vergrößern",
+    "resetView": "Ansicht zurücksetzen",
+    "commitDetails": "Commit-Details",
+    "parents": "Vorgänger",
+    "branches": "Referenzen",
+    "nextDemoStep": "Nächster Demo-Schritt",
+    "restartDemo": "Demo neu starten",
+    "demoComplete": "Demo abgeschlossen",
+    "conceptQuestionA08": "Welcher Commit ist beim Bisect der erste fehlerhafte Commit?",
+    "conceptAnswerA08": "Der erste Commit, bei dem der Test fehlschlägt",
+    "conceptDistractorA08": "Der neueste Commit im Branch",
+    "conceptQuestionA09": "Was speichert ein Git-Submodul im übergeordneten Repository?",
+    "conceptAnswerA09": "Einen Commit-Zeiger auf ein anderes Repository",
+    "conceptDistractorA09": "Eine vollständige Kopie des Repository-Verlaufs",
+    "conceptQuestionA10": "Wähle die richtige Git-Objektkette.",
+    "conceptAnswerA10": "blob → tree → commit → ref",
+    "conceptDistractorA10": "ref → blob → commit → tree",
+    "indexImpact": "gestagte Pfade",
+    "worktreeImpact": "Arbeits-Pfade",
+    "semanticEffects": "semantische Effekte",
+    "landingBrand": "deterministisches visuelles Git",
+    "demoRunning": "Echte Befehle laufen…",
+    "noAccount": "Kein Konto. Kein Backend. Die Lern-Engine funktioniert ohne KI.",
+    "liveSimulator": "Live-Demo des deterministischen Simulators",
+    "liveEngine": "LIVE-ENGINE",
+    "proofCaption": "Das ist kein Video. Die Demo nutzt dieselbe Command Engine wie das Lab.",
+    "seeCausality": "Ursachen sehen",
+    "seeCausalityBody": "Working Tree, Staging Area und Repository machen jeden Befehl sichtbar.",
+    "trustSimulator": "Dem Simulator vertrauen",
+    "trustSimulatorBody": "Commits, Branches, Konflikte, Resets und Recovery folgen einem deterministischen DAG.",
+    "useAiSafely": "KI sicher nutzen",
+    "useAiSafelyBody": "Der Tutor erhält begrenzten Zustand und darf Befehle nur durch Validierung vorschlagen."
+  },
+  "nav": {
+    "learn": "Lernen",
+    "lab": "Lab",
+    "timeMachine": "Zeitmaschine",
+    "settings": "Einstellungen",
+    "beginner": "Einsteiger",
+    "advanced": "Fortgeschritten"
+  },
+  "mode": {
+    "noob": "Noob-Modus",
+    "pro": "Pro-Modus",
+    "noobDescription": "Visuelle Erklärungen und geführtes Feedback.",
+    "proDescription": "Weniger Führung, mehr Git."
+  },
+  "language": {
+    "label": "Sprache",
+    "english": "English",
+    "german": "Deutsch"
+  },
+  "gitZones": {
+    "workingTree": {
+      "title": "Working Tree",
+      "subtitle": "So sehen deine Dateien gerade aus"
+    },
+    "staging": {
+      "title": "Staging Area",
+      "subtitle": "Diese Versionen sind für den nächsten Commit vorgemerkt"
+    },
+    "repository": {
+      "title": "Repository",
+      "subtitle": "Gespeicherte Snapshots und Verlauf"
+    }
+  },
+  "terminal": {
+    "title": "Terminal",
+    "placeholder": "Git-Befehl eingeben…",
+    "unsupported": "Diese Git-Syntax unterstützt der Simulator noch nicht."
+  },
+  "commandLens": {
+    "title": "Command Lens",
+    "before": "Vorher",
+    "after": "Nachher",
+    "preview": "Vorschau",
+    "run": "Ausführen",
+    "putInTerminal": "Ins Terminal übernehmen",
+    "risk": {
+      "safe": "Sicher",
+      "caution": "Vorsicht",
+      "destructive": "Destruktiv"
+    }
+  },
+  "tutor": {
+    "title": "Git-Tutor",
+    "askPlaceholder": "Frag etwas über Git oder deinen aktuellen Repo-Zustand…",
+    "askGit": "Git fragen",
+    "explainThis": "Das erklären",
+    "diagnose": "Warum ist mein Repo so?",
+    "fix": "Repo reparieren",
+    "mistake": "Meinen Fehler erklären",
+    "preview": "Was würde das tun?",
+    "retry": "Erneut versuchen",
+    "offlineTitle": "Tutor nicht verfügbar",
+    "offlineBody": "Git-Lab und Lektionen funktionieren auch ohne KI."
+  },
+  "lesson": {
+    "goal": "Ziel",
+    "why": "Warum das wichtig ist",
+    "mentalModel": "Mentales Modell",
+    "tryIt": "Probier es aus",
+    "challenge": "Challenge",
+    "hint": "Hinweis",
+    "showMe": "Zeig es mir",
+    "restart": "Lektion neu starten",
+    "complete": "Lektion abgeschlossen",
+    "progress": "Fortschritt"
+  },
+  "statusHelp": {
+    "nothingToCommit": "Es wurde nichts committed. Git committed nur das, was gerade in der Staging Area liegt.",
+    "workingButNotStaged": "Deine Datei wurde im Working Tree geändert, aber diese Version ist noch nicht vorgemerkt.",
+    "conflict": "Git hat zwei unvereinbare Versionen gefunden. Lege den finalen Inhalt fest, stage ihn und schließe danach den Merge ab."
+  },
+  "fileState": {
+    "unchanged": "unverändert",
+    "modified": "geändert",
+    "untracked": "nicht verfolgt",
+    "added": "hinzugefügt",
+    "deleted": "gelöscht",
+    "staged": "gestagt",
+    "conflicted": "im Konflikt"
+  },
+  "hero": {
+    "eyebrow": "Interaktives Git-Labor",
+    "title": "Verstehe Git, indem du siehst, was wirklich passiert.",
+    "subtitle": "Lerne Branches, Commits, Merges und Recovery mit einer echten visuellen State Machine — plus KI-Tutor, der deinen aktuellen Repo-Zustand kennt.",
+    "startZero": "Bei null anfangen",
+    "startAdvanced": "Ich kenne die Basics",
+    "replay": "Demo wiederholen"
+  },
+  "lessons": {
+    "b01": {
+      "title": "Git kennenlernen",
+      "objective": "Mach aus einem normalen Ordner ein Git-Repository.",
+      "why": "Bevor Git Verlauf speichern kann, braucht es ein Repository.",
+      "mentalModel": "Ein Repository ist das Verlaufssystem, das zu deinem Projektordner gehört.",
+      "hints": [
+        "Du musst den Ordner zuerst initialisieren.",
+        "Welcher Befehl erstellt ein Git-Repository?",
+        "Führe `git init` aus."
+      ]
+    },
+    "b02": {
+      "title": "Deine drei Git-Zonen",
+      "objective": "Stage `app.ts` und erstelle deinen ersten Commit.",
+      "why": "Sehr viel Git-Verwirrung verschwindet, sobald diese drei Zonen klar sind.",
+      "mentalModel": "Du bearbeitest Dateien im Working Tree, merkst Versionen in der Staging Area vor und speicherst daraus Commits.",
+      "hints": [
+        "Die Änderung liegt bisher nur im Working Tree.",
+        "Die gewünschte Version muss vor dem Commit in die Staging Area.",
+        "Führe `git add app.ts` und danach `git commit -m \"First snapshot\"` aus."
+      ]
+    },
+    "b03": {
+      "title": "Deinen Verlauf sehen",
+      "objective": "Untersuche den Verlauf und finde den neuesten Commit.",
+      "why": "Commits bilden eine Kette gespeicherter Projektzustände.",
+      "mentalModel": "Jeder Commit hat eine Identität und Parent-Beziehung. So entsteht Verlauf.",
+      "hints": [
+        "Nutze einen Befehl, der Commit-Verlauf zeigt.",
+        "Probiere die kompakte Ein-Zeilen-Ansicht.",
+        "Führe `git log --oneline` aus."
+      ]
+    },
+    "b04": {
+      "title": "Branches ohne Angst",
+      "objective": "Erstelle `feature` und wechsle dorthin.",
+      "why": "Branches lassen eine Entwicklungslinie weiterlaufen, ohne eine andere zu verschieben.",
+      "mentalModel": "Ein Branch ist im Kern ein beweglicher Zeiger auf einen Commit. HEAD zeigt, auf welchem Branch du arbeitest.",
+      "hints": [
+        "Erstelle zuerst den neuen Branch.",
+        "Danach wechselst du mit HEAD auf diesen Branch.",
+        "Führe `git branch feature` und danach `git switch feature` aus."
+      ]
+    },
+    "b05": {
+      "title": "Auf einem Branch arbeiten",
+      "objective": "Erstelle zwei Commits auf `feature`, während `main` stehen bleibt.",
+      "why": "Genau dafür nutzt man Branches im Alltag.",
+      "mentalModel": "Neue Commits verschieben nur den Branch, auf dem HEAD gerade liegt.",
+      "hints": [
+        "Prüfe zuerst, auf welchem Branch HEAD liegt.",
+        "Erzeuge und stage zwei getrennte Änderungen.",
+        "Committe zwei getrennte Änderungen auf `feature`."
+      ]
+    },
+    "b06": {
+      "title": "Arbeit zusammenführen",
+      "objective": "Merge `feature` in `main`.",
+      "why": "Ein Merge führt Entwicklungslinien zusammen. Manchmal verschiebt Git nur einen Zeiger.",
+      "mentalModel": "Wenn `main` nicht abgezweigt ist, verschiebt ein Fast-Forward `main` entlang vorhandener Commits.",
+      "hints": [
+        "Wechsle auf den Branch, der die Änderungen erhalten soll.",
+        "Merge dann den Quell-Branch in den aktuellen Branch.",
+        "Führe `git switch main` und danach `git merge feature` aus."
+      ]
+    },
+    "b07": {
+      "title": "Merge-Konflikt lösen",
+      "objective": "Löse den Konflikt in `app.ts` und schließe den Merge ab.",
+      "why": "Git braucht deine Hilfe, wenn es den finalen Inhalt nicht sicher selbst wählen kann.",
+      "mentalModel": "Base ist die gemeinsame Vergangenheit; Ours und Theirs änderten dieselbe Stelle unterschiedlich — du legst das Ergebnis fest.",
+      "hints": [
+        "Sieh dir `git status` und die Konfliktdatei an.",
+        "Lege den finalen Inhalt fest und stage die gelöste Datei.",
+        "Löse `app.ts`, führe `git add app.ts` aus und committe den Merge."
+      ]
+    },
+    "b08": {
+      "title": "Rückgängig ohne Raten",
+      "objective": "Nutze die passende Undo-Strategie und erkenne den Unterschied.",
+      "why": "`reset` verschiebt Verlaufs-Refs; `revert` fügt korrigierenden Verlauf hinzu.",
+      "mentalModel": "Frage dich: Soll sich der Verlauf verschieben oder soll ein Korrektur-Commit entstehen?",
+      "hints": [
+        "Entscheide zuerst, ob Verlauf umgeschrieben werden darf.",
+        "Geteilter Verlauf lässt sich meist sicherer mit einem neuen Commit korrigieren.",
+        "Nutze den geforderten Reset-Modus oder `git revert` und vergleiche X-Ray vorher/nachher."
+      ]
+    },
+    "b09": {
+      "title": "Arbeit kurz weglegen",
+      "objective": "Stashe unfertige Arbeit, untersuche sie und hole sie zurück.",
+      "why": "Ein Stash schafft einen sauberen Working Tree, ohne unfertige Arbeit zu committen.",
+      "mentalModel": "Stell dir den Stash wie ein temporäres Regal für lokale Änderungen vor.",
+      "hints": [
+        "Du brauchst einen sauberen Working Tree, aber keinen neuen Commit.",
+        "Lege die lokalen Änderungen auf den Stash-Stack.",
+        "Führe `git stash`, `git stash list` und danach `git stash pop` aus."
+      ]
+    },
+    "b10": {
+      "title": "Remotes verstehen",
+      "objective": "Synchronisiere das simulierte lokale Repository mit `origin`.",
+      "why": "Lokale Branches und Remote-Tracking-Branches sind getrennte Zeiger.",
+      "mentalModel": "`fetch` aktualisiert dein Wissen über den Remote; `pull` integriert; `push` aktualisiert Remote-Refs mit lokalem Verlauf.",
+      "hints": [
+        "Fetche zuerst den Remote-Zustand.",
+        "Beobachte `main` und `origin/main` als getrennte Labels.",
+        "Nutze `git fetch origin` und entscheide danach anhand von Ahead/Behind zwischen pull und push."
+      ]
+    },
+    "a01": {
+      "title": "Interactive Rebase",
+      "objective": "Verwandle unruhigen Feature-Verlauf in bewussten Verlauf.",
+      "why": "Interactive Rebase lässt dich steuern, wie lokale Commits neu abgespielt werden.",
+      "mentalModel": "Beim Replay entstehen neue Commit-Identitäten.",
+      "hints": [
+        "Bestimme die lokalen Commits, die du umschreiben willst.",
+        "Wähle die richtige Rebase-Basis.",
+        "Nutze pick/reword/squash/drop wie in der Challenge gefordert."
+      ]
+    },
+    "a02": {
+      "title": "Cherry-Pick Surgery",
+      "objective": "Übernimm genau eine bestimmte Änderung auf deinen aktuellen Branch.",
+      "why": "Cherry-pick ist nützlich, wenn du eine Änderung, aber nicht den ganzen Quell-Branch willst.",
+      "mentalModel": "Git spielt die Änderung auf einem neuen Parent ab; dadurch entsteht eine neue Commit-Identität.",
+      "hints": [
+        "Finde den Quell-Commit.",
+        "Spiele genau diesen Commit auf dem aktuellen Branch neu ab.",
+        "Führe `git cherry-pick <hash>` aus."
+      ]
+    },
+    "a03": {
+      "title": "Stash wie ein Profi",
+      "objective": "Verwalte temporäre Arbeit bewusst.",
+      "why": "Ein Stash-Stack hilft nur, wenn klar ist, welcher Eintrag wofür steht.",
+      "mentalModel": "Jeder Stash hält temporären lokalen Zustand relativ zu einer Basis und Stack-Reihenfolge.",
+      "hints": [
+        "Gib dem Stash einen erkennbaren Namen.",
+        "Prüfe den Stack vor dem Anwenden.",
+        "Nutze `git stash -m \"...\"`, `git stash list` und stelle den gewünschten Eintrag wieder her."
+      ]
+    },
+    "a04": {
+      "title": "Reflog: dein Sicherheitsnetz",
+      "objective": "Hole Commits zurück, die aus dem normalen Branch-Verlauf verschwunden sind.",
+      "why": "Viele beängstigende Git-Fehler verschieben nur Referenzen. Der Reflog merkt sich frühere HEAD-Positionen.",
+      "mentalModel": "Ein Commit kann für Branches unerreichbar sein, ohne sofort zu verschwinden.",
+      "hints": [
+        "Untersuche frühere HEAD-Positionen.",
+        "Finde den verlorenen Tip im Reflog.",
+        "Nutze `git reflog`, finde den alten Tip und stelle eine sichere Referenz darauf wieder her."
+      ]
+    },
+    "a05": {
+      "title": "Detached HEAD",
+      "objective": "Experimentiere von einem alten Commit aus und sichere die Arbeit sauber.",
+      "why": "Detached HEAD bedeutet: HEAD zeigt direkt auf einen Commit statt auf einen Branch.",
+      "mentalModel": "Detached Commits brauchen einen Branch, wenn du sie dauerhaft leicht erreichbar halten willst.",
+      "hints": [
+        "Achte darauf, ob HEAD an einem Branch hängt.",
+        "Erstelle einen Branch für die experimentelle Arbeit.",
+        "Nutze vor dem Verlassen z. B. `git switch -c rescue`."
+      ]
+    },
+    "a06": {
+      "title": "Advanced Merge Reasoning",
+      "objective": "Löse einen nicht-trivialen Merge über Base, Ours und Theirs.",
+      "why": "Three-Way-Merge wird vorhersehbar, wenn du die gemeinsame Basis betrachtest.",
+      "mentalModel": "Git vergleicht beide Seiten mit der Merge Base und kombiniert kompatible Änderungen.",
+      "hints": [
+        "Bestimme Base und konkurrierende Änderungen.",
+        "Löse nur den wirklich unvereinbaren Bereich.",
+        "Stage die gelösten Dateien und schließe den Merge-Commit ab."
+      ]
+    },
+    "a07": {
+      "title": "Remote Divergence",
+      "objective": "Löse einen Branch, der gleichzeitig vor und hinter dem Remote liegt.",
+      "why": "Fetch, pull und push werden klar, wenn lokale und Remote-Tracking-Refs getrennt gedacht werden.",
+      "mentalModel": "Divergenz bedeutet: Beide Seiten haben Commits, die der anderen fehlen.",
+      "hints": [
+        "Fetche zuerst.",
+        "Prüfe Ahead/Behind.",
+        "Integriere Remote-Arbeit vor dem Push, wenn der Remote nicht fast-forwarden kann."
+      ]
+    },
+    "a08": {
+      "title": "Git Bisect",
+      "objective": "Finde eine Regression, indem du den verdächtigen Verlauf wiederholt halbierst.",
+      "why": "Binäre Suche reduziert die Zahl der zu testenden Commits stark.",
+      "mentalModel": "Markiere sicher gute und schlechte Punkte und teste sinnvolle Mittelpunkte.",
+      "hints": [
+        "Starte mit Good/Bad-Grenzen.",
+        "Klassifiziere den Mittelpunkt.",
+        "Wiederhole das, bis der erste schlechte Commit übrig bleibt."
+      ]
+    },
+    "a09": {
+      "title": "Submodules vs. Subtrees",
+      "objective": "Verstehe zwei Arten, Repositories zusammenzusetzen, ohne sie gleichzusetzen.",
+      "why": "Beide verbinden Projekte, aber Besitz und Update-Mechanik unterscheiden sich.",
+      "mentalModel": "Ein Submodule speichert einen Zeiger auf einen anderen Repo-Zustand; ein Subtree bringt dessen Inhalt in deinen Verlauf.",
+      "hints": [
+        "Achte darauf, wo der eingebundene Verlauf lebt.",
+        "Vergleiche zeigerbasierte Einbindung mit integriertem Inhalt.",
+        "Ordne jedes visuelle Szenario Submodule oder Subtree zu."
+      ]
+    },
+    "a10": {
+      "title": "Git Internals",
+      "objective": "Verfolge eine Datei von Blob über Tree und Commit bis zur Branch-Ref.",
+      "why": "Git wirkt weniger magisch, wenn klar ist: Commits zeigen auf Trees und Refs auf Commits.",
+      "mentalModel": "Content-Objekte sind unveränderlich; bewegliche Refs benennen Punkte in diesem Objektgraphen.",
+      "hints": [
+        "Starte beim Dateiinhalt.",
+        "Folge Blob → Tree → Commit.",
+        "Bestimme danach die Ref, die dem Commit einen lesbaren Namen gibt."
+      ]
+    }
+  }
+}

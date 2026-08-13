@@ -1,0 +1,82 @@
+[
+  {
+    "id": "scenario-empty-folder",
+    "description": "Virtual folder with README.md; Git not initialized."
+  },
+  {
+    "id": "scenario-first-change",
+    "description": "Initialized repo with app.ts in Working Tree and no commits."
+  },
+  {
+    "id": "scenario-three-commits",
+    "description": "Linear main: A--B--C."
+  },
+  {
+    "id": "scenario-single-main",
+    "description": "Clean repo with main at A."
+  },
+  {
+    "id": "scenario-main-clean",
+    "description": "Clean main A--B, ready for feature work."
+  },
+  {
+    "id": "scenario-fast-forward-feature",
+    "description": "main at B, feature at D with B--C--D and no main divergence."
+  },
+  {
+    "id": "scenario-conflicting-branches",
+    "description": "main and feature changed same line of app.ts differently from shared base."
+  },
+  {
+    "id": "scenario-undo-lab",
+    "description": "Linear history A--B--C_bad with controlled reset/revert substeps."
+  },
+  {
+    "id": "scenario-dirty-worktree",
+    "description": "Tracked modification plus an untracked file."
+  },
+  {
+    "id": "scenario-remote-divergence",
+    "description": "Local and origin refs prepared to explain fetch/pull/push."
+  },
+  {
+    "id": "scenario-messy-feature-history",
+    "description": "Feature has three WIP commits suitable for reword/squash/drop."
+  },
+  {
+    "id": "scenario-hotfix-other-branch",
+    "description": "One isolated hotfix exists on a different branch."
+  },
+  {
+    "id": "scenario-multi-stash",
+    "description": "Working/index state supports creating multiple named stashes."
+  },
+  {
+    "id": "scenario-lost-commits",
+    "description": "Prior hard reset made two commits unreachable from branch but present in reflog/object store."
+  },
+  {
+    "id": "scenario-detached-head",
+    "description": "History supports checkout of older commit and saving detached work on new branch."
+  },
+  {
+    "id": "scenario-complex-conflict",
+    "description": "Diverged branches contain one mergeable and one conflicting path."
+  },
+  {
+    "id": "scenario-remote-diverged",
+    "description": "Local main and remote main each own one unique commit."
+  },
+  {
+    "id": "scenario-bisect-concept",
+    "description": "Conceptual good/bad commit range with a hidden regression."
+  },
+  {
+    "id": "scenario-submodule-concept",
+    "description": "Conceptual parent repo and nested external repo comparison."
+  },
+  {
+    "id": "scenario-internals-concept",
+    "description": "Conceptual object database: blob → tree → commit → ref."
+  }
+]

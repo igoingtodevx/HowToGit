@@ -1,0 +1,424 @@
+[
+  {
+    "id": "b01",
+    "track": "beginner",
+    "order": 1,
+    "titleKey": "lessons.b01.title",
+    "objectiveKey": "lessons.b01.objective",
+    "whyKey": "lessons.b01.why",
+    "mentalModelKey": "lessons.b01.mentalModel",
+    "concepts": [
+      "repository"
+    ],
+    "commands": [
+      "git init",
+      "git status"
+    ],
+    "scenarioId": "scenario-empty-folder",
+    "validatorId": "validator-repo-initialized",
+    "conceptual": false
+  },
+  {
+    "id": "b02",
+    "track": "beginner",
+    "order": 2,
+    "titleKey": "lessons.b02.title",
+    "objectiveKey": "lessons.b02.objective",
+    "whyKey": "lessons.b02.why",
+    "mentalModelKey": "lessons.b02.mentalModel",
+    "concepts": [
+      "working-tree",
+      "staging-area",
+      "repository",
+      "snapshot"
+    ],
+    "commands": [
+      "git status",
+      "git add app.ts",
+      "git commit -m \"First snapshot\""
+    ],
+    "scenarioId": "scenario-first-change",
+    "validatorId": "validator-first-commit",
+    "conceptual": false
+  },
+  {
+    "id": "b03",
+    "track": "beginner",
+    "order": 3,
+    "titleKey": "lessons.b03.title",
+    "objectiveKey": "lessons.b03.objective",
+    "whyKey": "lessons.b03.why",
+    "mentalModelKey": "lessons.b03.mentalModel",
+    "concepts": [
+      "commit",
+      "hash",
+      "parent"
+    ],
+    "commands": [
+      "git log",
+      "git log --oneline",
+      "git diff"
+    ],
+    "scenarioId": "scenario-three-commits",
+    "validatorId": "validator-inspected-history",
+    "conceptual": false
+  },
+  {
+    "id": "b04",
+    "track": "beginner",
+    "order": 4,
+    "titleKey": "lessons.b04.title",
+    "objectiveKey": "lessons.b04.objective",
+    "whyKey": "lessons.b04.why",
+    "mentalModelKey": "lessons.b04.mentalModel",
+    "concepts": [
+      "branch",
+      "head",
+      "pointer"
+    ],
+    "commands": [
+      "git branch feature",
+      "git switch feature"
+    ],
+    "scenarioId": "scenario-single-main",
+    "validatorId": "validator-on-feature-branch",
+    "conceptual": false
+  },
+  {
+    "id": "b05",
+    "track": "beginner",
+    "order": 5,
+    "titleKey": "lessons.b05.title",
+    "objectiveKey": "lessons.b05.objective",
+    "whyKey": "lessons.b05.why",
+    "mentalModelKey": "lessons.b05.mentalModel",
+    "concepts": [
+      "branch-tip",
+      "divergence"
+    ],
+    "commands": [
+      "git switch -c feature",
+      "git add .",
+      "git commit -m \"Feature work\""
+    ],
+    "scenarioId": "scenario-main-clean",
+    "validatorId": "validator-feature-two-commits",
+    "conceptual": false
+  },
+  {
+    "id": "b06",
+    "track": "beginner",
+    "order": 6,
+    "titleKey": "lessons.b06.title",
+    "objectiveKey": "lessons.b06.objective",
+    "whyKey": "lessons.b06.why",
+    "mentalModelKey": "lessons.b06.mentalModel",
+    "concepts": [
+      "merge",
+      "fast-forward",
+      "merge-commit"
+    ],
+    "commands": [
+      "git switch main",
+      "git merge feature"
+    ],
+    "scenarioId": "scenario-fast-forward-feature",
+    "validatorId": "validator-feature-merged",
+    "conceptual": false
+  },
+  {
+    "id": "b07",
+    "track": "beginner",
+    "order": 7,
+    "titleKey": "lessons.b07.title",
+    "objectiveKey": "lessons.b07.objective",
+    "whyKey": "lessons.b07.why",
+    "mentalModelKey": "lessons.b07.mentalModel",
+    "concepts": [
+      "merge-base",
+      "conflict",
+      "ours",
+      "theirs"
+    ],
+    "commands": [
+      "git merge feature",
+      "git status",
+      "git add app.ts",
+      "git commit -m \"Resolve conflict\""
+    ],
+    "scenarioId": "scenario-conflicting-branches",
+    "validatorId": "validator-conflict-resolved",
+    "conceptual": false
+  },
+  {
+    "id": "b08",
+    "track": "beginner",
+    "order": 8,
+    "titleKey": "lessons.b08.title",
+    "objectiveKey": "lessons.b08.objective",
+    "whyKey": "lessons.b08.why",
+    "mentalModelKey": "lessons.b08.mentalModel",
+    "concepts": [
+      "reset",
+      "revert",
+      "history-rewrite"
+    ],
+    "commands": [
+      "git reset --soft HEAD~1",
+      "git reset --mixed HEAD~1",
+      "git reset --hard HEAD~1",
+      "git revert HEAD"
+    ],
+    "scenarioId": "scenario-undo-lab",
+    "validatorId": "validator-safe-undo-complete",
+    "conceptual": false
+  },
+  {
+    "id": "b09",
+    "track": "beginner",
+    "order": 9,
+    "titleKey": "lessons.b09.title",
+    "objectiveKey": "lessons.b09.objective",
+    "whyKey": "lessons.b09.why",
+    "mentalModelKey": "lessons.b09.mentalModel",
+    "concepts": [
+      "stash",
+      "temporary-work"
+    ],
+    "commands": [
+      "git stash",
+      "git stash list",
+      "git stash pop"
+    ],
+    "scenarioId": "scenario-dirty-worktree",
+    "validatorId": "validator-stash-roundtrip",
+    "conceptual": false
+  },
+  {
+    "id": "b10",
+    "track": "beginner",
+    "order": 10,
+    "titleKey": "lessons.b10.title",
+    "objectiveKey": "lessons.b10.objective",
+    "whyKey": "lessons.b10.why",
+    "mentalModelKey": "lessons.b10.mentalModel",
+    "concepts": [
+      "remote",
+      "origin",
+      "remote-tracking",
+      "fetch",
+      "pull",
+      "push"
+    ],
+    "commands": [
+      "git remote -v",
+      "git fetch origin",
+      "git push -u origin main",
+      "git pull"
+    ],
+    "scenarioId": "scenario-remote-divergence",
+    "validatorId": "validator-remote-synced",
+    "conceptual": false
+  },
+  {
+    "id": "a01",
+    "track": "advanced",
+    "order": 1,
+    "titleKey": "lessons.a01.title",
+    "objectiveKey": "lessons.a01.objective",
+    "whyKey": "lessons.a01.why",
+    "mentalModelKey": "lessons.a01.mentalModel",
+    "concepts": [
+      "rebase",
+      "pick",
+      "reword",
+      "squash",
+      "drop"
+    ],
+    "commands": [
+      "git rebase -i HEAD~3"
+    ],
+    "scenarioId": "scenario-messy-feature-history",
+    "validatorId": "validator-rebase-clean-history",
+    "conceptual": false
+  },
+  {
+    "id": "a02",
+    "track": "advanced",
+    "order": 2,
+    "titleKey": "lessons.a02.title",
+    "objectiveKey": "lessons.a02.objective",
+    "whyKey": "lessons.a02.why",
+    "mentalModelKey": "lessons.a02.mentalModel",
+    "concepts": [
+      "cherry-pick",
+      "patch",
+      "new-identity"
+    ],
+    "commands": [
+      "git cherry-pick <hash>"
+    ],
+    "scenarioId": "scenario-hotfix-other-branch",
+    "validatorId": "validator-cherry-picked",
+    "conceptual": false
+  },
+  {
+    "id": "a03",
+    "track": "advanced",
+    "order": 3,
+    "titleKey": "lessons.a03.title",
+    "objectiveKey": "lessons.a03.objective",
+    "whyKey": "lessons.a03.why",
+    "mentalModelKey": "lessons.a03.mentalModel",
+    "concepts": [
+      "stash-stack",
+      "context-switch"
+    ],
+    "commands": [
+      "git stash -m \"WIP\"",
+      "git stash list",
+      "git stash pop"
+    ],
+    "scenarioId": "scenario-multi-stash",
+    "validatorId": "validator-stash-managed",
+    "conceptual": false
+  },
+  {
+    "id": "a04",
+    "track": "advanced",
+    "order": 4,
+    "titleKey": "lessons.a04.title",
+    "objectiveKey": "lessons.a04.objective",
+    "whyKey": "lessons.a04.why",
+    "mentalModelKey": "lessons.a04.mentalModel",
+    "concepts": [
+      "reflog",
+      "orphaned-commit",
+      "recovery"
+    ],
+    "commands": [
+      "git reflog",
+      "git reset --hard <recovered-hash>"
+    ],
+    "scenarioId": "scenario-lost-commits",
+    "validatorId": "validator-reflog-recovered",
+    "conceptual": false
+  },
+  {
+    "id": "a05",
+    "track": "advanced",
+    "order": 5,
+    "titleKey": "lessons.a05.title",
+    "objectiveKey": "lessons.a05.objective",
+    "whyKey": "lessons.a05.why",
+    "mentalModelKey": "lessons.a05.mentalModel",
+    "concepts": [
+      "detached-head",
+      "branch-reference"
+    ],
+    "commands": [
+      "git checkout <hash>",
+      "git switch -c rescue"
+    ],
+    "scenarioId": "scenario-detached-head",
+    "validatorId": "validator-detached-work-saved",
+    "conceptual": false
+  },
+  {
+    "id": "a06",
+    "track": "advanced",
+    "order": 6,
+    "titleKey": "lessons.a06.title",
+    "objectiveKey": "lessons.a06.objective",
+    "whyKey": "lessons.a06.why",
+    "mentalModelKey": "lessons.a06.mentalModel",
+    "concepts": [
+      "three-way-merge",
+      "merge-base",
+      "conflict-resolution"
+    ],
+    "commands": [
+      "git merge feature"
+    ],
+    "scenarioId": "scenario-complex-conflict",
+    "validatorId": "validator-advanced-merge",
+    "conceptual": false
+  },
+  {
+    "id": "a07",
+    "track": "advanced",
+    "order": 7,
+    "titleKey": "lessons.a07.title",
+    "objectiveKey": "lessons.a07.objective",
+    "whyKey": "lessons.a07.why",
+    "mentalModelKey": "lessons.a07.mentalModel",
+    "concepts": [
+      "remote-tracking",
+      "ahead-behind",
+      "non-fast-forward"
+    ],
+    "commands": [
+      "git fetch origin",
+      "git pull",
+      "git push"
+    ],
+    "scenarioId": "scenario-remote-diverged",
+    "validatorId": "validator-divergence-resolved",
+    "conceptual": false
+  },
+  {
+    "id": "a08",
+    "track": "advanced",
+    "order": 8,
+    "titleKey": "lessons.a08.title",
+    "objectiveKey": "lessons.a08.objective",
+    "whyKey": "lessons.a08.why",
+    "mentalModelKey": "lessons.a08.mentalModel",
+    "concepts": [
+      "binary-search",
+      "regression"
+    ],
+    "commands": [],
+    "scenarioId": "scenario-bisect-concept",
+    "validatorId": "validator-bisect-concept",
+    "conceptual": true
+  },
+  {
+    "id": "a09",
+    "track": "advanced",
+    "order": 9,
+    "titleKey": "lessons.a09.title",
+    "objectiveKey": "lessons.a09.objective",
+    "whyKey": "lessons.a09.why",
+    "mentalModelKey": "lessons.a09.mentalModel",
+    "concepts": [
+      "submodule",
+      "subtree",
+      "repository-composition"
+    ],
+    "commands": [],
+    "scenarioId": "scenario-submodule-concept",
+    "validatorId": "validator-submodule-concept",
+    "conceptual": true
+  },
+  {
+    "id": "a10",
+    "track": "advanced",
+    "order": 10,
+    "titleKey": "lessons.a10.title",
+    "objectiveKey": "lessons.a10.objective",
+    "whyKey": "lessons.a10.why",
+    "mentalModelKey": "lessons.a10.mentalModel",
+    "concepts": [
+      "blob",
+      "tree",
+      "commit-object",
+      "ref",
+      "content-addressing"
+    ],
+    "commands": [],
+    "scenarioId": "scenario-internals-concept",
+    "validatorId": "validator-internals-concept",
+    "conceptual": true
+  }
+]
