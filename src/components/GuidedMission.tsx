@@ -70,6 +70,7 @@ export function GuidedMission() {
 
   const restart = () => {
     const scenario = createLessonScenario(id);
+    setHintCount(0);
     if (scenario) dispatch({ type: 'lesson/restarted', lessonId: id, git: scenario });
   };
 
@@ -77,7 +78,7 @@ export function GuidedMission() {
     if (!nextId) return;
     const scenario = createLessonScenario(nextId);
     if (scenario) dispatch({ type: 'lesson/restarted', lessonId: nextId, git: scenario });
-    globalThis.scrollTo?.({ top: 0, behavior: 'smooth' });
+    globalThis.requestAnimationFrame?.(() => document.querySelector('.guided-mission')?.scrollIntoView?.({ behavior: 'smooth', block: 'start' }));
   };
 
   return (
@@ -132,7 +133,7 @@ export function GuidedMission() {
           <span aria-hidden="true">✓</span>
           <div>
             <small>{copy.successTitle}</small>
-            <strong>{nextId ? copy.successBody : copy.trackComplete}</strong>
+            <strong>{nextId ? t('lesson.complete') : copy.trackComplete}</strong>
             <p>{nextId ? copy.successBody : copy.trackCompleteBody}</p>
           </div>
           {nextId && <button className="primary-button" type="button" onClick={goNext}>{copy.next} →</button>}
