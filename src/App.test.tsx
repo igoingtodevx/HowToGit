@@ -28,6 +28,16 @@ describe('application shell', () => {
     expect(screen.getByRole('complementary', { name: 'Primary navigation' })).toBeInTheDocument();
   });
 
+  it('keeps beginner Noob mode focused on the mission and practice terminal', () => {
+    renderApp();
+
+    expect(screen.getByText('Your mission')).toBeInTheDocument();
+    expect(screen.getByText('git add <file>')).toBeInTheDocument();
+    expect(screen.getAllByRole('heading', { name: 'Terminal' }).length).toBeGreaterThan(0);
+    expect(screen.queryByRole('heading', { name: 'Git Tutor' })).not.toBeInTheDocument();
+    expect(screen.queryByRole('button', { name: 'git init' })).not.toBeInTheDocument();
+  });
+
   it('switches locale immediately', async () => {
     const user = userEvent.setup();
     renderApp();
