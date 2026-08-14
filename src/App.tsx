@@ -16,7 +16,7 @@ import { useI18n } from './i18n/i18n';
 import './styles/guided.css';
 
 const guidedFileLessons = new Set(['b02', 'b05', 'b07', 'b09']);
-const guidedGraphLessons = new Set(['b03', 'b04', 'b05', 'b06', 'b07', 'b08', 'b10']);
+const guidedGraphLessons = new Set(['b02', 'b03', 'b04', 'b05', 'b06', 'b07', 'b08', 'b10']);
 
 export default function App() {
   const { state, dispatch } = useAppState();
