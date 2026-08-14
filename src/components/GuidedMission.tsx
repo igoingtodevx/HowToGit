@@ -1,0 +1,143 @@
+import { useEffect, useMemo, useState } from 'react';
+import { useAppState } from '../application/AppStateProvider';
+import { useI18n } from '../i18n/i18n';
+import { createLessonScenario, getLesson, validateLesson, type LessonId } from '../lessons';
+
+const beginnerIds = Array.from({ length: 10 }, (_, index) => `b${String(index + 1).padStart(2, '0')}`) as LessonId[];
+
+const guidedCopy = {
+  en: {
+    understand: 'Understand',
+    doIt: 'Do it yourself',
+    confirm: 'Confirm the result',
+    mission: 'Your mission',
+    instruction: 'Use the terminal directly below. You can experiment safely here; a wrong command does not break your real files.',
+    successTitle: 'Mission complete',
+    successBody: 'The repository reached the target state. Look at what changed before moving on.',
+    next: 'Next mission',
+    trackComplete: 'Beginner track complete',
+    trackCompleteBody: 'You cleared all ten beginner missions. Switch to Pro Mode when you want the full lab and advanced track.',
+    criteria: 'criteria complete',
+  },
+  de: {
+    understand: 'Verstehen',
+    doIt: 'Selbst ausführen',
+    confirm: 'Ergebnis prüfen',
+    mission: 'Deine Mission',
+    instruction: 'Nutze jetzt das Terminal direkt darunter. Du kannst hier gefahrlos ausprobieren; ein falscher Befehl verändert keine echten Dateien.',
+    successTitle: 'Mission geschafft',
+    successBody: 'Das Repository hat den Zielzustand erreicht. Schau dir kurz an, was sich verändert hat, bevor du weitergehst.',
+    next: 'Nächste Mission',
+    trackComplete: 'Einsteiger-Track abgeschlossen',
+    trackCompleteBody: 'Du hast alle zehn Einsteiger-Missionen geschafft. Wechsle in den Pro-Modus, wenn du das volle Lab und den Advanced-Track nutzen möchtest.',
+    criteria: 'Kriterien erfüllt',
+  },
+} as const;
+
+export function GuidedMission() {
+  const { state, dispatch } = useAppState();
+  const { locale, t, tArray } = useI18n();
+  const [hintCount, setHintCount] = useState(0);
+  const id = state.activeLessonId as LessonId;
+  const lesson = getLesson(id);
+  const hints = tArray(`lessons.${id}.hints`);
+  const copy = guidedCopy[locale];
+
+  useEffect(() => setHintCount(0), [id]);
+
+  const initialState = useMemo(() => createLessonScenario(id), [id]);
+  const validation = initialState
+    ? validateLesson(lesson.validatorId, { state: state.git, initialState, interaction: state.interaction })
+    : null;
+
+  useEffect(() => {
+    if (!validation?.complete || state.progress[id]?.completed) return;
+    dispatch({
+      type: 'progress/updated',
+      progress: {
+        lessonId: id,
+        completed: true,
+        attempts: (state.progress[id]?.attempts ?? 0) + 1,
+        hintsUsed: hintCount,
+      },
+    });
+  }, [dispatch, hintCount, id, state.progress, validation?.complete]);
+
+  const lessonIndex = beginnerIds.indexOf(id);
+  const nextId = lessonIndex >= 0 && lessonIndex < beginnerIds.length - 1 ? beginnerIds[lessonIndex + 1] : null;
+  const satisfied = validation?.satisfied.length ?? 0;
+  const total = satisfied + (validation?.remaining.length ?? 0);
+
+  const restart = () => {
+    const scenario = createLessonScenario(id);
+    if (scenario) dispatch({ type: 'lesson/restarted', lessonId: id, git: scenario });
+  };
+
+  const goNext = () => {
+    if (!nextId) return;
+    const scenario = createLessonScenario(nextId);
+    if (scenario) dispatch({ type: 'lesson/restarted', lessonId: nextId, git: scenario });
+    globalThis.scrollTo?.({ top: 0, behavior: 'smooth' });
+  };
+
+  return (
+    <section className="guided-mission" aria-labelledby="guided-mission-title">
+      <ol className="guided-phases" aria-label={t('lesson.progress')}>
+        <li className="phase-done"><span>1</span><b>{copy.understand}</b></li>
+        <li className={validation?.complete ? 'phase-done' : 'phase-active'}><span>2</span><b>{copy.doIt}</b></li>
+        <li className={validation?.complete ? 'phase-active' : ''}><span>3</span><b>{copy.confirm}</b></li>
+      </ol>
+
+      <div className="guided-hero">
+        <p className="eyebrow">{id.startsWith('b') ? t('nav.beginner') : t('nav.advanced')} · {id.slice(1)}</p>
+        <h1 id="guided-mission-title">{t(`lessons.${id}.title`)}</h1>
+        <p className="guided-objective">{t(`lessons.${id}.objective`)}</p>
+      </div>
+
+      <div className="guided-concepts">
+        <article>
+          <small>{t('lesson.why')}</small>
+          <p>{t(`lessons.${id}.why`)}</p>
+        </article>
+        <article>
+          <small>{t('lesson.mentalModel')}</small>
+          <p>{t(`lessons.${id}.mentalModel`)}</p>
+        </article>
+      </div>
+
+      <div className={`guided-task ${validation?.complete ? 'guided-task-complete' : ''}`}>
+        <div className="guided-task-heading">
+          <small>{copy.mission}</small>
+          {validation && <span>{validation.complete ? `✓ ${t('lesson.complete')}` : `${satisfied}/${total} ${copy.criteria}`}</span>}
+        </div>
+        <strong>{lesson.challenge.goal[locale]}</strong>
+        {!validation?.complete && <p>{copy.instruction}</p>}
+      </div>
+
+      {!validation?.complete && (
+        <div className="hint-box guided-hints">
+          <div><span aria-hidden="true">◎</span><p>{hintCount === 0 ? t('ui.hintIntro') : hints[hintCount - 1]}</p></div>
+          <button type="button" onClick={() => setHintCount((count) => Math.min(3, count + 1))} disabled={hintCount >= 3}>
+            {t('lesson.hint')} {Math.min(3, hintCount + 1)}/3
+          </button>
+        </div>
+      )}
+
+      <div className="guided-actions">
+        <button className="ghost-button" type="button" onClick={restart}>{t('lesson.restart')}</button>
+      </div>
+
+      {validation?.complete && (
+        <div className="guided-success" role="status">
+          <span aria-hidden="true">✓</span>
+          <div>
+            <small>{copy.successTitle}</small>
+            <strong>{nextId ? copy.successBody : copy.trackComplete}</strong>
+            <p>{nextId ? copy.successBody : copy.trackCompleteBody}</p>
+          </div>
+          {nextId && <button className="primary-button" type="button" onClick={goNext}>{copy.next} →</button>}
+        </div>
+      )}
+    </section>
+  );
+}
