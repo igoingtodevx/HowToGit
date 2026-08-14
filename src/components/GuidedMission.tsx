@@ -11,11 +11,12 @@ const lessonCommands: Partial<Record<LessonId, readonly string[]>> = {
   b04: ['git branch <name>', 'git switch <name>'],
   b05: ['git status', 'git add <file>', 'git commit -m "<message>"'],
   b06: ['git switch <target>', 'git merge <source>'],
-  b07: ['git status', 'git add <resolved-file>', 'git commit'],
+  b07: ['git merge <branch>', 'git status', 'git add <resolved-file>', 'git commit'],
   b08: ['git reset', 'git revert'],
   b09: ['git stash', 'git stash list', 'git stash pop'],
   b10: ['git fetch', 'git pull', 'git push'],
 };
+const visualToolLessons = new Set<LessonId>(['b05', 'b07']);
 
 const guidedCopy = {
   en: {
@@ -26,6 +27,7 @@ const guidedCopy = {
     commandLabel: 'Commands to learn',
     commandNote: 'Read these first. Then type the command yourself in the terminal below; placeholders in <angle brackets> must be replaced.',
     instruction: 'Use the terminal directly below. You can experiment safely here; a wrong command does not break your real files.',
+    instructionWithTools: 'Use the terminal plus the visual file/conflict tool shown below it. Everything is simulated, so you can experiment safely.',
     successTitle: 'Mission complete',
     successBody: 'The repository reached the target state. Look at what changed before moving on.',
     next: 'Next mission',
@@ -41,6 +43,7 @@ const guidedCopy = {
     commandLabel: 'Diese Befehle lernst du',
     commandNote: 'Lies sie zuerst. Tippe den passenden Befehl danach selbst unten ins Terminal; Platzhalter in <spitzen Klammern> musst du ersetzen.',
     instruction: 'Nutze jetzt das Terminal direkt darunter. Du kannst hier gefahrlos ausprobieren; ein falscher Befehl verändert keine echten Dateien.',
+    instructionWithTools: 'Nutze das Terminal zusammen mit dem Datei-/Konfliktwerkzeug darunter. Alles ist simuliert, du kannst also gefahrlos ausprobieren.',
     successTitle: 'Mission geschafft',
     successBody: 'Das Repository hat den Zielzustand erreicht. Schau dir kurz an, was sich verändert hat, bevor du weitergehst.',
     next: 'Nächste Mission',
@@ -137,7 +140,7 @@ export function GuidedMission() {
           {validation && <span>{validation.complete ? `✓ ${t('lesson.complete')}` : `${satisfied}/${total} ${copy.criteria}`}</span>}
         </div>
         <strong>{lesson.challenge.goal[locale]}</strong>
-        {!validation?.complete && <p>{copy.instruction}</p>}
+        {!validation?.complete && <p>{visualToolLessons.has(id) ? copy.instructionWithTools : copy.instruction}</p>}
       </div>
 
       {!validation?.complete && (
