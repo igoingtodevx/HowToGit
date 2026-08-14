@@ -4,6 +4,18 @@ import { useI18n } from '../i18n/i18n';
 import { createLessonScenario, getLesson, validateLesson, type LessonId } from '../lessons';
 
 const beginnerIds = Array.from({ length: 10 }, (_, index) => `b${String(index + 1).padStart(2, '0')}`) as LessonId[];
+const lessonCommands: Partial<Record<LessonId, readonly string[]>> = {
+  b01: ['git init'],
+  b02: ['git add <file>', 'git commit -m "<message>"'],
+  b03: ['git log --oneline'],
+  b04: ['git branch <name>', 'git switch <name>'],
+  b05: ['git status', 'git add <file>', 'git commit -m "<message>"'],
+  b06: ['git switch <target>', 'git merge <source>'],
+  b07: ['git status', 'git add <resolved-file>', 'git commit'],
+  b08: ['git reset', 'git revert'],
+  b09: ['git stash', 'git stash list', 'git stash pop'],
+  b10: ['git fetch', 'git pull', 'git push'],
+};
 
 const guidedCopy = {
   en: {
@@ -11,6 +23,8 @@ const guidedCopy = {
     doIt: 'Do it yourself',
     confirm: 'Confirm the result',
     mission: 'Your mission',
+    commandLabel: 'Commands to learn',
+    commandNote: 'Read these first. Then type the command yourself in the terminal below; placeholders in <angle brackets> must be replaced.',
     instruction: 'Use the terminal directly below. You can experiment safely here; a wrong command does not break your real files.',
     successTitle: 'Mission complete',
     successBody: 'The repository reached the target state. Look at what changed before moving on.',
@@ -24,6 +38,8 @@ const guidedCopy = {
     doIt: 'Selbst ausführen',
     confirm: 'Ergebnis prüfen',
     mission: 'Deine Mission',
+    commandLabel: 'Diese Befehle lernst du',
+    commandNote: 'Lies sie zuerst. Tippe den passenden Befehl danach selbst unten ins Terminal; Platzhalter in <spitzen Klammern> musst du ersetzen.',
     instruction: 'Nutze jetzt das Terminal direkt darunter. Du kannst hier gefahrlos ausprobieren; ein falscher Befehl verändert keine echten Dateien.',
     successTitle: 'Mission geschafft',
     successBody: 'Das Repository hat den Zielzustand erreicht. Schau dir kurz an, was sich verändert hat, bevor du weitergehst.',
@@ -41,6 +57,7 @@ export function GuidedMission() {
   const id = state.activeLessonId as LessonId;
   const lesson = getLesson(id);
   const hints = tArray(`lessons.${id}.hints`);
+  const commands = lessonCommands[id] ?? [];
   const copy = guidedCopy[locale];
 
   useEffect(() => setHintCount(0), [id]);
@@ -105,6 +122,14 @@ export function GuidedMission() {
           <p>{t(`lessons.${id}.mentalModel`)}</p>
         </article>
       </div>
+
+      {commands.length > 0 && (
+        <div className="guided-command-lesson">
+          <small>{copy.commandLabel}</small>
+          <div>{commands.map((command) => <code key={command}>{command}</code>)}</div>
+          <p>{copy.commandNote}</p>
+        </div>
+      )}
 
       <div className={`guided-task ${validation?.complete ? 'guided-task-complete' : ''}`}>
         <div className="guided-task-heading">
