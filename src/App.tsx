@@ -21,7 +21,7 @@ const guidedGraphLessons = new Set(['b03', 'b04', 'b05', 'b06', 'b07', 'b08', 'b
 export default function App() {
   const { state, dispatch } = useAppState();
   const { locale, setLocale, t } = useI18n();
-  const [command, setCommand] = useState('git status');
+  const [command, setCommand] = useState('');
   const [navOpen, setNavOpen] = useState(false);
   const [mobileViewport, setMobileViewport] = useState(false);
   const menuButtonRef = useRef<HTMLButtonElement>(null);
