@@ -27,6 +27,7 @@
     "conceptualModule": "Konzeptmodul",
     "challengeCriteria": "Challenge-Kriterien",
     "xraySignature": "ein Zustand · drei Ansichten",
+    "zoneJustChanged": "Eben geändert",
     "nothingHere": "Hier ist noch nichts",
     "virtualFile": "VIRTUELLE DATEI",
     "fileEditor": "Datei-Editor",
@@ -38,7 +39,7 @@
     "mergePaused": "MERGE PAUSIERT",
     "resolve": "Löse",
     "needsDecision": "deine Entscheidung ist nötig",
-    "conflictIntro": "Git hat zwei gültige Änderungen am selben Inhalt gefunden. Vergleiche die gemeinsame Base mit beiden Seiten und lege dann die finale Datei fest.",
+    "conflictIntro": "Git hat zwei gültige Änderungen am selben Inhalt gefunden. Vergleiche die gemeinsame Base mit beiden Seiten – und lege dann die finale Datei fest.",
     "base": "Base · gemeinsame Vergangenheit",
     "ours": "Ours · aktueller Branch",
     "theirs": "Theirs · eingehender Branch",
@@ -74,6 +75,8 @@
     "rewordedMessage": "Neue Commit-Nachricht",
     "applyReplay": "Replay-Plan anwenden",
     "complete": "Abgeschlossen",
+    "completed": "Abgeschlossen",
+    "perfect": "Perfekt",
     "hintIntro": "Versuche zuerst die Aufgabe. Die Hinweise werden schrittweise genauer.",
     "zoomOut": "Verkleinern",
     "zoomIn": "Vergrößern",
@@ -107,7 +110,10 @@
     "trustSimulator": "Dem Simulator vertrauen",
     "trustSimulatorBody": "Commits, Branches, Konflikte, Resets und Recovery folgen einem deterministischen DAG.",
     "useAiSafely": "KI sicher nutzen",
-    "useAiSafelyBody": "Der Tutor erhält begrenzten Zustand und darf Befehle nur durch Validierung vorschlagen."
+    "useAiSafelyBody": "Der Tutor erhält begrenzten Zustand und darf Befehle nur durch Validierung vorschlagen.",
+    "lab": "Lab",
+    "beginnerTrack": "Einsteiger",
+    "advancedTrack": "Fortgeschritten"
   },
   "nav": {
     "learn": "Lernen",
@@ -120,8 +126,8 @@
   "mode": {
     "noob": "Noob-Modus",
     "pro": "Pro-Modus",
-    "noobDescription": "Visuelle Erklärungen und geführtes Feedback.",
-    "proDescription": "Weniger Führung, mehr Git."
+    "noobDescription": "Geführte Missionen mit visuellen Erklärungen.",
+    "proDescription": "Das volle Labor, weniger Führung."
   },
   "language": {
     "label": "Sprache",
@@ -131,21 +137,30 @@
   "gitZones": {
     "workingTree": {
       "title": "Working Tree",
-      "subtitle": "So sehen deine Dateien gerade aus"
+      "subtitle": "Deine Dateien, genau jetzt"
     },
     "staging": {
       "title": "Staging Area",
-      "subtitle": "Diese Versionen sind für den nächsten Commit vorgemerkt"
+      "subtitle": "Für den nächsten Commit vorgemerkt"
     },
     "repository": {
       "title": "Repository",
-      "subtitle": "Gespeicherte Snapshots und Verlauf"
+      "subtitle": "Gespeicherter Verlauf"
+    },
+    "stash": {
+      "title": "Stash-Regal",
+      "subtitle": "Zur Seite gelegte Arbeit, Neuestes oben",
+      "onShelf": "liegt im Regal"
     }
   },
   "terminal": {
     "title": "Terminal",
-    "placeholder": "Git-Befehl eingeben…",
-    "unsupported": "Diese Git-Syntax unterstützt der Simulator noch nicht."
+    "placeholder": "Gib einen Git-Befehl ein…",
+    "unsupported": "Dieser Simulator unterstützt diese Git-Syntax noch nicht.",
+    "historyHint": "↑ ↓ vorherige Befehle",
+    "correction": "Meintest du {command}?",
+    "announceSuccess": "Befehl erfolgreich.",
+    "announceFailure": "Befehl fehlgeschlagen."
   },
   "commandLens": {
     "title": "Command Lens",
@@ -153,7 +168,7 @@
     "after": "Nachher",
     "preview": "Vorschau",
     "run": "Ausführen",
-    "putInTerminal": "Ins Terminal übernehmen",
+    "putInTerminal": "Ins Terminal",
     "risk": {
       "safe": "Sicher",
       "caution": "Vorsicht",
@@ -162,13 +177,13 @@
   },
   "tutor": {
     "title": "Git-Tutor",
-    "askPlaceholder": "Frag etwas über Git oder deinen aktuellen Repo-Zustand…",
+    "askPlaceholder": "Frag etwas über Git oder dein aktuelles Repo…",
     "askGit": "Git fragen",
-    "explainThis": "Das erklären",
+    "explainThis": "Erkläre das",
     "diagnose": "Warum ist mein Repo so?",
-    "fix": "Repo reparieren",
-    "mistake": "Meinen Fehler erklären",
-    "preview": "Was würde das tun?",
+    "fix": "Repariere mein Repo",
+    "mistake": "Erkläre meinen Fehler",
+    "preview": "Was wird das bewirken?",
     "retry": "Erneut versuchen",
     "offlineTitle": "Tutor nicht verfügbar",
     "offlineBody": "Git-Lab und Lektionen funktionieren auch ohne KI."
@@ -185,247 +200,709 @@
     "complete": "Lektion abgeschlossen",
     "progress": "Fortschritt"
   },
-  "statusHelp": {
-    "nothingToCommit": "Es wurde nichts committed. Git committed nur das, was gerade in der Staging Area liegt.",
-    "workingButNotStaged": "Deine Datei wurde im Working Tree geändert, aber diese Version ist noch nicht vorgemerkt.",
-    "conflict": "Git hat zwei unvereinbare Versionen gefunden. Lege den finalen Inhalt fest, stage ihn und schließe danach den Merge ab."
-  },
   "fileState": {
     "unchanged": "unverändert",
     "modified": "geändert",
-    "untracked": "nicht verfolgt",
+    "untracked": "unbeobachtet",
     "added": "hinzugefügt",
     "deleted": "gelöscht",
-    "staged": "gestagt",
-    "conflicted": "im Konflikt"
+    "staged": "vorgemerkt",
+    "conflicted": "Konflikt"
   },
   "hero": {
     "eyebrow": "Interaktives Git-Labor",
     "title": "Verstehe Git, indem du siehst, was wirklich passiert.",
-    "subtitle": "Lerne Branches, Commits, Merges und Recovery mit einer echten visuellen State Machine — plus KI-Tutor, der deinen aktuellen Repo-Zustand kennt.",
-    "startZero": "Bei null anfangen",
+    "subtitle": "Lerne Branches, Commits, Merges und Recovery, indem du sie ausführst – jeder Befehl bewegt sichtbar echten Git-Zustand.",
+    "startZero": "Von null starten",
     "startAdvanced": "Ich kenne die Basics",
-    "replay": "Demo wiederholen"
+    "replay": "Demo abspielen"
+  },
+  "flow": {
+    "learn": "Verstehen",
+    "try": "Ausprobieren",
+    "see": "Sehen",
+    "confirm": "Festigen",
+    "done": "Fertig",
+    "stepDesc": {
+      "learn": "Die Idee verstehen",
+      "try": "Selbst machen",
+      "see": "Sehen, was sich geändert hat",
+      "confirm": "Verständnis prüfen",
+      "done": "Lektion abgeschlossen"
+    },
+    "stepOf": "Schritt {n} von 5",
+    "scenarioTitle": "Die Situation",
+    "commandTitle": "Die Befehle, die du kennenlernst",
+    "youWillLearn": "Du begegnest",
+    "startChallenge": "Ich bin bereit – zeig mir die Mission",
+    "mission": "Deine Mission",
+    "criteriaTitle": "Git wird prüfen",
+    "whatChangedTitle": "Was sich gerade geändert hat",
+    "takeawayTitle": "Was du gelernt hast",
+    "checkUnderstanding": "Verständnis prüfen",
+    "questionOf": "Frage {n} von {total}",
+    "correct": "Richtig.",
+    "notYet": "Noch nicht ganz.",
+    "finishLesson": "Lektion abschließen",
+    "nextLesson": "Weiter: {title}",
+    "doItAgain": "Noch einmal",
+    "whereTerminal": "Gib deinen Befehl im Terminal ein",
+    "whereEditor": "Nimm die Änderung im Datei-Editor vor",
+    "whereConflict": "Entscheide im Konflikt-Panel",
+    "missionProgress": "Mission {n}/{m}"
+  },
+  "mentor": {
+    "name": "der Guide",
+    "role": "Dein Begleiter im Lab",
+    "intro": {
+      "generic": "Ich halte dich auf Kurs. Das Denken übernimmst du.",
+      "b01": "Geben wir deinem Ordner ein Gedächtnis. Ein Befehl – und du siehst, wie sich alles verändert.",
+      "b02": "Git existiert jetzt. Nun kommt Gits wichtigste Regel: Ohne dein Okay wird nichts gespeichert.",
+      "b03": "Gute Nachricht: Hier hat schon jemand Commits gemacht. Deine Aufgabe ist es, ihre Geschichte zu lesen.",
+      "b04": "Zeit, an zwei Dingen gleichzeitig zu arbeiten. Branches machen das möglich.",
+      "b05": "Jetzt bau etwas Echtes auf deinem Branch – main bleibt sicher.",
+      "b06": "Zeit, die beiden Linien zusammenzuführen. Achte darauf, was mit den Labels passiert.",
+      "b07": "Ein Merge mit einer Wendung: An einer Stelle braucht Git dein Urteil.",
+      "b08": "Jeder macht Fehler. Die Kunst ist, sie mit Absicht rückgängig zu machen.",
+      "b09": "Manchmal muss Arbeit pausieren. Git hat dafür ein Regal.",
+      "b10": "Letzte Anfänger-Mission: Lerne das Remote kennen – dort lebt die Zusammenarbeit."
+    },
+    "hint": {
+      "1": "Denk an das Ziel, nicht an den Befehl.",
+      "2": "Und jetzt: Welche Befehlsfamilie bringt dich dorthin?",
+      "3": "Den Shortcut hast du dir verdient."
+    },
+    "wrong": {
+      "notGit": "Jeder Befehl hier beginnt mit `git` – daran erkennt das Terminal, dass wir mit Git sprechen.",
+      "generic": "Noch nicht ganz – aber jeder Versuch ist Information. Lies, was das Terminal sagt.",
+      "stuck": "Zweimal daneben – nimm einen Hinweis. Er kostet nichts und zeigt die Richtung.",
+      "noProgress": "Der Befehl hat funktioniert – aber die Mission hat sich nicht bewegt. Schau auf die Checkliste: Welcher Punkt ist noch offen?"
+    },
+    "success": {
+      "first": "Genau das! Schau nach unten – die Zonen haben sich verändert.",
+      "next": "Gut. Git reagiert genau so, wie es soll.",
+      "lesson": "Mission erfüllt. Gut gemacht."
+    },
+    "confirm": {
+      "correct": "Genau.",
+      "wrong": "Noch nicht ganz. Überleg, was Git wirklich tut, und versuch es noch einmal."
+    },
+    "milestone": {
+      "b05": "Halbzeit! Du kennst jetzt init, Commits, Branches und Merging.",
+      "b10": "Anfänger-Track abgeschlossen – du hältst jetzt Gits Alltags-Werkzeugkasten in der Hand."
+    },
+    "see": "Machen wir die Veränderung sichtbar.",
+    "takeaway": "Bevor du weitergehst:",
+    "done": "Bereit für die nächste Mission?"
+  },
+  "celebration": {
+    "lesson": {
+      "title": "Lektion abgeschlossen!",
+      "body": "Du hast {title} gemeistert."
+    },
+    "perfect": "Perfekter Lauf – keine Hinweise gebraucht.",
+    "halfway": {
+      "title": "Halbzeit!",
+      "body": "Fünf von zehn Anfänger-Missionen geschafft."
+    },
+    "course": {
+      "title": "Anfänger-Track abgeschlossen!",
+      "body": "Init, Commit, Branch, Merge, Konflikt, Undo, Stash, Remote – alles gehört jetzt dir."
+    }
+  },
+  "effects": {
+    "REPOSITORY_INITIALIZED": "Git hat den versteckten `.git`-Ordner angelegt. Dieser Ordner ist jetzt ein Repository, bereit für seinen ersten Commit.",
+    "FILE_STAGED": "Die aktuelle Version der Datei ist in die Staging Area gewandert.",
+    "COMMIT_CREATED": "Ein neuer Commit wurde gespeichert. Das Label des aktuellen Branch zeigt jetzt auf ihn.",
+    "BRANCH_CREATED": "Ein neues Branch-Label ist an diesem Commit erschienen.",
+    "BRANCH_DELETED": "Ein Branch-Label wurde entfernt. Seine Commits bleiben im Verlauf.",
+    "BRANCH_MOVED": "Ein Branch-Label ist zu einem anderen Commit gewandert.",
+    "HEAD_MOVED": "HEAD hat sich bewegt – du schaust jetzt auf einen anderen Commit.",
+    "MERGE_FAST_FORWARD": "Kein neuer Commit: Das Branch-Label ist einfach entlang der bestehenden Historie nach vorn gerutscht.",
+    "MERGE_COMMIT_CREATED": "Ein Merge-Commit wurde erstellt – er hat zwei Eltern, eine von jeder Seite.",
+    "CONFLICT_CREATED": "Git hat den Merge pausiert: Diese Datei braucht deine Entscheidung.",
+    "CONFLICT_RESOLVED": "Der Konflikt ist gelöst – du hast den finalen Inhalt gewählt.",
+    "RESET_PERFORMED": "Das Branch-Label ist zurückgewandert. Lokale Historie wurde umgeschrieben.",
+    "STASH_CREATED": "Deine Änderungen liegen jetzt auf dem Stash-Regal. Der Working Tree ist sauber.",
+    "STASH_APPLIED": "Die gestashten Änderungen sind zurück im Working Tree.",
+    "CHERRY_PICK_CREATED": "Die Änderung wurde als neuer Commit auf diesen Branch kopiert.",
+    "COMMITS_REPLAYED": "Commits wurden mit neuen Identitäten neu abgespielt.",
+    "TAG_CREATED": "Ein Tag benennt jetzt diesen Commit.",
+    "REMOTE_UPDATED": "Dein Wissen über das Remote wurde aufgefrischt.",
+    "INDEX_CHANGED": "Die Staging Area hat sich verändert.",
+    "WORKTREE_CHANGED": "Der Working Tree hat sich verändert – Git sieht den Unterschied jetzt."
+  },
+  "concepts": {
+    "repository": "Repository – Gits Gedächtnis an deinem Ordner",
+    "working-tree": "Working Tree – deine Dateien, genau jetzt",
+    "staging-area": "Staging Area – Versionen, ausgewählt für den nächsten Commit",
+    "snapshot": "Snapshot – eine gespeicherte Kopie des ganzen Projekts",
+    "commit": "Commit – ein gespeicherter Snapshot mit Nachricht",
+    "hash": "Hash – die eindeutige ID eines Commits",
+    "parent": "Parent – der Commit davor",
+    "branch": "Branch – ein bewegliches Label, das auf einen Commit zeigt",
+    "head": "HEAD – die Markierung, wo du gerade bist",
+    "pointer": "Pointer – eine Referenz, die sich bewegen kann",
+    "branch-tip": "Branch-Spitze – der neueste Commit eines Branches",
+    "divergence": "Divergenz – zwei Branches mit unterschiedlichen Commits",
+    "merge": "Merge – zwei Arbeitslinien zusammenführen",
+    "fast-forward": "Fast-Forward – Merge, bei dem nur ein Label bewegt wird",
+    "merge-commit": "Merge-Commit – ein Commit mit zwei Eltern",
+    "merge-base": "Merge-Base – der letzte Commit, den beide Seiten teilen",
+    "conflict": "Konflikt – Git braucht deine Entscheidung bei einer Änderung",
+    "ours": "Ours – die Version deines aktuellen Branches",
+    "theirs": "Theirs – die Version des eingehenden Branches",
+    "reset": "Reset – ein Branch-Label zurückbewegen",
+    "revert": "Revert – ein neuer Commit, der einen alten rückgängig macht",
+    "history-rewrite": "History-Rewrite – bestehende Commits verändern",
+    "stash": "Stash – ein Regal für laufende Arbeit",
+    "temporary-work": "Temporäre Arbeit – Änderungen, die noch nicht reif für einen Commit sind",
+    "remote": "Remote – ein anderes Repository, mit dem dein Git spricht",
+    "origin": "Origin – der übliche Name des Haupt-Remotes",
+    "remote-tracking": "Remote-Tracking – deine lokalen Notizen über das Remote",
+    "fetch": "Fetch – dein Wissen über das Remote aktualisieren",
+    "pull": "Pull – fetchen und mergen in einem Schritt",
+    "push": "Push – deine Commits zum Remote veröffentlichen",
+    "rebase": "Rebase – Commits auf eine neue Basis neu abspielen",
+    "pick": "Pick – einen Commit beim Replay behalten",
+    "reword": "Reword – eine Commit-Nachricht beim Replay ändern",
+    "squash": "Squash – einen Commit mit dem vorherigen verbinden",
+    "drop": "Drop – einen Commit beim Replay entfernen",
+    "cherry-pick": "Cherry-Pick – genau einen Commit auf deinen Branch kopieren",
+    "patch": "Patch – die Änderung, die ein Commit enthält",
+    "new-identity": "Neue Identität – neu abgespielte Commits bekommen neue Hashes",
+    "stash-stack": "Stash-Stack – mehrere Regaleinträge, der neueste oben",
+    "context-switch": "Kontextwechsel – eine Aufgabe pausieren, um an einer anderen zu arbeiten",
+    "reflog": "Reflog – das Tagebuch jeder Ref-Bewegung",
+    "orphaned-commit": "Verwaister Commit – ein Commit, auf den kein Branch zeigt",
+    "recovery": "Recovery – unerreichbare Commits zurückholen",
+    "detached-head": "Detached HEAD – HEAD zeigt auf einen Commit statt auf einen Branch",
+    "branch-reference": "Branch-Referenz – der benannte Zeiger, den ein Branch liefert",
+    "three-way-merge": "Drei-Wege-Merge – beide Seiten gegen die Merge-Base vergleichen",
+    "conflict-resolution": "Konfliktlösung – den finalen Inhalt wählen",
+    "binary-search": "Binäre Suche – den Suchraum bei jedem Schritt halbieren",
+    "regression": "Regression – ein Fehler, den ein früherer Commit eingeführt hat",
+    "submodule": "Submodule – ein Zeiger auf ein anderes Repository",
+    "subtree": "Subtree – ein anderes Projekt, in deinen Verlauf gemergt",
+    "repository-composition": "Repository-Komposition – Repositories kombinieren",
+    "blob": "Blob – das Objekt, das Dateiinhalt speichert",
+    "tree": "Tree – das Objekt, das eine Ordnerstruktur speichert",
+    "commit-object": "Commit-Objekt – ein Snapshot mit Autor, Nachricht und Eltern",
+    "ref": "Ref – ein menschenlesbarer Name für einen Commit",
+    "content-addressing": "Content-Addressing – IDs sind Hashes des Inhalts"
+  },
+  "confirm": {
+    "init-means": {
+      "prompt": "Was macht `git init` wirklich?",
+      "option": {
+        "0": "Es kopiert deine Dateien an einen sicheren Backup-Ort.",
+        "1": "Es erstellt den versteckten `.git`-Ordner, in dem Git den Verlauf speichert.",
+        "2": "Es löscht deinen Ordner und startet einen neuen, leeren."
+      },
+      "explain": "`.git` ist Gits Gedächtnis. Deine Dateien bleiben genau, wo sie sind."
+    },
+    "commit-without-add": {
+      "prompt": "Du änderst `app.ts` und führst `git commit` aus, ohne vorher `git add` zu machen. Was passiert?",
+      "option": {
+        "0": "Nichts wird committet – Git committet nur, was du gestagt hast.",
+        "1": "Git stagt und committet automatisch alles für dich.",
+        "2": "Der Commit funktioniert, überspringt aber den Working Tree."
+      },
+      "explain": "Commits enthalten nur, was in der Staging Area liegt. Genau das ist der Schutzmechanismus: Du entscheidest immer, was gespeichert wird."
+    },
+    "newest-commit": {
+      "prompt": "`git log` listet Commits auf. Welcher Commit steht GANZ OBEN?",
+      "option": {
+        "0": "Der neueste Commit – der Verlauf wird neueste zuerst ausgegeben.",
+        "1": "Der älteste Commit – der Verlauf beginnt am Anfang.",
+        "2": "Ein zufälliger Commit – Git hält keine Reihenfolge ein."
+      },
+      "explain": "Neueste zuerst. Die jüngste Arbeit ist immer die interessanteste, also steht sie oben."
+    },
+    "what-is-a-branch": {
+      "prompt": "Was erstellt `git branch feature` wirklich?",
+      "option": {
+        "0": "Ein bewegliches Label, das auf den aktuellen Commit zeigt – nichts wird kopiert.",
+        "1": "Eine vollständige Kopie des gesamten Projektordners.",
+        "2": "Einen neuen Ordner namens `feature` in deinem Projekt."
+      },
+      "explain": "Ein Branch ist nur ein Zeiger. Deshalb ist das Anlegen sofort erledigt und kostet nichts."
+    },
+    "which-labels-move": {
+      "prompt": "Du bist auf `feature` und committest. Welche Labels bewegen sich?",
+      "option": {
+        "0": "Nur `feature` – `main` bleibt, wo es war.",
+        "1": "`feature` und `main` bewegen sich zusammen.",
+        "2": "Keine Labels bewegen sich; nur der Commit entsteht."
+      },
+      "explain": "Ein Commit bewegt nur den Branch, auf den HEAD zeigt. So bleibt parallele Arbeit parallel."
+    },
+    "why-no-new-commit": {
+      "prompt": "Dein Merge hat KEINEN neuen Commit erzeugt. Warum?",
+      "option": {
+        "0": "Der Merge ist stillschweigend fehlgeschlagen.",
+        "1": "`main` ist einfach entlang der bestehenden Commits von `feature` nach vorn gerutscht – ein Fast-Forward.",
+        "2": "Git verwendet den alten Commit wieder und löscht `feature`."
+      },
+      "explain": "Wenn `main` nicht divergiert ist, gibt es nichts zu kombinieren – Git bewegt nur das Label. Das ist ein Fast-Forward."
+    },
+    "why-conflict": {
+      "prompt": "Warum hat Git den Merge pausiert und um Hilfe gebeten?",
+      "option": {
+        "0": "Beide Seiten haben dieselbe Zeile unterschiedlich geändert – nur du kannst die finale Version wählen.",
+        "1": "Git ist abgestürzt, weil sich zwei Branches nicht mergen lassen.",
+        "2": "Die Datei war zu groß für einen automatischen Merge."
+      },
+      "explain": "Git merged automatisch, wenn es kann. Wenn zwei Änderungen dieselbe Stelle treffen, braucht die Entscheidung einen Menschen."
+    },
+    "undo-after-share": {
+      "prompt": "Dein fehlerhafter Commit ist schon gepusht und dein Team hat ihn gepullt. Welches Undo ist sicherer?",
+      "option": {
+        "0": "`git reset --hard` – das hält den Verlauf sauberer.",
+        "1": "`git revert` – es fügt einen Korrektur-Commit hinzu, statt die geteilte Historie umzuschreiben.",
+        "2": "Den Commit von Hand aus `.git` löschen."
+      },
+      "explain": "Schreibe niemals Historie um, auf der andere aufbauen. `revert` lässt die Vergangenheit intakt und legt die Korrektur obendrauf."
+    },
+    "stash-list-shows": {
+      "prompt": "Nach `git stash`: Was zeigt `git stash list`?",
+      "option": {
+        "0": "Deine abgelegte Änderung – und der Working Tree bleibt sauber, bis du sie poppst.",
+        "1": "Eine Liste aller deiner Commits, neueste zuerst.",
+        "2": "Nichts – `list` funktioniert nur vor dem Stashen."
+      },
+      "explain": "Der Stash ist ein Regal. `list` zeigt, was darauf liegt; der Baum bleibt sauber bis zum `pop`."
+    },
+    "fetch-vs-pull": {
+      "prompt": "Nach `git fetch origin`: Was hat sich geändert?",
+      "option": {
+        "0": "Dein `origin/main`-Zeiger hat sich dem Remote angeglichen – deine Dateien wurden nicht angefasst.",
+        "1": "Deine Arbeitsdateien wurden mit den Remote-Versionen überschrieben.",
+        "2": "Nichts – fetch ist nur ein Statusbefehl."
+      },
+      "explain": "Fetch aktualisiert Wissen. `origin/main` hat sich bewegt; das in deine Arbeit zu integrieren ist ein eigener Schritt (pull)."
+    },
+    "rebase-identities": {
+      "prompt": "Interactive Rebase schreibt Commits um. Was ändert sich an ihnen?",
+      "option": {
+        "0": "Sie bekommen neue Identitäten (Hashes) – der Inhalt wird auf einer neuen Basis neu abgespielt.",
+        "1": "Nichts – dieselben Commits werden nur an Ort und Stelle umsortiert.",
+        "2": "Sie werden gelöscht und sind nie wiederherstellbar."
+      },
+      "explain": "Replay bedeutet neue Commits mit neuen Hashes. Die alten existieren weiter, bis zur Garbage Collection."
+    },
+    "cherry-pick-vs-merge": {
+      "prompt": "Warum würdest du cherry-picken statt mergen?",
+      "option": {
+        "0": "Du willst genau eine Änderung von einem anderen Branch, nicht dessen ganzen Verlauf.",
+        "1": "Cherry-Pick ist in jedem Fall schneller als Merge.",
+        "2": "Cherry-Pick löscht den Quell-Branch für dich."
+      },
+      "explain": "Cherry-Pick kopiert einen einzelnen Patch. Merge bringt alles mit."
+    },
+    "reset-lost-history": {
+      "prompt": "Nach `git reset --hard`: Wo landet der „verlorene“ Commit?",
+      "option": {
+        "0": "Er ist für immer gelöscht und nicht wiederherstellbar.",
+        "1": "Er wird unerreichbar, existiert aber weiter – das Reflog erinnert sich noch eine Weile an ihn.",
+        "2": "Er wandert ins Remote-Repository."
+      },
+      "explain": "Reset bewegt nur das Label. Der Commit bleibt bis zur Garbage Collection; das Reflog zeigt den Weg zurück."
+    },
+    "detached-head-save": {
+      "prompt": "Du hast Commits gemacht, während HEAD detached war. Was hält sie sicher?",
+      "option": {
+        "0": "Zeige mit einem Branch auf sie (z. B. `git switch -c rescue`), bevor du weitergehst.",
+        "1": "Nichts – detached Commits gehen sofort verloren.",
+        "2": "Das Terminal zu schließen speichert sie automatisch."
+      },
+      "explain": "Commits brauchen eine benannte Ref. Ein Branch gibt ihnen eine; sonst sind sie nur über Hash oder Reflog erreichbar."
+    }
+  },
+  "errors": {
+    "notGit": "Jeder Befehl hier beginnt mit `git`. Versuch es noch einmal mit `git …`.",
+    "generic": "Git hat den Befehl abgelehnt. Lies die Meldung oben – sie sagt, warum.",
+    "typo": "Fast – das ist kein Git-Befehl. Prüfe die Schreibweise und versuch es noch einmal.",
+    "notARepository": "Git ist hier noch nicht initialisiert. Es gibt nichts zu prüfen – erstelle zuerst das Repository.",
+    "nothingToCommit": "Es wurde nichts committet. Git committet nur, was gerade in der Staging Area liegt.",
+    "unsupportedSyntax": "Dieser Simulator unterstützt einen festen Satz an Git-Befehlen. Sieh dir die usage-Zeile oben an.",
+    "unresolvedConflicts": "Git kann nicht weitermachen, solange Konflikte offen sind. Löse sie zuerst.",
+    "conflictNotEdited": "Git stagt keine Konfliktdatei, die du nicht gelöst hast. Wähle zuerst den finalen Inhalt.",
+    "operationInProgress": "Ein Merge oder Rebase läuft bereits. Schließe ihn ab, bevor du etwas Neues beginnst.",
+    "unknownBranch": "Diesen Branch gibt es nicht. Schau im Graph oder mit `git branch` nach den echten Namen.",
+    "unknownRevision": "Git findet diesen Commit oder Branch nicht. Prüfe die Schreibweise – Hashes und Namen müssen exakt stimmen.",
+    "pathspecNotFound": "Git findet diese Datei nicht. Prüfe den Dateinamen und versuch es noch einmal.",
+    "localChangesOverwritten": "Git verweigert: Das würde deine ungespeicherten Änderungen zerstören. Committe oder stashe sie zuerst.",
+    "noUpstream": "Dieser Branch hat kein Remote-Gegenstück. Setze ein Upstream oder pushe explizit.",
+    "nonFastForward": "Das Remote hat den Push abgelehnt: Es hat Commits, die du nicht hast. Fetche und integriere zuerst.",
+    "noStash": "Der Stash ist leer. Es gibt nichts zu poppen.",
+    "branchExists": "Ein Branch mit diesem Namen existiert schon. Wähle einen anderen Namen.",
+    "deleteCurrentBranch": "Du kannst den Branch nicht löschen, auf dem du gerade stehst. Wechsle zuerst.",
+    "noCurrentBranch": "Git muss wissen, welchen Branch du meinst.",
+    "detachedMerge": "Du kannst nicht mergen, solange HEAD detached ist. Wechsle zuerst auf einen Branch.",
+    "detachedRebase": "Du kannst nicht rebasen, solange HEAD detached ist. Wechsle zuerst auf einen Branch.",
+    "tagExists": "Diesen Tag gibt es schon. Tags sind einmalig pro Name.",
+    "remoteExists": "Dieses Remote existiert schon. Prüfe mit `git remote -v`.",
+    "unknownRemote": "Dieses Remote gibt es nicht. Lege es zuerst an oder prüfe die Schreibweise.",
+    "emptyCherryPick": "Dieser Commit hat nichts zu kopieren – er ist hier bereits vollständig vorhanden.",
+    "operationBlocked": "Git erlaubt diese Operation gerade nicht.",
+    "conflictCreated": "Diese Operation ist in einen Konflikt gelaufen. Löse ihn, bevor du weitermachst.",
+    "interactiveRebaseUi": "Ein Interactive Rebase braucht zuerst einen Plan – nutze den Rebase-Editor oben.",
+    "invalidRebasePlan": "Dieser Replay-Plan ist ungültig. Prüfe die Auswahl im Editor."
+  },
+  "challenge": {
+    "criteria": {
+      "repositoryInitialized": "Der Ordner ist ein Git-Repository",
+      "commitReachable": "Ein Commit existiert auf `main`",
+      "expectedFileCommitted": "`app.ts` ist im Commit gespeichert",
+      "operationComplete": "Kein offener Merge oder Rebase",
+      "historyInspected": "Du hast den Verlauf untersucht",
+      "featureExists": "Der Branch `feature` existiert",
+      "headOnFeature": "HEAD ist auf `feature`",
+      "twoFeatureCommits": "Zwei Commits auf `feature` erstellt",
+      "mainUnmoved": "`main` ist geblieben, wo es war",
+      "headOnMain": "HEAD ist wieder auf `main`",
+      "featureIncluded": "`feature`s Commits sind in `main`",
+      "mergeParentsPreserved": "Der Merge-Commit hat beide Eltern",
+      "resolvedFileCommitted": "Die gelöste Datei ist committet",
+      "resetCompared": "Du hast einen Reset ausprobiert und seine Wirkung gesehen",
+      "revertCompared": "Du hast einen Revert ausprobiert und seine Wirkung gesehen",
+      "stashCreated": "Deine Änderungen sind gestasht",
+      "stashInspected": "Du hast den Stash geprüft",
+      "stashRestored": "Der Stash wurde wiederhergestellt",
+      "workingChangesRestored": "Working Tree entspricht dem Start",
+      "remoteFetched": "Du hast von `origin` gefetcht",
+      "remoteSynchronized": "`main` entspricht `origin/main`",
+      "featureOnTargetBase": "`feature` steht auf der Ziel-Basis",
+      "changesPreserved": "Der finale Inhalt entspricht dem Original",
+      "identitiesReplayed": "Neu abgespielte Commits haben neue IDs",
+      "historyRewritten": "Keine zusätzlichen Commits haben den Rewrite überlebt",
+      "patchPresent": "Die Hotfix-Änderung ist vorhanden",
+      "newCommitIdentity": "Es ist ein neuer Commit, nicht das Original",
+      "stashNamed": "Der Stash hat einen sinnvollen Namen",
+      "reflogInspected": "Du hast das Reflog geprüft",
+      "lostHistoryReachable": "Die verlorenen Commits sind wieder erreichbar",
+      "headSymbolic": "HEAD hängt wieder an einem Branch",
+      "namedRescueBranch": "Ein benannter Branch hält die Arbeit",
+      "workReachable": "Deine Arbeit ist erreichbar",
+      "compatibleChangePreserved": "Die kompatible Änderung hat überlebt",
+      "conflictResolved": "Der Konflikt ist gelöst und committet",
+      "localRemoteEqual": "Lokal und Remote sind sich einig",
+      "firstBadIdentified": "Der erste schlechte Commit ist identifiziert",
+      "compositionClassified": "Die Szenarien sind korrekt zugeordnet",
+      "objectChainCorrect": "Die Objektkette ist korrekt"
+    },
+    "feedback": {
+      "repositoryInitialized": "Der Ordner ist noch kein Git-Repository.",
+      "commitReachable": "Auf `main` gibt es noch keinen Commit.",
+      "expectedFileCommitted": "Der committete Snapshot enthält kein `app.ts`.",
+      "operationComplete": "Ein Merge oder Rebase ist noch offen.",
+      "historyInspected": "Du hast den Verlauf noch nicht geprüft – versuch `git log`.",
+      "featureExists": "Der Branch `feature` existiert nicht.",
+      "headOnFeature": "HEAD ist noch nicht auf `feature`.",
+      "twoFeatureCommits": "`feature` braucht zwei eigene Commits.",
+      "mainUnmoved": "`main` hat sich bewegt – es muss bleiben, wo es war.",
+      "headOnMain": "HEAD ist nicht auf `main`.",
+      "featureIncluded": "`feature`s Commits sind noch nicht Teil von `main`.",
+      "mergeParentsPreserved": "Der Merge-Commit hat nicht beide Eltern.",
+      "resolvedFileCommitted": "Die gelöste Datei ist nicht committet.",
+      "resetCompared": "Probier einen `git reset` und beobachte das X-Ray.",
+      "revertCompared": "Probier einen `git revert` und beobachte das X-Ray.",
+      "stashCreated": "Deine Änderungen sind noch nicht gestasht.",
+      "stashInspected": "Prüfe den Stash mit `git stash list`.",
+      "stashRestored": "Der Stash wurde noch nicht wiederhergestellt.",
+      "workingChangesRestored": "Der Working Tree weicht vom Start ab.",
+      "remoteFetched": "Fetche zuerst von `origin`.",
+      "remoteSynchronized": "`main` und `origin/main` zeigen noch auf verschiedene Commits.",
+      "featureOnTargetBase": "`feature` stammt noch nicht von der Ziel-Basis ab.",
+      "changesPreserved": "Der finale Inhalt weicht vom Original ab.",
+      "identitiesReplayed": "Die neu abgespielten Commits haben ihre alten Identitäten behalten.",
+      "historyRewritten": "Zu viele Commits haben den Rewrite überlebt.",
+      "patchPresent": "Die Hotfix-Änderung ist noch nicht vorhanden.",
+      "newCommitIdentity": "Das ist der Original-Commit – du brauchst eine neue Kopie.",
+      "stashNamed": "Gib dem Stash einen aussagekräftigen Namen.",
+      "reflogInspected": "Prüfe zuerst das Reflog.",
+      "lostHistoryReachable": "Die verlorenen Commits sind noch nicht erreichbar.",
+      "headSymbolic": "HEAD ist immer noch detached.",
+      "namedRescueBranch": "Noch hält kein benannter Branch die Arbeit.",
+      "workReachable": "Die Arbeit ist nicht erreichbar.",
+      "compatibleChangePreserved": "Eine kompatible Änderung ist verloren gegangen.",
+      "conflictResolved": "Der Konflikt ist nicht gelöst und committet.",
+      "localRemoteEqual": "Lokal und Remote divergieren noch.",
+      "firstBadIdentified": "Der erste schlechte Commit ist noch nicht identifiziert.",
+      "compositionClassified": "Die Szenarien sind noch nicht vollständig zugeordnet.",
+      "objectChainCorrect": "Die Objektkette ist nicht in der richtigen Reihenfolge."
+    }
   },
   "lessons": {
     "b01": {
-      "title": "Git kennenlernen",
-      "objective": "Mach aus einem normalen Ordner ein Git-Repository.",
-      "why": "Bevor Git Verlauf speichern kann, braucht es ein Repository.",
-      "mentalModel": "Ein Repository ist das Verlaufssystem, das zu deinem Projektordner gehört.",
+      "title": "Lerne Git kennen",
+      "scenario": "Dein Projektordner existiert, mit einer Datei: `README.md`. Momentan ist es ein normaler Ordner – Git weiß noch nichts von ihm.",
+      "objective": "Mach aus diesem normalen Ordner ein Git-Repository.",
+      "why": "Jede Git-Geschichte beginnt hier. Bevor Git sich etwas merken kann, braucht es einen Ort für seine Historie: das Repository.",
+      "mentalModel": "`git init` erstellt einen versteckten Ordner namens `.git` in deinem Projekt. Dieser Ordner ist Gits Gedächtnis. Deine Dateien bleiben genau, wo sie sind.",
+      "commandIntro": "Du führst genau einen Befehl aus: `git init` – das bedeutet „initialisiere Git hier“. Der Branch `main` entsteht, aber er ist leer: noch keine Commits.",
+      "takeaway": "Dein Ordner ist jetzt ein Repository. `.git` existiert, und `main` wartet auf seinen ersten Commit.",
       "hints": [
-        "Du musst den Ordner zuerst initialisieren.",
-        "Welcher Befehl erstellt ein Git-Repository?",
-        "Führe `git init` aus."
+        "Git beobachtet deinen Ordner noch nicht. Es gibt genau einen Befehl, der Git hier „einziehen“ und aufbauen lässt.",
+        "Der Befehl bedeutet „initialisieren“. Bei Git heißt dieses Wort `init`.",
+        "Tippe exakt: `git init`"
       ]
     },
     "b02": {
       "title": "Deine drei Git-Zonen",
-      "objective": "Stage `app.ts` und erstelle deinen ersten Commit.",
-      "why": "Sehr viel Git-Verwirrung verschwindet, sobald diese drei Zonen klar sind.",
-      "mentalModel": "Du bearbeitest Dateien im Working Tree, merkst Versionen in der Staging Area vor und speicherst daraus Commits.",
+      "scenario": "Dein Repository hat eine Datei: `app.ts` – und die ist noch leer. Zeit für deine erste echte Änderung.",
+      "objective": "Ändere `app.ts`, stage sie und speichere deinen ersten Commit.",
+      "why": "Ein Commit ist Gits Art, deine Arbeit zu speichern – aber er speichert nur, was du ausdrücklich auswählst. Zwei Schritte machen das sichtbar: Stagen, dann Committen.",
+      "mentalModel": "Drei Zonen: Der Working Tree sind deine Dateien, genau jetzt. Die Staging Area hält die Versionen, die du ausgewählt hast. Das Repository bewahrt die gespeicherte Historie. Bearbeiten → stage n → committen.",
+      "commandIntro": "Nach dem Bearbeiten wählst du die Datei mit `git add app.ts` aus und speicherst mit `git commit -m \"First snapshot\"`. Der Teil `-m` ist die Nachricht, die deine Änderung beschreibt.",
+      "takeaway": "Du kennst jetzt Gits goldene Regel: im Working Tree bearbeiten, mit `add` auswählen, mit `commit` speichern. Commits enthalten nur, was gestagt war.",
       "hints": [
-        "Die Änderung liegt bisher nur im Working Tree.",
-        "Die gewünschte Version muss vor dem Commit in die Staging Area.",
-        "Führe `git add app.ts` und danach `git commit -m \"First snapshot\"` aus."
+        "Deine Änderung lebt gerade nur im Working Tree – der Zone ganz links. Ein Commit greift sich nie von selbst Dateien: Du musst sie zuerst auswählen.",
+        "Bewege die Datei mit `git add` in die Staging Area und mach aus der gestagten Version mit `git commit -m „…“` einen Commit.",
+        "Führe `git add app.ts` aus, dann `git commit -m \"First snapshot\"`."
       ]
     },
     "b03": {
-      "title": "Deinen Verlauf sehen",
-      "objective": "Untersuche den Verlauf und finde den neuesten Commit.",
-      "why": "Commits bilden eine Kette gespeicherter Projektzustände.",
-      "mentalModel": "Jeder Commit hat eine Identität und Parent-Beziehung. So entsteht Verlauf.",
+      "title": "Sieh deinen Verlauf",
+      "scenario": "Dein Projekt hat bereits drei Commits – jemand anderes hat sie gestern gemacht. Wie findest du heraus, was passiert ist?",
+      "objective": "Untersuche den Verlauf mit `git log` und finde den neuesten Commit.",
+      "why": "Historie ist Gits Superkraft. Sie zu lesen beantwortet: Was hat sich geändert, wann, und warum.",
+      "mentalModel": "Jeder Commit hat eine eindeutige ID – seinen Hash – und zeigt auf seinen Parent. Den Parents rückwärts zu folgen, heißt Verlauf lesen.",
+      "commandIntro": "`git log` listet Commits auf, neueste zuerst. Die Flag `--oneline` presst jeden Commit in eine Zeile: kurzer Hash plus Nachricht. Probier `git log --oneline`.",
+      "takeaway": "Commits bilden über ihre Parents eine Kette. Die kurzen Hashes sind IDs, die du später noch brauchst – zum Vergleichen, Rückgängigmachen oder Wiederherstellen.",
       "hints": [
-        "Nutze einen Befehl, der Commit-Verlauf zeigt.",
-        "Probiere die kompakte Ein-Zeilen-Ansicht.",
+        "Du willst, dass Git seine Geschichte erzählt. Welcher Befehl bittet Git, „den Verlauf zu zeigen“?",
+        "Der Befehl ist `git log`. Eine kompakte Flag lässt jeden Commit in eine Zeile passen.",
         "Führe `git log --oneline` aus."
       ]
     },
     "b04": {
       "title": "Branches ohne Angst",
-      "objective": "Erstelle `feature` und wechsle dorthin.",
-      "why": "Branches lassen eine Entwicklungslinie weiterlaufen, ohne eine andere zu verschieben.",
-      "mentalModel": "Ein Branch ist im Kern ein beweglicher Zeiger auf einen Commit. HEAD zeigt, auf welchem Branch du arbeitest.",
+      "scenario": "Dein Teammitglied bittet dich, ein neues Feature zu bauen – ohne die funktionierende main-Version anzufassen. Du brauchst eine parallele Arbeitslinie.",
+      "objective": "Erstelle einen Branch namens `feature` und wechsle zu ihm.",
+      "why": "Branches sind der Grund, warum Git-Teams parallel arbeiten können. Einen anzulegen kostet nichts und kopiert nichts.",
+      "mentalModel": "Ein Branch ist nur ein bewegliches Label, das auf einen Commit zeigt. `HEAD` markiert den Branch, auf dem du arbeitest. Einen Branch zu erstellen ändert nichts an deinen Dateien – das Wechseln bewegt HEAD.",
+      "commandIntro": "Zwei Schritte: `git branch feature` erstellt das Label, `git switch feature` bewegt dich darauf. Schau auf den Graph: Ein zweites Label erscheint, dann springt HEAD hinüber.",
+      "takeaway": "Branch = bewegliches Label. Wechseln = HEAD bewegen. Historie ist zwischen Branches geteilt – nichts wird kopiert.",
       "hints": [
-        "Erstelle zuerst den neuen Branch.",
-        "Danach wechselst du mit HEAD auf diesen Branch.",
-        "Führe `git branch feature` und danach `git switch feature` aus."
+        "Zuerst brauchst du ein zweites Label im Graph. Was erstellt ein neues Label an deinem aktuellen Commit?",
+        "Erstelle es mit `git branch <name>` und wechsle dann mit `git switch <name>` darauf.",
+        "Führe `git branch feature` aus, dann `git switch feature`."
       ]
     },
     "b05": {
-      "title": "Auf einem Branch arbeiten",
-      "objective": "Erstelle zwei Commits auf `feature`, während `main` stehen bleibt.",
-      "why": "Genau dafür nutzt man Branches im Alltag.",
-      "mentalModel": "Neue Commits verschieben nur den Branch, auf dem HEAD gerade liegt.",
+      "title": "Auf einem Branch bauen",
+      "scenario": "Du bist jetzt auf `feature`. Liefere zwei echte Änderungen – aber `main` muss genau bleiben, wo es ist.",
+      "objective": "Erstelle zwei Commits auf `feature`, ohne `main` zu bewegen.",
+      "why": "Das ist der Alltag mit Branches: Jeder Branch rückt nur vor, wenn du auf ihm committest. `main` bleibt sicher.",
+      "mentalModel": "Wenn du committest, bewegt sich nur der Branch, auf den HEAD zeigt. Das Label von `main` rührt sich nicht – deine zwei Commits gehören allein zu `feature`.",
+      "commandIntro": "Bearbeite die Datei im Editor (das ändert den Working Tree, nicht Git). Dann `git add .` – der Punkt bedeutet „alles Geänderte“ – und `git commit -m „…“`. Mach das zweimal mit unterschiedlichen Änderungen.",
+      "takeaway": "Commits bewegen nur den Branch, auf dem du bist. `main` bleibt unberührt – das ist die Sicherheit, die Branches dir geben.",
       "hints": [
-        "Prüfe zuerst, auf welchem Branch HEAD liegt.",
-        "Erzeuge und stage zwei getrennte Änderungen.",
-        "Committe zwei getrennte Änderungen auf `feature`."
+        "Wo bist du? `git status` zeigt den aktuellen Branch. Commits landen auf dem Branch, auf den HEAD zeigt – stell sicher, dass das `feature` ist.",
+        "Jeder Commit braucht eine gestagte Änderung: Datei bearbeiten, `git add .`, `git commit -m „...“`. Mach es zweimal.",
+        "Auf `feature`: bearbeite `app.ts`, `git add .`, `git commit -m \"Feature work\"` – dann noch einmal bearbeiten, adden, committen."
       ]
     },
     "b06": {
       "title": "Arbeit zusammenführen",
+      "scenario": "Deine zwei Feature-Commits sind fertig und abgenommen. Zeit, sie in `main` zu holen.",
       "objective": "Merge `feature` in `main`.",
-      "why": "Ein Merge führt Entwicklungslinien zusammen. Manchmal verschiebt Git nur einen Zeiger.",
-      "mentalModel": "Wenn `main` nicht abgezweigt ist, verschiebt ein Fast-Forward `main` entlang vorhandener Commits.",
+      "why": "Mergen ist, wie getrennte Arbeitslinien eins werden. Wer den Fast-Forward versteht, findet die Hälfte aller Merges selbstverständlich.",
+      "mentalModel": "Du mergst IN den Branch, auf dem du stehst. Hat sich `main` seit dem Branching nicht bewegt, schiebt Git `main` einfach entlang der bestehenden Commits nach vorn – ein Fast-Forward. Kein neuer Commit.",
+      "commandIntro": "Zuerst `git switch main` – Git merged in den Branch, auf dem du bist. Dann `git merge feature`. Schau zu, wie das Label von `main` zum neuesten Commit springt.",
+      "takeaway": "Fast-Forward = kein neuer Commit, nur ein bewegtes Label. `main` enthält jetzt alles, was `feature` hatte.",
       "hints": [
-        "Wechsle auf den Branch, der die Änderungen erhalten soll.",
-        "Merge dann den Quell-Branch in den aktuellen Branch.",
-        "Führe `git switch main` und danach `git merge feature` aus."
+        "Welcher Branch soll die Arbeit bekommen? Git merged in den Branch, auf dem du gerade stehst.",
+        "Wechsle zu `main` und hol dann `feature`s Historie herein.",
+        "Führe `git switch main` aus, dann `git merge feature`."
       ]
     },
     "b07": {
-      "title": "Merge-Konflikt lösen",
+      "title": "Einen Merge-Konflikt lösen",
+      "scenario": "Zwei Leute haben dieselbe Zeile unterschiedlich geändert. Git hat alles gemergt, was es konnte – aber diese eine Stelle braucht dein Urteil.",
       "objective": "Löse den Konflikt in `app.ts` und schließe den Merge ab.",
-      "why": "Git braucht deine Hilfe, wenn es den finalen Inhalt nicht sicher selbst wählen kann.",
-      "mentalModel": "Base ist die gemeinsame Vergangenheit; Ours und Theirs änderten dieselbe Stelle unterschiedlich — du legst das Ergebnis fest.",
+      "why": "Konflikte sind keine Fehler. Sie sind Git, das dich als Mensch ins Spiel holt. Wer einen gesehen hat, verliert die Angst vor ihnen.",
+      "mentalModel": "Git erinnert sich an die gemeinsame Base und beide Versionen: base = wo ihr beide gestartet seid, ours = dein Branch, theirs = der eingehende Branch. Du wählst den finalen Inhalt.",
+      "commandIntro": "`git merge feature` wird pausieren. Das Konflikt-Panel zeigt base/ours/theirs. Wähle den finalen Inhalt, dann `git add app.ts` und `git commit -m \"Resolve conflict\"`, um den Merge abzuschließen.",
+      "takeaway": "Ein Konflikt bedeutet: Git braucht eine menschliche Entscheidung. Lösen, stagen, committen – der Merge endet dann mit einem Commit, der zwei Eltern hat.",
       "hints": [
-        "Sieh dir `git status` und die Konfliktdatei an.",
-        "Lege den finalen Inhalt fest und stage die gelöste Datei.",
-        "Löse `app.ts`, führe `git add app.ts` aus und committe den Merge."
+        "Git hat den Merge pausiert und wartet. Schau ins Konflikt-Panel: Welche zwei Versionen streiten sich?",
+        "Schreib den finalen Inhalt und stage die Datei, damit Git weiß, dass sie gelöst ist.",
+        "Löse `app.ts`, führe `git add app.ts` aus, dann `git commit -m \"Resolve conflict\"`."
       ]
     },
     "b08": {
-      "title": "Rückgängig ohne Raten",
-      "objective": "Nutze die passende Undo-Strategie und erkenne den Unterschied.",
-      "why": "`reset` verschiebt Verlaufs-Refs; `revert` fügt korrigierenden Verlauf hinzu.",
-      "mentalModel": "Frage dich: Soll sich der Verlauf verschieben oder soll ein Korrektur-Commit entstehen?",
+      "title": "Undo ohne Raten",
+      "scenario": "Dein letzter Commit war ein Fehler. Die Frage ist nicht „Wie mache ich rückgängig?“ – sondern „Welche Art von Undo?“",
+      "objective": "Probiere beide Undo-Strategien und sieh den Unterschied: einen Revert und einen Reset.",
+      "why": "Panik-Undo ist, wie Leute Arbeit verlieren. Den Unterschied zwischen „Historie bewegen“ und „Historie korrigieren“ zu kennen, hält dich ruhig.",
+      "mentalModel": "`reset` bewegt das Branch-Label zurück – es schreibt lokale Historie um. `revert` fügt einen NEUEN Commit hinzu, der den alten rückgängig macht – die Historie wächst weiter und bleibt sicher zum Teilen.",
+      "commandIntro": "`HEAD~1` bedeutet „ein Commit vor HEAD“. Probier zuerst `git revert HEAD`: Ein neuer Korrektur-Commit erscheint oben auf der Historie. Dann `git reset --soft HEAD~1`: Das Label wandert zurück und die Änderung landet in der Staging Area. Vergleiche den Graph jedes Mal.",
+      "takeaway": "Private Historie? Reset. Geteilte Historie? Revert. Der Graph zeigt dir, was sich wohin bewegt hat.",
       "hints": [
-        "Entscheide zuerst, ob Verlauf umgeschrieben werden darf.",
-        "Geteilter Verlauf lässt sich meist sicherer mit einem neuen Commit korrigieren.",
-        "Nutze den geforderten Reset-Modus oder `git revert` und vergleiche X-Ray vorher/nachher."
+        "Zwei Werkzeuge, eine Frage: Soll ein Korrektur-Commit dazukommen, oder soll das Label zurückwandern?",
+        "`revert` lässt die Historie wachsen; `reset --soft` spult das Label zurück und behält die Änderungen gestagt. Probier beide und vergleiche den Graph.",
+        "Führe `git revert HEAD` aus, dann `git reset --soft HEAD~1` – und beobachte jedes Mal das X-Ray."
       ]
     },
     "b09": {
-      "title": "Arbeit kurz weglegen",
-      "objective": "Stashe unfertige Arbeit, untersuche sie und hole sie zurück.",
-      "why": "Ein Stash schafft einen sauberen Working Tree, ohne unfertige Arbeit zu committen.",
-      "mentalModel": "Stell dir den Stash wie ein temporäres Regal für lokale Änderungen vor.",
+      "title": "Arbeit zur Seite legen",
+      "scenario": "Du bist mitten in einer Änderung, da kommt ein dringender Bugfix rein. Du kannst halbfertige Arbeit nicht committen – aber du brauchst jetzt einen sauberen Baum.",
+      "objective": "Stashe deine Änderungen, prüfe, dass sie sicher liegen, und hol sie zurück.",
+      "why": "Stash ist Gits Pause-Knopf für unfertige Arbeit. Du bekommst einen sauberen Baum, ohne etwas zu verlieren (oder zu committen).",
+      "mentalModel": "Ein Stash ist ein Regal: Deine Änderungen werden vom Working Tree auf einen Stapel gehoben. `pop` legt den obersten Eintrag zurück.",
+      "commandIntro": "`git stash` legt deine Änderungen ins Regal. `git stash list` zeigt das Regal. `git stash pop` legt sie zurück in den Working Tree.",
+      "takeaway": "Stash = temporäres Regal für laufende Arbeit. Der Baum wurde sauber, dann kam deine Arbeit exakt so zurück, wie sie war.",
       "hints": [
-        "Du brauchst einen sauberen Working Tree, aber keinen neuen Commit.",
-        "Lege die lokalen Änderungen auf den Stash-Stack.",
-        "Führe `git stash`, `git stash list` und danach `git stash pop` aus."
+        "Du brauchst einen sauberen Baum ohne Commit und ohne die Änderungen zu verlieren. Welches Git-Feature legt Änderungen vorübergehend zur Seite?",
+        "Leg die Änderungen auf den Stash-Stapel, schau dir den Stapel an und hol den obersten Eintrag zurück.",
+        "Führe `git stash` aus, dann `git stash list`, dann `git stash pop`."
       ]
     },
     "b10": {
       "title": "Remotes verstehen",
-      "objective": "Synchronisiere das simulierte lokale Repository mit `origin`.",
-      "why": "Lokale Branches und Remote-Tracking-Branches sind getrennte Zeiger.",
-      "mentalModel": "`fetch` aktualisiert dein Wissen über den Remote; `pull` integriert; `push` aktualisiert Remote-Refs mit lokalem Verlauf.",
+      "scenario": "Dein Code liegt auch auf einem Server namens `origin`, wo dein Team Änderungen veröffentlicht. Dein lokales `main` und ihr `origin/main` sind zwei verschiedene Zeiger.",
+      "objective": "Fetche von `origin` und synchronisiere dann deinen Branch, wie es der Zustand verlangt.",
+      "why": "Remotes sind der Ort der Zusammenarbeit. Lokale und Remote-Tracking-Branches sind getrennt – fetch aktualisiert dein Wissen, pull integriert, push veröffentlicht.",
+      "mentalModel": "`origin/main` ist Gits lokale Notiz über das Remote – sie ändert sich nur beim Fetch. Fetch = Wissen aktualisieren. Pull = fetch + merge. Push = Commits veröffentlichen.",
+      "commandIntro": "Starte mit `git fetch origin` – beobachte, wie sich `origin/main` bewegt. Dann entscheide: hintendran? `git pull`. Vorneweg? `git push -u origin main`.",
+      "takeaway": "Fetch ≠ Pull ≠ Push. Fetch aktualisiert Wissen, Pull integriert, Push veröffentlicht. Lokal und Remote sind immer zwei getrennte Dinge.",
       "hints": [
-        "Fetche zuerst den Remote-Zustand.",
-        "Beobachte `main` und `origin/main` als getrennte Labels.",
-        "Nutze `git fetch origin` und entscheide danach anhand von Ahead/Behind zwischen pull und push."
+        "Dein lokales `main` und `origin/main` sind zwei verschiedene Zeiger. Welcher Befehl aktualisiert dein Wissen über das Remote?",
+        "Fetche zuerst und schau dann, wohin `main` und `origin/main` zeigen. Ist das Remote voraus, integriere es.",
+        "Führe `git fetch origin` aus, dann `git pull`."
       ]
     },
     "a01": {
       "title": "Interactive Rebase",
-      "objective": "Verwandle unruhigen Feature-Verlauf in bewussten Verlauf.",
-      "why": "Interactive Rebase lässt dich steuern, wie lokale Commits neu abgespielt werden.",
-      "mentalModel": "Beim Replay entstehen neue Commit-Identitäten.",
+      "scenario": "Dein Feature-Branch trägt drei unaufgeräumte „WIP“-Commits. Mach daraus eine bewusste Geschichte, bevor du sie teilst.",
+      "objective": "Mach aus unaufgeräumter Feature-Historie bewusste Historie.",
+      "why": "Interactive Rebase lässt dich bearbeiten, wie lokale Commits neu abgespielt werden.",
+      "mentalModel": "Neu abgespielte Änderungen bekommen neue Commit-Identitäten.",
+      "takeaway": "Die Geschichte liest sich jetzt sauber – und das Replay hat neue Commit-Identitäten erzeugt.",
       "hints": [
-        "Bestimme die lokalen Commits, die du umschreiben willst.",
+        "Identifiziere die lokalen Commits, die du umschreiben willst.",
         "Wähle die richtige Rebase-Basis.",
-        "Nutze pick/reword/squash/drop wie in der Challenge gefordert."
+        "Nutze pick/reword/squash/drop wie von der Lektion gefordert."
       ]
     },
     "a02": {
-      "title": "Cherry-Pick Surgery",
-      "objective": "Übernimm genau eine bestimmte Änderung auf deinen aktuellen Branch.",
-      "why": "Cherry-pick ist nützlich, wenn du eine Änderung, aber nicht den ganzen Quell-Branch willst.",
-      "mentalModel": "Git spielt die Änderung auf einem neuen Parent ab; dadurch entsteht eine neue Commit-Identität.",
+      "title": "Cherry-Pick-Chirurgie",
+      "scenario": "Ein Hotfix ist auf einem anderen Branch gelandet. Du willst genau diese eine Änderung – nicht den ganzen Branch.",
+      "objective": "Kopiere genau eine Änderung auf deinen aktuellen Branch.",
+      "why": "Cherry-Pick ist nützlich, wenn du eine Änderung willst, nicht den ganzen Quell-Branch.",
+      "mentalModel": "Git spielt die Änderung des gewählten Commits auf einem neuen Parent neu ab – mit neuer Identität.",
+      "takeaway": "Ein Patch, ein neuer Commit – der Quell-Branch wurde nie angefasst.",
       "hints": [
         "Finde den Quell-Commit.",
-        "Spiele genau diesen Commit auf dem aktuellen Branch neu ab.",
+        "Spiele diesen Commit auf dem aktuellen Branch neu ab.",
         "Führe `git cherry-pick <hash>` aus."
       ]
     },
     "a03": {
-      "title": "Stash wie ein Profi",
+      "title": "Stashen wie ein Profi",
+      "scenario": "Mehrere Aufgaben liegen gestapelt auf deinem Schreibtisch. Jede braucht ihr eigenes beschriftetes Regal.",
       "objective": "Verwalte temporäre Arbeit bewusst.",
-      "why": "Ein Stash-Stack hilft nur, wenn klar ist, welcher Eintrag wofür steht.",
-      "mentalModel": "Jeder Stash hält temporären lokalen Zustand relativ zu einer Basis und Stack-Reihenfolge.",
+      "why": "Ein Stash-Stack ist nur nützlich, wenn du weißt, was jeder Eintrag bedeutet.",
+      "mentalModel": "Jeder Stash ist temporärer lokaler Zustand mit Basis und Stapelreihenfolge.",
+      "takeaway": "Benannte Einträge, klare Reihenfolge – Kontextwechsel, ohne den Faden zu verlieren.",
       "hints": [
-        "Gib dem Stash einen erkennbaren Namen.",
-        "Prüfe den Stack vor dem Anwenden.",
-        "Nutze `git stash -m \"...\"`, `git stash list` und stelle den gewünschten Eintrag wieder her."
+        "Benenne den Stash klar.",
+        "Prüfe den Stack, bevor du anwendest.",
+        "Nutze `git stash -m \"...\"`, `git stash list` und stelle dann den gewünschten Eintrag wieder her."
       ]
     },
     "a04": {
-      "title": "Reflog: dein Sicherheitsnetz",
-      "objective": "Hole Commits zurück, die aus dem normalen Branch-Verlauf verschwunden sind.",
-      "why": "Viele beängstigende Git-Fehler verschieben nur Referenzen. Der Reflog merkt sich frühere HEAD-Positionen.",
-      "mentalModel": "Ein Commit kann für Branches unerreichbar sein, ohne sofort zu verschwinden.",
+      "title": "Reflog: Dein Sicherheitsnetz",
+      "scenario": "Ein Hard Reset hat gerade zwei Commits „gelöscht“. Sie existieren noch – du kannst sie nur von keinem Branch aus sehen.",
+      "objective": "Hole Commits zurück, die aus der normalen Branch-Historie verschwunden sind.",
+      "why": "Viele beängstigende Git-Fehler bewegen nur Referenzen. Das Reflog erinnert sich an frühere HEAD-Positionen.",
+      "mentalModel": "Ein Commit kann von einem Branch aus unerreichbar sein, ohne sofort aufzuhören zu existieren.",
+      "takeaway": "Reset hat nur das Label bewegt – die Arbeit war nie weg. Das Reflog wusste, wo sie zu finden ist.",
       "hints": [
-        "Untersuche frühere HEAD-Positionen.",
-        "Finde den verlorenen Tip im Reflog.",
-        "Nutze `git reflog`, finde den alten Tip und stelle eine sichere Referenz darauf wieder her."
+        "Prüfe frühere HEAD-Positionen.",
+        "Finde die verlorene Spitze im Reflog.",
+        "Nutze `git reflog`, identifiziere die alte Spitze und stelle eine Branch/Ref darauf wieder her."
       ]
     },
     "a05": {
       "title": "Detached HEAD",
-      "objective": "Experimentiere von einem alten Commit aus und sichere die Arbeit sauber.",
+      "scenario": "Du bist zu einem alten Commit gesprungen, um zu experimentieren. HEAD ist jetzt detached – und du hast hier gerade committet.",
+      "objective": "Experimentiere von einem alten Commit aus und sichere die Arbeit.",
       "why": "Detached HEAD bedeutet: HEAD zeigt direkt auf einen Commit statt auf einen Branch.",
-      "mentalModel": "Detached Commits brauchen einen Branch, wenn du sie dauerhaft leicht erreichbar halten willst.",
+      "mentalModel": "Detached Commits brauchen einen Branch, wenn du eine einfache, dauerhafte Referenz willst.",
+      "takeaway": "Das Experiment ist auf einem benannten Branch gesichert – HEAD hängt wieder an.",
       "hints": [
         "Achte darauf, ob HEAD an einem Branch hängt.",
-        "Erstelle einen Branch für die experimentelle Arbeit.",
-        "Nutze vor dem Verlassen z. B. `git switch -c rescue`."
+        "Erstelle einen Branch, der auf die experimentelle Arbeit zeigt.",
+        "Nutze `git switch -c rescue`, bevor du die detached Arbeit verlässt."
       ]
     },
     "a06": {
-      "title": "Advanced Merge Reasoning",
-      "objective": "Löse einen nicht-trivialen Merge über Base, Ours und Theirs.",
-      "why": "Three-Way-Merge wird vorhersehbar, wenn du die gemeinsame Basis betrachtest.",
-      "mentalModel": "Git vergleicht beide Seiten mit der Merge Base und kombiniert kompatible Änderungen.",
+      "title": "Fortgeschrittenes Merge-Denken",
+      "scenario": "Zwei Branches haben benachbarte Stellen derselben Datei geändert. Git kann das meiste mergen – eine Stelle braucht dich.",
+      "objective": "Löse einen nichttrivialen Merge mit base, ours und theirs.",
+      "why": "Ein Drei-Wege-Merge wird vorhersagbar, wenn du die gemeinsame Base untersuchst.",
+      "mentalModel": "Git vergleicht beide Seiten mit der Merge-Base und kombiniert kompatible Änderungen.",
+      "takeaway": "Kompatible Änderungen wurden automatisch gemergt; du hast den einen echten Konflikt entschieden.",
       "hints": [
-        "Bestimme Base und konkurrierende Änderungen.",
-        "Löse nur den wirklich unvereinbaren Bereich.",
+        "Identifiziere die Base und die konkurrierenden Änderungen.",
+        "Löse nur die wirklich inkompatible Stelle.",
         "Stage die gelösten Dateien und schließe den Merge-Commit ab."
       ]
     },
     "a07": {
-      "title": "Remote Divergence",
-      "objective": "Löse einen Branch, der gleichzeitig vor und hinter dem Remote liegt.",
-      "why": "Fetch, pull und push werden klar, wenn lokale und Remote-Tracking-Refs getrennt gedacht werden.",
-      "mentalModel": "Divergenz bedeutet: Beide Seiten haben Commits, die der anderen fehlen.",
+      "title": "Remote-Divergenz",
+      "scenario": "Dein Branch ist gleichzeitig vor UND hinter dem Remote. Beide Seiten haben Arbeit, die der anderen fehlt.",
+      "objective": "Löse einen Branch, der gleichzeitig vor und hinter seinem Remote liegt.",
+      "why": "Fetch, Pull und Push ergeben Sinn, sobald lokale und Remote-Tracking-Refs getrennter Zustand sind.",
+      "mentalModel": "Divergenz bedeutet: Jede Seite hat Commits, die der anderen fehlen.",
+      "takeaway": "Erst fetchen, dann integrieren, dann pushen – Divergenz in der richtigen Reihenfolge aufgelöst.",
       "hints": [
-        "Fetche zuerst.",
-        "Prüfe Ahead/Behind.",
-        "Integriere Remote-Arbeit vor dem Push, wenn der Remote nicht fast-forwarden kann."
+        "Fetche, bevor du über den Remote-Zustand entscheidest.",
+        "Prüfe ahead/behind.",
+        "Integriere die Remote-Arbeit, bevor du pushst, wenn das Remote nicht fast-forwarden kann."
       ]
     },
     "a08": {
       "title": "Git Bisect",
-      "objective": "Finde eine Regression, indem du den verdächtigen Verlauf wiederholt halbierst.",
-      "why": "Binäre Suche reduziert die Zahl der zu testenden Commits stark.",
-      "mentalModel": "Markiere sicher gute und schlechte Punkte und teste sinnvolle Mittelpunkte.",
+      "scenario": "Irgendwo in fünfzig Commits hat sich eine Regression eingeschlichen. Sie einzeln zu testen würde den ganzen Tag dauern.",
+      "objective": "Finde eine Regression, indem du die verdächtige Historie wiederholt halbierst.",
+      "why": "Binäre Suche reduziert die Anzahl der zu testenden Commits drastisch.",
+      "mentalModel": "Markiere bekannt-gute und bekannt-schlechte Punkte und teste dann nützliche Mittelpunkte.",
+      "takeaway": "Jeder Schritt halbiert die Verdächtigen – aus fünfzig Commits werden ein paar Tests.",
       "hints": [
-        "Starte mit Good/Bad-Grenzen.",
+        "Starte mit good/bad-Grenzen.",
         "Klassifiziere den Mittelpunkt.",
-        "Wiederhole das, bis der erste schlechte Commit übrig bleibt."
+        "Wiederhole, bis der erste schlechte Commit übrig bleibt."
       ]
     },
     "a09": {
       "title": "Submodules vs. Subtrees",
-      "objective": "Verstehe zwei Arten, Repositories zusammenzusetzen, ohne sie gleichzusetzen.",
-      "why": "Beide verbinden Projekte, aber Besitz und Update-Mechanik unterscheiden sich.",
-      "mentalModel": "Ein Submodule speichert einen Zeiger auf einen anderen Repo-Zustand; ein Subtree bringt dessen Inhalt in deinen Verlauf.",
+      "scenario": "Du brauchst eine gemeinsame Bibliothek in zwei Projekten. Zwei sehr unterschiedliche Git-Strategien versprechen das.",
+      "objective": "Verstehe zwei Ansätze der Repository-Komposition, ohne sie gleichzusetzen.",
+      "why": "Beide verbinden Projekte, aber Ownership und Update-Mechanik unterscheiden sich.",
+      "mentalModel": "Ein Submodule speichert einen Zeiger auf einen anderen Repo-Zustand; ein Subtree holt den Inhalt eines anderen Projekts in deine Historie.",
+      "takeaway": "Zeiger vs. integrierter Inhalt – die Wahl prägt, wie Updates fließen.",
       "hints": [
-        "Achte darauf, wo der eingebundene Verlauf lebt.",
-        "Vergleiche zeigerbasierte Einbindung mit integriertem Inhalt.",
-        "Ordne jedes visuelle Szenario Submodule oder Subtree zu."
+        "Konzentriere dich darauf, wo die verschachtelte Historie lebt.",
+        "Vergleiche zeigerbasierte Komposition mit integriertem Inhalt.",
+        "Ordne jedes visuelle Szenario als Submodule oder Subtree ein."
       ]
     },
     "a10": {
-      "title": "Git Internals",
-      "objective": "Verfolge eine Datei von Blob über Tree und Commit bis zur Branch-Ref.",
-      "why": "Git wirkt weniger magisch, wenn klar ist: Commits zeigen auf Trees und Refs auf Commits.",
-      "mentalModel": "Content-Objekte sind unveränderlich; bewegliche Refs benennen Punkte in diesem Objektgraphen.",
+      "title": "Git-Interna",
+      "scenario": "Alles in Git sind inhaltsadressierte Objekte. Zeit, die Kette zu sehen, die alles zusammenhält.",
+      "objective": "Verfolge eine Datei vom Blob über Tree und Commit bis zur Branch-Ref.",
+      "why": "Git wird weniger magisch, sobald du siehst, dass Commits auf Trees zeigen und Refs auf Commits.",
+      "mentalModel": "Inhaltsobjekte sind unveränderlich; bewegliche Refs benennen Punkte in diesem Objektgraph.",
+      "takeaway": "blob → tree → commit → ref: die ganze Architektur in einer Kette.",
       "hints": [
         "Starte beim Dateiinhalt.",
-        "Folge Blob → Tree → Commit.",
-        "Bestimme danach die Ref, die dem Commit einen lesbaren Namen gibt."
+        "Folge blob → tree → commit.",
+        "Identifiziere dann die Ref, die dem Commit einen menschenlesbaren Namen gibt."
       ]
     }
   }

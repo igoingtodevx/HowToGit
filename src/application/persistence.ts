@@ -9,6 +9,7 @@ interface PersistedPreferences {
   mode?: LearningMode;
   progress?: Record<string, LessonProgress>;
   onboarded?: boolean;
+  lessonId?: string;
 }
 
 function isLocale(value: unknown): value is Locale {
@@ -54,6 +55,7 @@ export function loadPreferences(storage: Pick<Storage, 'getItem'> | undefined): 
         ? { progress: parsed.progress as Record<string, LessonProgress> }
         : {}),
       ...(typeof parsed.onboarded === 'boolean' ? { onboarded: parsed.onboarded } : {}),
+      ...(typeof parsed.lessonId === 'string' && /^(?:b|a)(?:0[1-9]|10)$/.test(parsed.lessonId) ? { lessonId: parsed.lessonId } : {}),
     };
   } catch {
     return {};

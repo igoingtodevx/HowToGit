@@ -4,7 +4,8 @@ export type ParsedCommand =
   | { kind: 'init' }
   | { kind: 'status'; short: boolean }
   | { kind: 'add'; paths: string[] }
-  | { kind: 'commit'; message: string }
+  | { kind: 'commit'; message: string; stageAll: boolean }
+  | { kind: 'show'; target?: string }
   | { kind: 'log'; oneline: boolean; graph: boolean; all: boolean }
   | { kind: 'diff'; staged: boolean }
   | { kind: 'branch'; action: 'list' }
@@ -94,9 +95,20 @@ export const parseCommand = (input: string): ParseResult => {
       return { success: true, command: { kind: 'add', paths: args } };
     case 'commit': {
       const messageIndex = args.indexOf('-m');
-      if (messageIndex === -1 || args.length !== 2 || !args[messageIndex + 1]) return fail('usage: git commit -m "<message>"');
-      return { success: true, command: { kind: 'commit', message: args[messageIndex + 1] } };
+      const shorthandIndex = args.indexOf('-am');
+      const stageAll = args.includes('-a') || shorthandIndex !== -1;
+      const flagCount = args.filter((arg) => arg === '-a' || arg === '-am' || arg === '-m').length;
+      if (flagCount !== args.length - 1) return fail('usage: git commit [-a] -m "<message>"');
+      if (shorthandIndex !== -1) {
+        if (shorthandIndex !== args.length - 2) return fail('usage: git commit [-a] -m "<message>"');
+        return { success: true, command: { kind: 'commit', message: args[shorthandIndex + 1], stageAll: true } };
+      }
+      if (messageIndex !== args.length - 2) return fail('usage: git commit [-a] -m "<message>"');
+      return { success: true, command: { kind: 'commit', message: args[messageIndex + 1], stageAll } };
     }
+    case 'show':
+      if (args.length <= 1) return { success: true, command: { kind: 'show', target: args[0] } };
+      return fail('usage: git show [<commit-ish>]');
     case 'log':
       if (args.some((arg) => !['--oneline', '--graph', '--all'].includes(arg))) return fail('usage: git log [--oneline] [--graph] [--all]');
       return { success: true, command: { kind: 'log', oneline: args.includes('--oneline'), graph: args.includes('--graph'), all: args.includes('--all') } };

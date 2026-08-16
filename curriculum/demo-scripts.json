@@ -472,6 +472,15 @@
           "de": "Zeige den alten Zustand in der Vorschau, bevor du ihn wiederherstellst."
         },
         "focus": "timeMachine"
+      },
+      {
+        "kind": "terminal",
+        "value": "git reset --hard <recovered-hash>",
+        "narration": {
+          "en": "Reset restores the ref to the lost tip. The 'deleted' commits are reachable again.",
+          "de": "Reset stellt die Ref auf die verlorene Spitze zurück. Die „gelöschten“ Commits sind wieder erreichbar."
+        },
+        "focus": "graph"
       }
     ]
   },
@@ -518,6 +527,36 @@
           "de": "Kompatible Änderungen werden kombiniert; unvereinbare Bereiche müssen gelöst werden."
         },
         "focus": "conflict"
+      },
+      {
+        "kind": "resolveConflict",
+        "value": {
+          "path": "app.ts",
+          "strategy": "manual"
+        },
+        "narration": {
+          "en": "Only the incompatible region needs a decision; the compatible change merged itself.",
+          "de": "Nur die inkompatible Stelle braucht eine Entscheidung; die kompatible Änderung hat sich selbst gemergt."
+        },
+        "focus": "conflict"
+      },
+      {
+        "kind": "terminal",
+        "value": "git add .",
+        "narration": {
+          "en": "Staging marks the resolution and includes the auto-merged file.",
+          "de": "Staging markiert die Lösung und nimmt die automatisch gemergte Datei mit auf."
+        },
+        "focus": "staging"
+      },
+      {
+        "kind": "terminal",
+        "value": "git commit -m \"Merge feature\"",
+        "narration": {
+          "en": "The merge commit records both parents and both changes.",
+          "de": "Der Merge-Commit hält beide Eltern und beide Änderungen fest."
+        },
+        "focus": "repository"
       }
     ]
   },
@@ -544,6 +583,24 @@
           "de": "Beide Refs besitzen Commits, die der jeweils anderen fehlen."
         },
         "focus": "graph"
+      },
+      {
+        "kind": "terminal",
+        "value": "git pull",
+        "narration": {
+          "en": "Pull integrates the remote work: local and remote changes combine in a merge commit.",
+          "de": "Pull integriert die Remote-Arbeit: lokale und entfernte Änderungen vereinen sich in einem Merge-Commit."
+        },
+        "focus": "graph"
+      },
+      {
+        "kind": "terminal",
+        "value": "git push",
+        "narration": {
+          "en": "Now the remote can fast-forward, and both refs point to the same history.",
+          "de": "Jetzt kann der Remote fast-forwarden, und beide Refs zeigen auf denselben Verlauf."
+        },
+        "focus": "repository"
       }
     ]
   },

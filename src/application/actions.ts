@@ -1,5 +1,5 @@
 import type { GitEffect, GitState, LearningMode, LessonProgress, Locale } from '../../engine/types';
-import type { InteractionState } from './appState';
+import type { ConfirmAnswer, FlowState, InteractionState, LessonStage } from './appState';
 
 export type AppAction =
   | { type: 'locale/changed'; locale: Locale }
@@ -12,6 +12,10 @@ export type AppAction =
   | { type: 'conflict/resolved'; path: string; content: string }
   | { type: 'lesson/selected'; lessonId: string }
   | { type: 'lesson/restarted'; git: GitState; lessonId: string }
+  | { type: 'flow/stage'; stage: LessonStage }
+  | { type: 'flow/hintRevealed' }
+  | { type: 'flow/confirmAnswered'; key: string; value: ConfirmAnswer }
+  | { type: 'flow/reset'; flow?: Partial<FlowState> }
   | { type: 'lab/reset' }
   | { type: 'effects/cleared' }
   | { type: 'demo/state'; git: GitState; effects: GitEffect[]; interaction?: InteractionState }

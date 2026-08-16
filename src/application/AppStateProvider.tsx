@@ -13,12 +13,17 @@ const AppStateContext = createContext<AppStateContextValue | null>(null);
 
 function initializeState(): AppState {
   const preferences = loadPreferences(getStorage());
+  const labState = loadLabState(getStorage());
+  // Restore the active lesson only when its repository state was restored too;
+  // otherwise the mission would validate against a stale repo.
+  const activeLessonId = labState && preferences.lessonId ? preferences.lessonId : undefined;
   return createInitialAppState(
     preferences.locale ?? detectBrowserLocale(),
     preferences.progress,
     preferences.mode,
-    loadLabState(getStorage()),
+    labState,
     preferences.onboarded,
+    activeLessonId,
   );
 }
 
@@ -31,6 +36,7 @@ export function AppStateProvider({ children }: PropsWithChildren) {
       mode: state.mode,
       progress: state.progress,
       onboarded: state.onboarded,
+      lessonId: state.activeLessonId,
     });
   }, [state.locale, state.mode, state.progress, state.onboarded]);
 

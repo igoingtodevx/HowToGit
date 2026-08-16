@@ -51,11 +51,6 @@ export const applyChanges = (base: TreeSnapshot, changes: readonly TreeChange[])
   return cloneTree(next);
 };
 
-export const selectPaths = (tree: TreeSnapshot, paths: readonly string[]): string[] => {
-  if (paths.some((path) => path === '.' || path === '-A')) return Object.keys(tree).sort();
-  return [...new Set(paths)].sort();
-};
-
 export const statusBetween = (
   headTree: TreeSnapshot,
   index: TreeSnapshot,

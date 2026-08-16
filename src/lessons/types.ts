@@ -60,12 +60,24 @@ export interface DemoStep {
 export interface DemoScript { lessonId: LessonId; steps: readonly DemoStep[] }
 export interface ScenarioDefinition { id: ScenarioId; description: string }
 
+/** A "check your understanding" question shown in the Confirm stage. Copy lives in i18n under `confirm.<id>.*`. */
+export interface ConfirmQuestion {
+  id: string;
+  kind: 'choice' | 'order';
+  /** Index of the correct option (choice) — options are `confirm.<id>.option.<n>` i18n keys. */
+  correctIndex?: number;
+  optionCount: number;
+  /** Correct sequence for order questions — the learner's value is an array of option indexes. */
+  correctOrder?: readonly number[];
+}
+
 export interface LessonRuntimeDefinition extends LessonDefinition {
   scenario: ScenarioDefinition;
   challenge: ChallengeDefinition;
   demo: DemoScript;
   hints: Readonly<Record<Locale, readonly [string, string, string]>>;
   validator: LessonValidator;
+  confirm: readonly ConfirmQuestion[];
 }
 
 export interface ChallengeValidationResult {

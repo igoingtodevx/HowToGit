@@ -1,14 +1,8 @@
 import type { AppAction } from './actions';
 import { executeCommand } from '../../engine/commandExecutor';
 import { createGitState, removeWorkingFile, resolveConflict, writeWorkingFile } from '../../engine/state';
-import { createInitialAppState, type AppState } from './appState';
-
-function explanationFor(errorCode: string | undefined, input: string): string | undefined {
-  if (errorCode === 'NOTHING_TO_COMMIT') return 'statusHelp.nothingToCommit';
-  if (errorCode === 'UNRESOLVED_CONFLICTS' || errorCode === 'CONFLICT_NOT_EDITED') return 'statusHelp.conflict';
-  if (/^git\s+status/.test(input)) return undefined;
-  return undefined;
-}
+import { feedbackFor } from '../lessons/feedback';
+import { createInitialAppState, createInitialFlowState, type AppState } from './appState';
 
 export function appReducer(state: AppState, action: AppAction): AppState {
   switch (action.type) {
@@ -18,25 +12,30 @@ export function appReducer(state: AppState, action: AppAction): AppState {
       return { ...state, mode: action.mode };
     case 'git/replaced':
       return { ...state, git: action.git };
-    case 'progress/updated':
-      return {
-        ...state,
-        progress: {
-          ...state.progress,
-          [action.progress.lessonId]: action.progress,
-        },
+    case 'progress/updated': {
+      const previous = state.progress[action.progress.lessonId];
+      const merged = {
+        ...previous,
+        ...action.progress,
+        perfect: Boolean(action.progress.perfect || previous?.perfect),
+        hintsUsed: Math.min(previous?.hintsUsed ?? action.progress.hintsUsed, action.progress.hintsUsed),
       };
+      return { ...state, progress: { ...state.progress, [action.progress.lessonId]: merged } };
+    }
     case 'command/executed': {
       const result = executeCommand(state.git, action.input);
       const interaction = { ...state.interaction };
       interaction.commands = [...interaction.commands, action.input];
+      const effectTypes = new Set(result.effects.map((effect) => effect.type));
       if (/^git\s+log\b/.test(action.input) && result.success) interaction.logExecuted = true;
-      if (/^git\s+stash(?:\s+-m|\s+push|\s*$)/.test(action.input) && result.success) interaction.stashCreated = true;
+      if (effectTypes.has('STASH_CREATED')) interaction.stashCreated = true;
       if (/^git\s+stash\s+list/.test(action.input) && result.success) interaction.stashInspected = true;
-      if (/^git\s+stash\s+pop/.test(action.input) && result.success) interaction.stashRestored = true;
-      if (/^git\s+reset\b/.test(action.input) && result.success) interaction.undoResetSeen = true;
+      if (effectTypes.has('STASH_APPLIED')) interaction.stashRestored = true;
+      if (effectTypes.has('RESET_PERFORMED')) interaction.undoResetSeen = true;
       if (/^git\s+revert\b/.test(action.input) && result.success) interaction.undoRevertSeen = true;
-      if (/^git\s+fetch\b/.test(action.input) && result.success) interaction.fetched = true;
+      // `git pull` performs a fetch internally — its REMOTE_UPDATED effect counts as fetching.
+      if (effectTypes.has('REMOTE_UPDATED')) interaction.fetched = true;
+      const feedback = feedbackFor(action.input, result.errorCode);
       return {
         ...state,
         git: result.nextState,
@@ -48,7 +47,8 @@ export function appReducer(state: AppState, action: AppAction): AppState {
           success: result.success,
           lines: result.output,
           ...(result.errorCode ? { errorCode: result.errorCode } : {}),
-          ...(explanationFor(result.errorCode, action.input) ? { explanationKey: explanationFor(result.errorCode, action.input) } : {}),
+          ...(feedback.feedbackKey ? { explanationKey: feedback.feedbackKey } : {}),
+          ...(feedback.correction ? { correction: feedback.correction } : {}),
         }].slice(-40),
       };
     }
@@ -58,10 +58,33 @@ export function appReducer(state: AppState, action: AppAction): AppState {
       return { ...state, git: removeWorkingFile(state.git, action.path), effects: [{ type: 'WORKTREE_CHANGED', paths: [action.path] }] };
     case 'conflict/resolved':
       return { ...state, git: resolveConflict(state.git, action.path, action.content), effects: [{ type: 'WORKTREE_CHANGED', paths: [action.path] }] };
-    case 'lesson/selected':
-      return { ...state, activeLessonId: action.lessonId };
+    case 'lesson/selected': {
+      if (action.lessonId === state.activeLessonId) return state;
+      const completed = state.progress[action.lessonId]?.completed;
+      return {
+        ...state,
+        activeLessonId: action.lessonId,
+        flow: { ...createInitialFlowState(), stage: completed ? 'done' : 'learn' },
+      };
+    }
     case 'lesson/restarted':
-      return { ...state, git: action.git, activeLessonId: action.lessonId, terminal: [], effects: [], interaction: { commands: [], logExecuted: false, stashCreated: false, stashInspected: false, stashRestored: false, undoResetSeen: false, undoRevertSeen: false, fetched: false, inspectedRefs: [], conceptAnswers: {} } };
+      return {
+        ...state,
+        git: action.git,
+        activeLessonId: action.lessonId,
+        terminal: [],
+        effects: [],
+        interaction: { commands: [], logExecuted: false, stashCreated: false, stashInspected: false, stashRestored: false, undoResetSeen: false, undoRevertSeen: false, fetched: false, inspectedRefs: [], conceptAnswers: {} },
+        flow: createInitialFlowState(),
+      };
+    case 'flow/stage':
+      return { ...state, flow: { ...state.flow, stage: action.stage } };
+    case 'flow/hintRevealed':
+      return { ...state, flow: { ...state.flow, hintCount: Math.min(3, state.flow.hintCount + 1) } };
+    case 'flow/confirmAnswered':
+      return { ...state, flow: { ...state.flow, confirmAnswers: { ...state.flow.confirmAnswers, [action.key]: action.value } } };
+    case 'flow/reset':
+      return { ...state, flow: { ...state.flow, ...action.flow } };
     case 'lab/reset': {
       const fresh = createInitialAppState(state.locale, state.progress, state.mode, createGitState());
       return { ...fresh, activeLessonId: state.activeLessonId, onboarded: state.onboarded };

@@ -115,6 +115,7 @@ export type ResetMode = 'soft' | 'mixed' | 'hard';
 export type RiskLevel = 'safe' | 'caution' | 'destructive';
 
 export type GitEffect =
+  | { type: 'REPOSITORY_INITIALIZED' }
   | { type: 'FILE_STAGED'; paths: FilePath[] }
   | { type: 'COMMIT_CREATED'; commitId: CommitId; parentIds: CommitId[] }
   | { type: 'BRANCH_CREATED'; branch: BranchName; target: CommitId | null }
@@ -161,8 +162,12 @@ export interface CommandHistoryEntry {
 export interface LessonProgress {
   lessonId: string;
   completed: boolean;
+  /** Number of successful completions. */
   attempts: number;
+  /** Hints revealed during the best (lowest-hint) completion. */
   hintsUsed: number;
+  /** Completed at least once without revealing any hint. */
+  perfect: boolean;
 }
 
 export type Locale = 'en' | 'de';

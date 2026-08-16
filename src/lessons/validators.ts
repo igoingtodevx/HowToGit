@@ -1,5 +1,6 @@
 import { ancestorsOf, headCommitId, isAncestor, treeEquals, uniqueCommitsSince } from '../../engine';
-import type { GitState } from '../../engine';
+import { diffTrees } from '../../engine/tree';
+import type { GitState, TreeChange, TreeSnapshot } from '../../engine';
 import type { ChallengeValidationResult, LessonValidator, ValidationContext, ValidatorId } from './types';
 
 type Check = readonly [key: string, passed: boolean];
@@ -12,6 +13,13 @@ const result = (checks: readonly Check[]): ChallengeValidationResult => {
 };
 
 const branchTip = (state: GitState, name: string) => state.branches[name]?.target ?? null;
+const EMPTY: TreeSnapshot = {};
+const changeFingerprint = (change: TreeChange) => `${change.path} ${change.before?.content ?? ''} ${change.after?.content ?? ''}`;
+const changesEqual = (left: readonly TreeChange[], right: readonly TreeChange[]): boolean => {
+  const leftSet = new Set(left.map(changeFingerprint));
+  const rightSet = new Set(right.map(changeFingerprint));
+  return leftSet.size === rightSet.size && [...leftSet].every((fingerprint) => rightSet.has(fingerprint));
+};
 const headHas = (state: GitState, path: string) => {
   const head = headCommitId(state); return head !== null && state.commits[head]?.tree[path] !== undefined;
 };
@@ -58,7 +66,15 @@ const validators = {
   'validator-cherry-picked': ({ state, initialState }) => {
     const source = initialState.commits['source-hotfix']; const head = headCommitId(state);
     const reachable = ancestorsOf(state.commits, head);
-    const equivalent = [...reachable].some((id) => id !== source?.id && source && treeEquals(state.commits[id].tree, source.tree));
+    // Cherry-pick replays the source's *change-set* onto a new parent — full trees differ.
+    const sourceChange = source?.parents[0] ? diffTrees(initialState.commits[source.parents[0]]?.tree ?? EMPTY, source.tree) : [];
+    const equivalent = source && [...reachable].some((id) => {
+      if (id === source.id) return false;
+      const commit = state.commits[id];
+      if (!commit) return false;
+      const parentTree = commit.parents[0] ? state.commits[commit.parents[0]]?.tree ?? EMPTY : EMPTY;
+      return changesEqual(diffTrees(parentTree, commit.tree), sourceChange);
+    });
     return result([['patchPresent', Boolean(equivalent)], ['newCommitIdentity', !reachable.has('source-hotfix')]]);
   },
   'validator-stash-managed': ({ state, interaction }) => result([
