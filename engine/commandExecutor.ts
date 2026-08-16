@@ -19,6 +19,7 @@ import type {
   ReflogEntry,
   TerminalOutputLine,
   TreeSnapshot,
+  VirtualFile,
 } from './types';
 
 const DEFAULT_AUTHOR = { name: 'GitFlow Learner', email: 'learner@gitflow.academy' };
@@ -337,7 +338,7 @@ const mergeCommand = (previous: GitState, targetName: string, commandText: strin
   ]);
 };
 
-const commitCommand = (previous: GitState, message: string, commandText: string): CommandResult => {
+const commitCommand = (previous: GitState, message: string, commandText: string, stageAll = false): CommandResult => {
   if (previous.operation && Object.values(previous.operation.conflicts).some((conflict) => !conflict.resolved)) {
     return failure(previous, 'UNRESOLVED_CONFLICTS', 'error: Committing is not possible because you have unmerged files.');
   }
@@ -358,23 +359,56 @@ const commitCommand = (previous: GitState, message: string, commandText: string)
       );
     }
   }
-  if (treeEquals(previous.index, headTree(previous)) && !previous.operation) {
+  const next = cloneState(previous);
+  const stagedPaths: string[] = [];
+  if (stageAll) {
+    // `git commit -a` stages modified/deleted *tracked* files; untracked files stay out.
+    const tracked = new Set([...Object.keys(next.index), ...Object.keys(headTree(next))]);
+    const index: Record<string, VirtualFile> = { ...next.index };
+    for (const change of diffTrees(next.index, next.workingTree)) {
+      if (!tracked.has(change.path)) continue;
+      const working = next.workingTree[change.path];
+      if (working) index[change.path] = { ...working };
+      else delete index[change.path];
+      stagedPaths.push(change.path);
+    }
+    next.index = cloneTree(index);
+  }
+  if (treeEquals(next.index, headTree(next)) && !next.operation) {
     return failure(previous, 'NOTHING_TO_COMMIT', 'nothing to commit, working tree clean');
   }
-  const next = cloneState(previous);
   const head = headCommitId(next);
   const merge = next.operation?.kind === 'merge' ? next.operation : null;
   const parents = merge ? [head, merge.sourceCommit].filter((id): id is string => id !== null) : head ? [head] : [];
   const made = makeCommit(next, message, parents, next.index, commandText);
   next.operation = null;
   const output = [line(`[${currentBranchName(next) ?? 'detached'} ${made.commit.id.slice(0, 7)}] ${message}`, 'success')];
+  const stagedEffects: GitEffect[] = stagedPaths.length > 0
+    ? [{ type: 'FILE_STAGED', paths: stagedPaths }, { type: 'INDEX_CHANGED', paths: stagedPaths }]
+    : [];
   if (merge && parents.length === 2) {
     return success(previous, next, output, [
+      ...stagedEffects,
       { type: 'MERGE_COMMIT_CREATED', commitId: made.commit.id, parents: [parents[0], parents[1]] },
       ...made.effects.slice(1),
     ]);
   }
-  return success(previous, next, output, made.effects);
+  return success(previous, next, output, [...stagedEffects, ...made.effects]);
+};
+
+const showCommand = (previous: GitState, targetValue: string | undefined): CommandResult => {
+  const target = resolveCommitish(previous, targetValue ?? 'HEAD');
+  if (target === null) return failure(previous, 'UNKNOWN_REVISION', `fatal: ambiguous argument '${targetValue ?? 'HEAD'}': unknown revision`);
+  const commit = previous.commits[target];
+  const parentTree = commit.parents[0] ? previous.commits[commit.parents[0]]?.tree ?? EMPTY_TREE : EMPTY_TREE;
+  const changes = diffTrees(parentTree, commit.tree);
+  return success(previous, cloneState(previous), [
+    line(`commit ${commit.id}`, 'accent'),
+    line(`Author: ${commit.author.name} <${commit.author.email}>`, 'muted'),
+    line(''),
+    line(`    ${commit.message}`, 'default'),
+    ...(changes.length > 0 ? [line(''), ...formatDiff(changes)] : []),
+  ]);
 };
 
 const resetCommand = (previous: GitState, mode: 'soft' | 'mixed' | 'hard', targetValue: string, commandText: string): CommandResult => {
@@ -685,7 +719,7 @@ const executeParsed = (previous: GitState, command: ParsedCommand, commandText: 
       next.initialized = true;
       next.branches.main = { name: 'main', target: null };
       next.head = { kind: 'unborn', branch: 'main' };
-      return success(previous, next, [line('Initialized empty Git repository in /.git/', 'success')]);
+      return success(previous, next, [line('Initialized empty Git repository in /.git/', 'success')], [{ type: 'REPOSITORY_INITIALIZED' }]);
     }
     case 'status':
       return success(previous, cloneState(previous), formatStatus(previous, command.short));
@@ -712,7 +746,8 @@ const executeParsed = (previous: GitState, command: ParsedCommand, commandText: 
       if (next.operation) for (const path of paths) if (next.operation.conflicts[path]) effects.push({ type: 'CONFLICT_RESOLVED', path });
       return success(previous, next, [], effects);
     }
-    case 'commit': return commitCommand(previous, command.message, commandText);
+    case 'commit': return commitCommand(previous, command.message, commandText, command.stageAll);
+    case 'show': return showCommand(previous, command.target);
     case 'log': {
       const starts = command.all
         ? [

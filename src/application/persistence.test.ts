@@ -15,7 +15,7 @@ describe('preferences', () => {
       setItem: vi.fn((_key: string, value: string) => { persisted = value; }),
     };
 
-    savePreferences(storage, { locale: 'de', mode: 'noob', progress: {}, onboarded: true });
+    savePreferences(storage, { locale: 'de', mode: 'noob', progress: {}, onboarded: true, lessonId: 'b01' });
 
     expect(loadPreferences(storage).locale).toBe('de');
   });

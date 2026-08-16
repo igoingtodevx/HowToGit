@@ -78,6 +78,15 @@ describe('demo runner and validators', () => {
     expect(Object.values(interactive.state.commits).some((commit) => commit.message === 'Polished feature history')).toBe(true);
   });
 
+  it('every demo script is a valid learner path that satisfies its own validator', () => {
+    for (const lessonId of executableLessonIds) {
+      const runtime = runLessonDemo(lessonId);
+      const lesson = lessonCatalog.find((entry) => entry.id === lessonId)!;
+      const validation = lesson.validator(runtime);
+      expect(validation.complete, `${lessonId}: ${JSON.stringify(validation.remaining)}`).toBe(true);
+    }
+  });
+
   it('keeps validators pure and supports deterministic conceptual answers', () => {
     const runtime = createDemoRuntime('b01');
     const before = structuredClone(runtime);

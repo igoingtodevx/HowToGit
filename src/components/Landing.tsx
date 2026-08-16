@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { executeCommand } from '../../engine/commandExecutor';
 import { createGitState, writeWorkingFile } from '../../engine/state';
-import type { Locale } from '../../engine/types';
+import type { LearningMode, Locale } from '../../engine/types';
 import { useAppState } from '../application/AppStateProvider';
 import { createLessonScenario } from '../lessons';
 import { useI18n } from '../i18n/i18n';
@@ -17,9 +17,10 @@ export function Landing() {
   const runToken = useRef(0);
   useEffect(() => () => { runToken.current += 1; }, []);
 
-  const completeOnboarding = (lessonId: 'b01' | 'b07') => {
+  const completeOnboarding = (lessonId: 'b01' | 'a01', mode: LearningMode) => {
     const scenario = createLessonScenario(lessonId);
     if (scenario) dispatch({ type: 'lesson/restarted', lessonId, git: scenario });
+    if (mode === 'pro') dispatch({ type: 'mode/changed', mode: 'pro' });
     dispatch({ type: 'onboarding/completed' });
   };
 
@@ -53,7 +54,7 @@ export function Landing() {
   return (
     <main className="landing">
       <header className="landing-nav"><a className="brand" href="#hero"><span className="brand-mark">GF</span><span><b>{t('app.name')}</b><small>{t('ui.landingBrand')}</small></span></a><label className="language-select"><span>{t('language.label')}</span><select value={locale} onChange={(event) => setLocale(event.target.value as Locale)}><option value="en">English</option><option value="de">Deutsch</option></select></label></header>
-      <section className="landing-hero" id="hero"><div className="landing-copy"><p className="eyebrow">{t('hero.eyebrow')}</p><h1>{t('hero.title')}</h1><p>{t('hero.subtitle')}</p><div className="landing-actions"><button className="primary-button" type="button" onClick={() => completeOnboarding('b01')} disabled={running}>{t('hero.startZero')}</button><button className="ghost-button" type="button" onClick={() => completeOnboarding('b07')} disabled={running}>{t('hero.startAdvanced')}</button><button className="demo-button" type="button" onClick={runDemo} disabled={running}>{running ? t('ui.demoRunning') : t('hero.replay')}</button></div><p className="no-account">{t('ui.noAccount')}</p></div><aside className="landing-proof" aria-label={t('ui.liveSimulator')}><div className="proof-header"><span><i /> {t('ui.liveEngine')}</span><code>{state.git.initialized ? `${Object.keys(state.git.commits).length} ${t(Object.keys(state.git.commits).length === 1 ? 'ui.commit' : 'ui.commits')}` : t('ui.notInitialized')}</code></div><GitXRay state={state.git} effects={state.effects} /><GitGraph state={state.git} effects={state.effects} /><p className="proof-caption">{t('ui.proofCaption')} <code>git init → edit → git add → git commit</code></p></aside></section>
+      <section className="landing-hero" id="hero"><div className="landing-copy"><p className="eyebrow">{t('hero.eyebrow')}</p><h1>{t('hero.title')}</h1><p>{t('hero.subtitle')}</p><div className="landing-actions"><button className="primary-button" type="button" onClick={() => completeOnboarding('b01', 'noob')} disabled={running}>{t('hero.startZero')}</button><button className="ghost-button" type="button" onClick={() => completeOnboarding('a01', 'pro')} disabled={running}>{t('hero.startAdvanced')}</button><button className="demo-button" type="button" onClick={runDemo} disabled={running}>{running ? t('ui.demoRunning') : t('hero.replay')}</button></div><p className="no-account">{t('ui.noAccount')}</p></div><aside className="landing-proof" aria-label={t('ui.liveSimulator')}><div className="proof-header"><span><i /> {t('ui.liveEngine')}</span><code>{state.git.initialized ? `${Object.keys(state.git.commits).length} ${t(Object.keys(state.git.commits).length === 1 ? 'ui.commit' : 'ui.commits')}` : t('ui.notInitialized')}</code></div><GitXRay state={state.git} effects={state.effects} /><GitGraph state={state.git} effects={state.effects} /><p className="proof-caption">{t('ui.proofCaption')} <code>git init → edit → git add → git commit</code></p></aside></section>
       <section className="landing-values"><article><span>01</span><h2>{t('ui.seeCausality')}</h2><p>{t('ui.seeCausalityBody')}</p></article><article><span>02</span><h2>{t('ui.trustSimulator')}</h2><p>{t('ui.trustSimulatorBody')}</p></article><article><span>03</span><h2>{t('ui.useAiSafely')}</h2><p>{t('ui.useAiSafelyBody')}</p></article></section>
     </main>
   );

@@ -3,60 +3,92 @@ import { executeInteractiveRebase, uniqueCommitsSince } from '../../engine';
 import { useAppState } from '../application/AppStateProvider';
 import type { InteractionState } from '../application/appState';
 import { useI18n } from '../i18n/i18n';
-import { createDemoRuntime, createLessonScenario, getLesson, runDemoStep, validateLesson, type DemoRuntime, type DemoStep, type LessonId } from '../lessons';
+import { createDemoRuntime, getLesson, runDemoStep, type DemoRuntime, type DemoStep, type LessonId } from '../lessons';
+import { useLessonValidation } from '../lessons/useLessonValidation';
+import { ConceptualExercise } from './BeginnerFlow';
 
 const beginnerIds = Array.from({ length: 10 }, (_, index) => `b${String(index + 1).padStart(2, '0')}`);
 const advancedIds = Array.from({ length: 10 }, (_, index) => `a${String(index + 1).padStart(2, '0')}`);
 
-export function LessonNavigation() {
-  const { state, dispatch } = useAppState();
+export function LessonNavigation({ onSelectLesson }: { onSelectLesson: (lessonId: LessonId) => void }) {
+  const { state } = useAppState();
   const { t } = useI18n();
+  const statusOf = (id: string) => {
+    const progress = state.progress[id];
+    if (progress?.completed) return progress.perfect ? `★ ${t('ui.perfect')}` : `✓ ${t('ui.completed')}`;
+    return id === 'b01' ? t('ui.startHere') : (id.startsWith('b') ? t('ui.interactive') : t('ui.simulatorLesson'));
+  };
+  const renderLink = (id: string, index: number) => (
+    <li key={id}>
+      <button type="button" className={state.activeLessonId === id ? 'lesson-link active' : 'lesson-link'} onClick={() => onSelectLesson(id as LessonId)}>
+        <span>{String(index + 1).padStart(2, '0')}</span>
+        <span><b>{t(`lessons.${id}.title`)}</b><small>{statusOf(id)}</small></span>
+      </button>
+    </li>
+  );
   return (
     <nav className="lesson-navigation" aria-label={t('ui.courseLessons')}>
       <p className="sidebar-label">{t('nav.beginner')} · 10</p>
-      <ol>{beginnerIds.map((id, index) => <li key={id}><button type="button" className={state.activeLessonId === id ? 'lesson-link active' : 'lesson-link'} onClick={() => dispatch({ type: 'lesson/selected', lessonId: id })}><span>{String(index + 1).padStart(2, '0')}</span><span><b>{t(`lessons.${id}.title`)}</b><small>{state.progress[id]?.completed ? `✓ ${t('ui.complete')}` : index === 0 ? t('ui.startHere') : t('ui.interactive')}</small></span></button></li>)}</ol>
+      <ol>{beginnerIds.map(renderLink)}</ol>
       <p className="sidebar-label advanced-label">{t('nav.advanced')} · 10</p>
-      <ol>{advancedIds.map((id, index) => <li key={id}><button type="button" className={state.activeLessonId === id ? 'lesson-link active' : 'lesson-link'} onClick={() => dispatch({ type: 'lesson/selected', lessonId: id })}><span>{String(index + 1).padStart(2, '0')}</span><span><b>{t(`lessons.${id}.title`)}</b><small>{index >= 7 ? t('ui.conceptualModule') : t('ui.simulatorLesson')}</small></span></button></li>)}</ol>
+      <ol>{advancedIds.map(renderLink)}</ol>
     </nav>
   );
 }
 
-export function LessonPanel() {
+/** Pro Mode: dense lesson panel with live criteria, demo controller and hints. */
+export function ProLessonPanel() {
   const { state, dispatch } = useAppState();
   const { t, tArray } = useI18n();
   const [hintCount, setHintCount] = useState(0);
-  const id = state.activeLessonId;
+  const id = state.activeLessonId as LessonId;
   useEffect(() => setHintCount(0), [id]);
   const hints = tArray(`lessons.${id}.hints`);
-  const conceptual = ['a08', 'a09', 'a10'].includes(id);
-  const lesson = getLesson(id as LessonId);
-  const initialState = createLessonScenario(id as LessonId);
-  const validation = conceptual
-    ? validateLesson(lesson.validatorId, { state: state.git, initialState: state.git, interaction: state.interaction })
-    : initialState ? validateLesson(lesson.validatorId, { state: state.git, initialState, interaction: state.interaction }) : null;
+  const lesson = getLesson(id);
+  const validation = useLessonValidation();
+
   useEffect(() => {
     if (!validation?.complete || state.progress[id]?.completed) return;
-    dispatch({ type: 'progress/updated', progress: { lessonId: id, completed: true, attempts: (state.progress[id]?.attempts ?? 0) + 1, hintsUsed: hintCount } });
+    dispatch({ type: 'progress/updated', progress: { lessonId: id, completed: true, attempts: (state.progress[id]?.attempts ?? 0) + 1, hintsUsed: hintCount, perfect: hintCount === 0 } });
   }, [dispatch, hintCount, id, state.progress, validation?.complete]);
+
   const loadScenario = () => {
-    if (conceptual) {
+    if (lesson.conceptual) {
       dispatch({ type: 'concept/reset' });
       return;
     }
-    const scenario = createLessonScenario(id as LessonId);
-    if (scenario) dispatch({ type: 'lesson/restarted', lessonId: id, git: scenario });
+    const restarted = createDemoRuntime(id);
+    dispatch({ type: 'lesson/restarted', lessonId: id, git: restarted.state });
   };
+
   return (
     <section className="lesson-panel" id="learn" aria-labelledby="lesson-title">
-      <div className="lesson-meta"><span>{id.startsWith('b') ? t('nav.beginner') : t('nav.advanced')} · {id.slice(1)}</span>{conceptual && <b>{t('ui.conceptualLabel')}</b>}</div>
+      <div className="lesson-meta"><span>{t(`nav.${lesson.track}`)} · {id.slice(1)}</span>{lesson.conceptual && <b>{t('ui.conceptualLabel')}</b>}</div>
       <h1 id="lesson-title">{t(`lessons.${id}.title`)}</h1>
       <div className="lesson-goal"><small>{t('lesson.goal')}</small><strong>{t(`lessons.${id}.objective`)}</strong></div>
-      <div className="lesson-actions"><button className="primary-button" type="button" onClick={loadScenario}>{t('lesson.restart')}</button>{validation && <span className={validation.complete ? 'challenge-complete' : 'challenge-progress'}>{validation.complete ? `✓ ${t('lesson.complete')}` : `${validation.satisfied.length}/${validation.satisfied.length + validation.remaining.length} ${t('ui.challengeCriteria')}`}</span>}</div>
+      <div className="lesson-actions">
+        <button className="primary-button" type="button" onClick={loadScenario}>{t('lesson.restart')}</button>
+        {validation && (
+          <span className={validation.complete ? 'challenge-complete' : 'challenge-progress'}>
+            {validation.complete ? `✓ ${t('lesson.complete')}` : `${validation.satisfied.length}/${validation.satisfied.length + validation.remaining.length} ${t('ui.challengeCriteria')}`}
+          </span>
+        )}
+      </div>
       <div className="challenge-card"><small>{t('lesson.challenge')}</small><p>{lesson.challenge.goal[state.locale]}</p></div>
+      {validation && (
+        <ul className="criteria-list pro-criteria" aria-label={t('flow.criteriaTitle')}>
+          {[...validation.satisfied, ...validation.remaining].map((item, index) => (
+            <li key={item.key} className={index < validation.satisfied.length ? 'criteria-done' : 'criteria-open'}>
+              <span className="criteria-mark" aria-hidden="true">{index < validation.satisfied.length ? '✓' : '○'}</span>
+              {t(item.labelKey)}
+            </li>
+          ))}
+        </ul>
+      )}
       <details><summary>{t('lesson.why')}</summary><p>{t(`lessons.${id}.why`)}</p></details>
       <details><summary>{t('lesson.mentalModel')}</summary><p>{t(`lessons.${id}.mentalModel`)}</p></details>
       <div className="hint-box"><div><span aria-hidden="true">◎</span><p>{hintCount === 0 ? t('ui.hintIntro') : hints[hintCount - 1]}</p></div><button type="button" onClick={() => setHintCount((count) => Math.min(3, count + 1))} disabled={hintCount >= 3}>{t('lesson.hint')} {Math.min(3, hintCount + 1)}/3</button></div>
-      {conceptual ? <ConceptualExercise id={id as 'a08' | 'a09' | 'a10'} /> : <DemoController key={id} id={id as LessonId} />}
+      {lesson.conceptual ? <ConceptualExercise id={id as 'a08' | 'a09' | 'a10'} /> : <DemoController key={id} id={id} />}
       {id === 'a01' && <InteractiveRebaseLesson />}
     </section>
   );
@@ -101,19 +133,6 @@ function DemoController({ id }: { id: LessonId }) {
   };
   const complete = stepIndex >= lesson.demo.steps.length;
   return <section className="demo-controller" aria-label={t('lesson.showMe')}><div><small>{t('lesson.showMe')} · {Math.min(stepIndex + 1, lesson.demo.steps.length)}/{lesson.demo.steps.length}</small><p aria-live="polite">{narration || lesson.demo.steps[0]?.narration[locale]}</p></div><div className="button-row"><button className="ghost-button" type="button" onClick={restart}>{t('ui.restartDemo')}</button><button className="primary-button" type="button" onClick={next} disabled={complete}>{complete ? t('ui.demoComplete') : t('ui.nextDemoStep')}</button></div></section>;
-}
-
-function ConceptualExercise({ id }: { id: 'a08' | 'a09' | 'a10' }) {
-  const { state, dispatch } = useAppState();
-  const { t } = useI18n();
-  const definitions = {
-    a08: { key: 'firstBadCorrect', correct: true, wrong: false, question: 'ui.conceptQuestionA08', answer: 'ui.conceptAnswerA08', distractor: 'ui.conceptDistractorA08' },
-    a09: { key: 'submoduleSubtreeScore', correct: 'full', wrong: 'none', question: 'ui.conceptQuestionA09', answer: 'ui.conceptAnswerA09', distractor: 'ui.conceptDistractorA09' },
-    a10: { key: 'internalsOrder', correct: ['blob', 'tree', 'commit', 'ref'] as readonly string[], wrong: ['ref', 'blob', 'commit', 'tree'] as readonly string[], question: 'ui.conceptQuestionA10', answer: 'ui.conceptAnswerA10', distractor: 'ui.conceptDistractorA10' },
-  } as const;
-  const definition = definitions[id];
-  const answered = state.interaction.conceptAnswers[definition.key] !== undefined;
-  return <section className="concept-exercise" aria-labelledby="concept-question"><small>{t('lesson.tryIt')}</small><h2 id="concept-question">{t(definition.question)}</h2><div className="concept-options"><button type="button" onClick={() => dispatch({ type: 'concept/answered', key: definition.key, value: definition.correct })}>{t(definition.answer)}</button><button type="button" onClick={() => dispatch({ type: 'concept/answered', key: definition.key, value: definition.wrong })}>{t(definition.distractor)}</button></div>{answered && <p aria-live="polite">{state.interaction.conceptAnswers[definition.key] === definition.correct || (Array.isArray(definition.correct) && Array.isArray(state.interaction.conceptAnswers[definition.key]) && String(state.interaction.conceptAnswers[definition.key]) === String(definition.correct)) ? `✓ ${t('lesson.complete')}` : t('lesson.hint')}</p>}</section>;
 }
 
 function InteractiveRebaseLesson() {

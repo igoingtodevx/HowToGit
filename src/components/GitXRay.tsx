@@ -17,8 +17,9 @@ function Zone({ title, subtitle, kind, tree, states, active }: ZoneProps) {
   const { t } = useI18n();
   const reduceMotion = useReducedMotion();
   return (
-    <section className={`xray-zone xray-zone-${kind}${active ? ' xray-zone-active' : ''}`} aria-label={`${title}: ${subtitle}`}>
+    <section className={`xray-zone xray-zone-${kind}${active ? ' xray-zone-active' : ''}`} aria-label={`${title}: ${subtitle}${active ? ` (${t('ui.zoneJustChanged')})` : ''}`}>
       <header><span className="zone-icon" aria-hidden="true">{kind === 'working' ? '✎' : kind === 'staging' ? '◇' : '●'}</span><div><h3>{title}</h3><p>{subtitle}</p></div></header>
+      {active && <span className="sr-only">{t('ui.zoneJustChanged')}</span>}
       <div className="file-stack">
         <AnimatePresence initial={false}>
           {Object.values(tree).map((file) => (
@@ -56,8 +57,28 @@ export function GitXRay({ state, effects }: { state: GitState; effects: GitEffec
         <span className="flow-arrow" aria-hidden="true">→</span>
         <Zone title={t('gitZones.staging.title')} subtitle={t('gitZones.staging.subtitle')} kind="staging" tree={state.index} states={indexStates} active={types.has('FILE_STAGED') || types.has('INDEX_CHANGED')} />
         <span className="flow-arrow" aria-hidden="true">→</span>
-        <Zone title={t('gitZones.repository.title')} subtitle={t('gitZones.repository.subtitle')} kind="repository" tree={headTree(state)} states={{}} active={types.has('COMMIT_CREATED')} />
+        <Zone title={t('gitZones.repository.title')} subtitle={t('gitZones.repository.subtitle')} kind="repository" tree={headTree(state)} states={{}} active={types.has('COMMIT_CREATED') || types.has('MERGE_COMMIT_CREATED') || types.has('REPOSITORY_INITIALIZED')} />
       </div>
+      {state.stashes.length > 0 && <StashShelf state={state} />}
     </section>
+  );
+}
+
+/** The stash is invisible in real Git — showing the shelf makes stashing tangible. */
+function StashShelf({ state }: { state: GitState }) {
+  const { t } = useI18n();
+  return (
+    <div className="stash-shelf" role="group" aria-label={t('gitZones.stash.title')}>
+      <div className="stash-shelf-heading"><span className="zone-icon" aria-hidden="true">▤</span><div><h3>{t('gitZones.stash.title')}</h3><p>{t('gitZones.stash.subtitle')}</p></div><b>{state.stashes.length}</b></div>
+      <ol>
+        {[...state.stashes].reverse().map((entry, index) => (
+          <li key={entry.id}>
+            <span aria-hidden="true">stash@{'{'}{index}{'}'}</span>
+            <strong>{entry.message}</strong>
+            <small>{t('gitZones.stash.onShelf')}</small>
+          </li>
+        ))}
+      </ol>
+    </div>
   );
 }

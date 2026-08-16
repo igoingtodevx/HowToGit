@@ -9,7 +9,7 @@ describe('appReducer', () => {
 
   it('preserves Git state and progress when changing locale', () => {
     const state = createInitialAppState('en', {
-      b01: { lessonId: 'b01', completed: true, attempts: 1, hintsUsed: 0 },
+      b01: { lessonId: 'b01', completed: true, attempts: 1, hintsUsed: 0, perfect: true },
     });
     state.git.sequence = 7;
 

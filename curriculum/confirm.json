@@ -1,0 +1,156 @@
+[
+  {
+    "lessonId": "b01",
+    "questions": [
+      {
+        "id": "init-means",
+        "kind": "choice",
+        "correctIndex": 1,
+        "optionCount": 3
+      }
+    ]
+  },
+  {
+    "lessonId": "b02",
+    "questions": [
+      {
+        "id": "commit-without-add",
+        "kind": "choice",
+        "correctIndex": 0,
+        "optionCount": 3
+      }
+    ]
+  },
+  {
+    "lessonId": "b03",
+    "questions": [
+      {
+        "id": "newest-commit",
+        "kind": "choice",
+        "correctIndex": 0,
+        "optionCount": 3
+      }
+    ]
+  },
+  {
+    "lessonId": "b04",
+    "questions": [
+      {
+        "id": "what-is-a-branch",
+        "kind": "choice",
+        "correctIndex": 0,
+        "optionCount": 3
+      }
+    ]
+  },
+  {
+    "lessonId": "b05",
+    "questions": [
+      {
+        "id": "which-labels-move",
+        "kind": "choice",
+        "correctIndex": 0,
+        "optionCount": 3
+      }
+    ]
+  },
+  {
+    "lessonId": "b06",
+    "questions": [
+      {
+        "id": "why-no-new-commit",
+        "kind": "choice",
+        "correctIndex": 1,
+        "optionCount": 3
+      }
+    ]
+  },
+  {
+    "lessonId": "b07",
+    "questions": [
+      {
+        "id": "why-conflict",
+        "kind": "choice",
+        "correctIndex": 0,
+        "optionCount": 3
+      }
+    ]
+  },
+  {
+    "lessonId": "b08",
+    "questions": [
+      {
+        "id": "undo-after-share",
+        "kind": "choice",
+        "correctIndex": 1,
+        "optionCount": 3
+      }
+    ]
+  },
+  {
+    "lessonId": "b09",
+    "questions": [
+      {
+        "id": "stash-list-shows",
+        "kind": "choice",
+        "correctIndex": 0,
+        "optionCount": 3
+      }
+    ]
+  },
+  {
+    "lessonId": "b10",
+    "questions": [
+      {
+        "id": "fetch-vs-pull",
+        "kind": "choice",
+        "correctIndex": 0,
+        "optionCount": 3
+      }
+    ]
+  },
+  {
+    "lessonId": "a01",
+    "questions": [
+      {
+        "id": "rebase-identities",
+        "kind": "choice",
+        "correctIndex": 0,
+        "optionCount": 3
+      }
+    ]
+  },
+  {
+    "lessonId": "a02",
+    "questions": [
+      {
+        "id": "cherry-pick-vs-merge",
+        "kind": "choice",
+        "correctIndex": 0,
+        "optionCount": 3
+      }
+    ]
+  },
+  {
+    "lessonId": "a04",
+    "questions": [
+      {
+        "id": "reset-lost-history",
+        "kind": "choice",
+        "correctIndex": 1,
+        "optionCount": 3
+      }
+    ]
+  },
+  {
+    "lessonId": "a05",
+    "questions": [
+      {
+        "id": "detached-head-save",
+        "kind": "choice",
+        "correctIndex": 0,
+        "optionCount": 3
+      }
+    ]
+  }
+]

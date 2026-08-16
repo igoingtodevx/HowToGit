@@ -1,4 +1,4 @@
-import { ancestorsOf, reachableCommitIds } from '../../engine/graphAlgorithms';
+import { ancestorsOf, reachableCommitIds, uniqueCommitsSince } from '../../engine/graphAlgorithms';
 import { currentBranchName, headCommitId, headTree } from '../../engine/state';
 import { statusBetween } from '../../engine/tree';
 import type { CommitId, GitState } from '../../engine/types';
@@ -9,6 +9,24 @@ export const selectStatuses = (state: GitState) => statusBetween(
   state.workingTree,
   new Set(state.operation ? Object.keys(state.operation.conflicts) : []),
 );
+
+export interface AheadBehind { branch: string; remote: string; ahead: number; behind: number }
+
+/** Ahead/behind counts for the current branch vs. its remote-tracking ref. */
+export const selectAheadBehind = (state: GitState): AheadBehind | null => {
+  const branch = currentBranchName(state);
+  if (!branch) return null;
+  const upstream = state.branches[branch]?.upstream;
+  if (!upstream) return null;
+  const tracking = `${upstream.remote}/${upstream.branch}`;
+  const remoteTip = state.remoteTrackingBranches[tracking] ?? null;
+  const tip = state.branches[branch]?.target ?? null;
+  if (remoteTip === null || tip === null) return null;
+  const ahead = uniqueCommitsSince(state.commits, tip, remoteTip).length;
+  const behind = uniqueCommitsSince(state.commits, remoteTip, tip).length;
+  if (ahead === 0 && behind === 0) return null;
+  return { branch, remote: tracking, ahead, behind };
+};
 
 export interface GraphNodeLayout {
   id: CommitId;

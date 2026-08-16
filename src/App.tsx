@@ -3,24 +3,30 @@ import type { LearningMode, Locale } from '../engine/types';
 import { useAppState } from './application/AppStateProvider';
 import { CommandLens } from './components/CommandLens';
 import { AITutor } from './components/AITutor';
+import { BeginnerFlow } from './components/BeginnerFlow';
 import { ConflictPanel } from './components/ConflictPanel';
 import { FileEditor } from './components/FileEditor';
 import { GitGraph } from './components/GitGraph';
 import { GitXRay } from './components/GitXRay';
-import { LessonNavigation, LessonPanel } from './components/LessonPanel';
 import { Landing } from './components/Landing';
+import { LessonNavigation, ProLessonPanel } from './components/LessonPanel';
 import { Terminal } from './components/Terminal';
 import { TimeMachine } from './components/TimeMachine';
 import { useI18n } from './i18n/i18n';
+import { createLessonScenario, type LessonId } from './lessons';
+
+/** Lessons where the guided lab shows the file editor (the only way to edit virtual files). */
+const EDITOR_LESSONS = new Set(['b02', 'b05', 'a03', 'a06']);
 
 export default function App() {
   const { state, dispatch } = useAppState();
   const { locale, setLocale, t } = useI18n();
-  const [command, setCommand] = useState('git status');
+  const [command, setCommand] = useState('');
   const [navOpen, setNavOpen] = useState(false);
   const [mobileViewport, setMobileViewport] = useState(false);
   const menuButtonRef = useRef<HTMLButtonElement>(null);
   const sidebarRef = useRef<HTMLElement>(null);
+  const terminalInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     if (typeof globalThis.matchMedia !== 'function') return;
@@ -61,13 +67,31 @@ export default function App() {
 
   const changeMode = (mode: LearningMode) => dispatch({ type: 'mode/changed', mode });
   const changeLocale = (nextLocale: Locale) => setLocale(nextLocale);
+  const focusTerminal = () => terminalInputRef.current?.focus();
+
+  /** In guided mode, entering a lesson loads its scenario so the mission is always fair. */
+  const selectLesson = (lessonId: LessonId) => {
+    if (state.mode === 'noob') {
+      const scenario = createLessonScenario(lessonId);
+      if (scenario) dispatch({ type: 'lesson/restarted', lessonId, git: scenario });
+      else {
+        dispatch({ type: 'lesson/selected', lessonId });
+        dispatch({ type: 'concept/reset' });
+      }
+    } else {
+      dispatch({ type: 'lesson/selected', lessonId });
+    }
+    setNavOpen(false);
+  };
+
+  const beginnerDone = Object.keys(state.progress).filter((id) => id.startsWith('b') && state.progress[id]?.completed).length;
 
   return (
     <div className={`app-shell mode-${state.mode}`}>
       <a className="skip-link" href="#workspace">{t('shell.skipToContent')}</a>
       <aside ref={sidebarRef} className={navOpen ? 'sidebar sidebar-open' : 'sidebar'} aria-label={t('shell.primaryNavigation')} aria-modal={mobileViewport && navOpen ? true : undefined} inert={mobileViewport && !navOpen ? true : undefined} role={mobileViewport && navOpen ? 'dialog' : undefined}>
         <div className="sidebar-top"><a className="brand" href="#workspace"><span className="brand-mark" aria-hidden="true">GF</span><span><b>{t('app.name')}</b><small>{t('ui.brandSubtitle')}</small></span></a><button className="mobile-close" type="button" onClick={() => { setNavOpen(false); menuButtonRef.current?.focus(); }} aria-label={t('ui.closeNavigation')}>×</button></div>
-        <LessonNavigation />
+        <LessonNavigation onSelectLesson={selectLesson} />
         <div className="sidebar-settings">
           <fieldset className="segmented-control"><legend>{t('shell.learningMode')}</legend>{(['noob', 'pro'] as const).map((mode) => <button aria-pressed={state.mode === mode} className={state.mode === mode ? 'segment segment-active' : 'segment'} key={mode} onClick={() => changeMode(mode)} type="button">{t(`mode.${mode}`)}</button>)}</fieldset>
           <label className="language-select"><span>{t('language.label')}</span><select value={locale} onChange={(event) => changeLocale(event.target.value as Locale)}><option value="en">English</option><option value="de">Deutsch</option></select></label>
@@ -75,16 +99,48 @@ export default function App() {
       </aside>
 
       <main className="workspace" id="workspace" tabIndex={-1}>
-        <header className="workspace-toolbar"><button ref={menuButtonRef} className="mobile-menu" type="button" onClick={() => setNavOpen(true)} aria-expanded={navOpen} aria-label={t('ui.openLessons')}>☰</button><div><span className="workspace-status"><i /> {t('ui.engineReady')}</span><span className="repo-status">{state.git.initialized ? `${Object.keys(state.git.commits).length} ${t(Object.keys(state.git.commits).length === 1 ? 'ui.commit' : 'ui.commits')} · ${state.git.head.kind === 'detached' ? 'detached HEAD' : state.git.head.branch}` : t('ui.notInitialized')}</span></div><div className="toolbar-actions"><button type="button" className="ghost-button" onClick={() => dispatch({ type: 'lab/reset' })}>{t('ui.resetLab')}</button><a className="ghost-button" href="#timeMachine">{t('nav.timeMachine')}</a></div></header>
+        <header className="workspace-toolbar">
+          <div>
+            <button ref={menuButtonRef} className="mobile-menu" type="button" onClick={() => setNavOpen(true)} aria-expanded={navOpen} aria-label={t('ui.openLessons')}>☰</button>
+            {state.mode === 'noob'
+              ? <span className="workspace-status course-progress">{t('ui.beginnerTrack')} · {beginnerDone}/10 {t('ui.complete')}</span>
+              : <span className="workspace-status"><i /> {t('ui.engineReady')}</span>}
+            <span className="repo-status">{state.git.initialized ? `${Object.keys(state.git.commits).length} ${t(Object.keys(state.git.commits).length === 1 ? 'ui.commit' : 'ui.commits')} · ${state.git.head.kind === 'detached' ? 'detached HEAD' : state.git.head.branch}` : t('ui.notInitialized')}</span>
+          </div>
+          <div className="toolbar-actions">
+            <button type="button" className="ghost-button" onClick={() => dispatch({ type: 'lab/reset' })}>{t('ui.resetLab')}</button>
+            {state.mode === 'pro' && <a className="ghost-button" href="#timeMachine">{t('nav.timeMachine')}</a>}
+          </div>
+        </header>
 
-        <LessonPanel />
-        <GitXRay state={state.git} effects={state.effects} />
-        <div className="workspace-grid"><GitGraph state={state.git} effects={state.effects} /><FileEditor state={state.git} /></div>
-        <ConflictPanel state={state.git} />
-        <CommandLens command={command} onCommand={setCommand} />
-        <Terminal commandValue={command} onCommandValue={setCommand} />
-        <AITutor onCommand={setCommand} />
-        <TimeMachine state={state.git} onCommand={setCommand} />
+        {state.mode === 'noob' ? (
+          <div className="guided-layout">
+            <BeginnerFlow onSelectLesson={selectLesson} onFocusTerminal={focusTerminal} />
+            <div className="guided-lab">
+              <Terminal commandValue={command} onCommandValue={setCommand} inputRef={terminalInputRef} />
+              <GitXRay state={state.git} effects={state.effects} />
+              <div className="workspace-grid">
+                <GitGraph state={state.git} effects={state.effects} />
+                {EDITOR_LESSONS.has(state.activeLessonId) && <FileEditor state={state.git} />}
+              </div>
+              <ConflictPanel state={state.git} />
+            </div>
+          </div>
+        ) : (
+          <>
+            <ProLessonPanel />
+            <GitXRay state={state.git} effects={state.effects} />
+            <div className="workspace-grid"><GitGraph state={state.git} effects={state.effects} /><FileEditor state={state.git} /></div>
+            <ConflictPanel state={state.git} />
+            <CommandLens command={command} onCommand={setCommand} />
+            <Terminal commandValue={command} onCommandValue={setCommand} inputRef={terminalInputRef} />
+            <div className="pro-bottom-grid">
+              <AITutor onCommand={setCommand} />
+              <TimeMachine state={state.git} onCommand={setCommand} />
+            </div>
+          </>
+        )}
+
         <footer><span>GitFlow Academy</span><p>{t('ui.footerTruth')}</p><button type="button" onClick={() => changeLocale(locale === 'en' ? 'de' : 'en')}>{locale.toUpperCase()}</button></footer>
       </main>
       {navOpen && <button className="nav-backdrop" aria-label={t('ui.closeNavigation')} onClick={() => { setNavOpen(false); menuButtonRef.current?.focus(); }} />}
