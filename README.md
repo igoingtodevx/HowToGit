@@ -4,6 +4,10 @@ GitFlow Academy is a production-grade, bilingual visual Git laboratory. It teach
 
 The project is designed first for someone who has barely used Git. Noob Mode is the default; English and German are first-class; the complete beginner course and simulator work without an AI provider.
 
+## Live demo
+
+[Open HowToGit](https://howtogit.vercel.app)
+
 ## Run locally
 
 ```bash
